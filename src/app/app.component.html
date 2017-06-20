@@ -1,32 +1,102 @@
 <div class="container">
+  <div class="col-md-12">
+    <app-header></app-header>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- <div class="container">
 
   <h1>CerceTransport</h1>
 
   <div class="row">
     <div class="col-xs-3">
       <h4>Próximos trenes Cercedilla - Madrid</h4>
-      <table class="table">
+      <div class="" *ngIf="!departsTrainC2CerceMadrid">
+        Loading...
+      </div>
+      <table class="table" *ngIf="departsTrainC2CerceMadrid">
         <tr><td>Hora</td><td>Estación</td></tr>
+        <tr *ngFor="let depart of departsTrainC2CerceMadrid">
+          <td>
+             <span>
+               <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
+               <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
+               a las
+             </span>
+            {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+          </td>
+          <td>TODO Link estacion cercedilla</td>
+        </tr>
+
       </table>
     </div>
     <div class="col-xs-3">
       <h4>Próximos trenes Madrid Atocha - Cercedilla</h4>
-      <table class="table">
+      <div class="" *ngIf="!departsTrainC2MadridCerce">
+        Loading...
+      </div>
+      <table class="table" *ngIf="departsTrainC2MadridCerce">
         <tr><td>Hora</td><td>Estación</td></tr>
+        <tr *ngFor="let depart of departsTrainC2MadridCerce">
+          <td>
+             <span>
+               <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
+               <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
+               a las
+             </span>
+            {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+          </td>
+          <td>TODO Link estacion cercedilla</td>
+        </tr>
+
       </table>
     </div>
     <div class="col-xs-3">
       <h4>Próximos Buses 684 Cercedilla - Madrid Moncloa</h4>
-      <table class="table">
+      <div class="" *ngIf="!departsBus684CerceMadrid">
+        Loading...
+      </div>
+      <table class="table" *ngIf="departsBus684CerceMadrid">
         <tr><td>Hora</td><td>Estación</td></tr>
+        <tr *ngFor="let depart of departsBus684CerceMadrid">
+          <td>
+             <span>
+               <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
+               <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
+               a las
+             </span>
+            {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+          </td>
+          <td>TODO Link estacion cercedilla</td>
+        </tr>
       </table>
     </div>
     <div class="col-xs-3">
       <h4>Próximos Buses 684 Madrid Moncloa - Cercedilla</h4>
-      <table class="table">
+      <div class="" *ngIf="!departsBus684MadridCerce">
+        Loading...
+      </div>
+
+      <table class="table" *ngIf="departsBus684MadridCerce">
         <tr><td>Hora</td><td>Estación</td></tr>
+        <tr *ngFor="let depart of departsBus684MadridCerce">
+          <td>
+             <span>
+               <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
+               <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
+               a las
+             </span>
+            {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+          </td>
+          <td>TODO Link estacion cercedilla</td>
+        </tr>
       </table>
     </div>
   </div>
 
-</div>
+</div> -->
