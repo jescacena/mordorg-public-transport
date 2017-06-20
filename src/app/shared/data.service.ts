@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import {Subject} from 'rxjs/Subject';
+
 
 @Injectable()
 export class DataService {
+
+  mixDeparturesCerceMadrid = new Subject();
+  mixDeparturesMadridCerce = new Subject();
 
   constructor(private http: Http) {}
 

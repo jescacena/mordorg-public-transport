@@ -5,6 +5,7 @@ import { DataService } from './data.service';
 import { BankHoliday } from '../model/bankHoliday.class';
 import { Response } from '@angular/http';
 import * as _ from "lodash";
+import { TransportTypeEnum } from '../model/transport-type.enum';
 
 @Injectable()
 export class DateUtilsService {
@@ -199,7 +200,7 @@ export class DateUtilsService {
           console.log('parseCCPOI_BusTimetableResponseToArray ERROR');
     }
 
-    return this.parseTimetableEntryArrayToDepartures(ttData , momentDate);
+    return this.parseTimetableEntryArrayToDepartures(ttData , momentDate, TransportTypeEnum.Train);
   }
 
   /**
@@ -227,7 +228,7 @@ export class DateUtilsService {
           console.log('parseCCPOI_TrainTimetableResponseToArray ERROR');
     }
 
-    return this.parseTimetableEntryArrayToDepartures(ttData , momentDate);
+    return this.parseTimetableEntryArrayToDepartures(ttData , momentDate, TransportTypeEnum.Bus);
   }
 
 
@@ -239,9 +240,10 @@ export class DateUtilsService {
        "LV-6-00,15,30,45D",
        "LV-7-00,15D,30,45D",
     @param momentDate {object} moment data
+    @param transportType {number} transport type
     @return {object} Array of departures
   */
-  parseTimetableEntryArrayToDepartures(ttEntryArray, momentDate): Array<Departure> {
+  parseTimetableEntryArrayToDepartures(ttEntryArray, momentDate, transportType): Array<Departure> {
     let result:Array<Departure>  = [];
     let dayTypeOfTheWeek:string = 'LV';
     let dayOfTheWeek;
@@ -319,7 +321,7 @@ export class DateUtilsService {
             momentToAdd.set('minute', parseInt(minute));
 
             //TODO set place and placeLink
-            let departure = new Departure(momentToAdd,'','',departureType,isDirect,isNightly);
+            let departure = new Departure(momentToAdd,'','',departureType,isDirect,isNightly,transportType);
 
             result.push(departure);
           }

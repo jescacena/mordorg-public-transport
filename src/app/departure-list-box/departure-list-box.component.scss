@@ -1,0 +1,9 @@
+@import '../../assets/styles/variables.scss';
+
+.tipo-bus {
+  @include bus-icon-bg;
+}
+
+.tipo-tren {
+  @include tren-icon-bg;
+}

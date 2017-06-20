@@ -1,0 +1,31 @@
+@import '../../assets/styles/variables.scss';
+
+.page-header {
+  margin:0.5em 0 0 0;
+  border:0;
+  img {
+    width:5em;
+    float:left;
+  }
+
+  h1 {
+    @include large-text;
+    padding-top:0em;
+    margin-left:0.5em;
+    display:inline-block;
+  }
+
+  small {
+    color: $dark-blue;
+  }
+
+  .navbar-collapse {
+    float:right;
+    margin-top:1em;
+    @include regular-text;
+
+    a,a:hover {
+      color:$light-grey;
+    }
+  }
+}

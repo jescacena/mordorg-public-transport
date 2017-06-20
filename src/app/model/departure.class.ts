@@ -1,3 +1,5 @@
+
+import {TransportTypeEnum} from './transport-type.enum';
 /**
 */
 export class Departure {
@@ -11,19 +13,22 @@ export class Departure {
   departureType: string;     //'LV' / 'SDF' / 'NVSG'
   isDirect: Boolean;
   isNightly: Boolean;
+  transportType: number;  //
 
   constructor(momentDate,
               placeLink: string ,
               placeLabel: string,
               departureType: string,
               isDirect: Boolean,
-              isNightly: Boolean) {
+              isNightly: Boolean,
+              transportType: number) {
     this.momentDate = momentDate;
     this.placeLink = placeLink;
     this.placeLabel = placeLabel;
     this.departureType = departureType;
     this.isDirect = isDirect;
     this.isNightly = isNightly;
+    this.transportType = transportType;
 
   }
 

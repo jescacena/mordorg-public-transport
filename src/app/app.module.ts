@@ -8,6 +8,11 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { OneDirectionComponent } from './one-direction/one-direction.component';
 import { TransportDetailComponent } from './transport-detail/transport-detail.component';
+import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
+
+import { DateUtilsService } from './shared/date-utils.service';
+import { DataService } from './shared/data.service';
+
 
 @NgModule({
   declarations: [
@@ -15,14 +20,15 @@ import { TransportDetailComponent } from './transport-detail/transport-detail.co
     HeaderComponent,
     HomeComponent,
     OneDirectionComponent,
-    TransportDetailComponent
+    TransportDetailComponent,
+    DepartureListBoxComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DateUtilsService,DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
