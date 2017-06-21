@@ -2,8 +2,50 @@
 
 .tipo-bus {
   @include bus-icon-bg;
+  background-position: 1.4em 0.3em;
 }
 
 .tipo-tren {
   @include tren-icon-bg;
+  background-position: 1.4em 0.3em;
+}
+
+.content {
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    // border-radius: 10px;
+    // border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    overflow:hidden;
+    padding: 0px;
+    tr {
+      background-color: $light-grey;
+      text-align: left;
+      &:first-child {
+        text-align: center;
+      }
+      &:hover {
+        background-color: $grey-2;
+      }
+
+      td,th {
+        &:first-child {
+          text-align: center;
+        }
+      }
+
+    }
+
+    // thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+    //     border-radius: 4px 0 0 0;
+    // }
+    // thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+    //     border-radius: 0 0 0 4px;
+    // }
+    // tr:nth-child(even){
+    //   background-color: #f2f2f2
+    // }
+  }
 }

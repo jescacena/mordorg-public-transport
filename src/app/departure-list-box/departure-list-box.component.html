@@ -5,23 +5,25 @@
   </div>
 
   <!-- <pre style="font-size:0.7em;text-align:left;">{{departures | json}}</pre> -->
-  <table class="table table-condensed table-striped" *ngIf="departures">
-    <tr>
-      <th class="success">Tipo</th>
-      <th class="success">Cuándo</th>
-      <th class="success">Desde</th>
-    </tr>
-    <tr *ngFor="let depart of departures">
-      <td class="success"><div [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div></td>
-      <td>
-         <span>
-           <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
-           <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
-           a las
-         </span>
-        {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
-      </td>
-      <td>TODO Link estacion cercedilla</td>
-    </tr>
-  </table>
+  <div class="content">
+    <table class="table table-condensed table-striped table-hover" *ngIf="departures">
+      <tr>
+        <th>Tipo</th>
+        <th>Cuándo</th>
+        <th>Desde</th>
+      </tr>
+      <tr *ngFor="let depart of departures">
+        <td><div [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div></td>
+        <td>
+           <span>
+             <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
+             <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
+             a las
+           </span>
+          {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+        </td>
+        <td>TODO Link estacion cercedilla</td>
+      </tr>
+    </table>
+  </div>
 </div>
