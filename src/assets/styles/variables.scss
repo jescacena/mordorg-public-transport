@@ -4,21 +4,58 @@
 // @import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
 @import url('https://fonts.googleapis.com/css?family=Questrial');
 
+//Resets
+html,body { height: 100%; margin: 0px; padding: 0px; }
+
+h1,h2,h3,h4,h5,h6 {
+  margin:0;
+}
+
+ul {
+  margin:0; padding:0; list-style: none;
+}
+
+
+
+//Colours
+$light-blue: #89D6D6;
 $blue: #339999;
 $dark-blue: #0A7272;
 $light-grey: #ffeeff;
 
-@mixin large-text {
+//Full height background
+body {
+  background-color: $blue;
+}
+//Mixins
+@mixin family-text {
   font: {
     family: Questrial,sans-serif;
-    size: 3em;
-    weight: bold;
   }
+}
+
+@mixin color-text {
   color: $light-grey;
 }
 
+@mixin large-text {
+  @include family-text;
+  @include color-text;
+  font: {
+    size: 3em;
+    weight: bold;
+  }
+}
+
+@mixin subtitle-text {
+  @include family-text;
+  @include color-text;
+  font-size: 2em;
+}
+
 @mixin regular-text {
-  @include large-text;
+  @include family-text;
+  @include color-text;
   font-size: 1em;
 }
 

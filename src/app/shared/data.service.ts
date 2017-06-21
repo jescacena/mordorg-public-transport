@@ -8,6 +8,10 @@ export class DataService {
 
   mixDeparturesCerceMadrid = new Subject();
   mixDeparturesMadridCerce = new Subject();
+  mixDepartures = new Subject();
+
+  //When user change direction on home direction selector
+  newDirectionSelected = new Subject();
 
   constructor(private http: Http) {}
 

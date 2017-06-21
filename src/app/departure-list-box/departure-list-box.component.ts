@@ -43,6 +43,14 @@ export class DepartureListBoxComponent implements OnInit {
           }
       });
     }
+    if(this.feedType === 'mixDepartures') {
+      this.subscription = this.dataService.mixDepartures.subscribe(
+        (data: Array<Departure>)=> {
+          if(data) {
+            this.departures = data;
+          }
+      });
+    }
   }
 
 }

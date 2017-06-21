@@ -1,0 +1,17 @@
+<div class="direction-selector">
+  <h3>Próximas salidas</h3>
+  <h3>{{labelSelected}}</h3>
+  <h5 (click)="toggleChoiceList()">Cambiar
+    <span class="arrow" *ngIf="!showChoiceList">&gt;</span>
+    <span class="arrow" *ngIf="showChoiceList">v</span>
+  </h5>
+  <div class="choices" *ngIf="showChoiceList">
+    <ul>
+      <li
+        *ngFor="let choice of choiceList"
+        (click)='onChoiceSelect(choice.code)'>
+        {{choice.label}}
+      </li>
+    </ul>
+  </div>
+</div>

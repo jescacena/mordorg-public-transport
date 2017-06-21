@@ -1,0 +1,48 @@
+@import '../../../assets/styles/variables.scss';
+
+.direction-selector {
+  background-color: $dark-blue;
+  border-radius: 10px;
+  color: $light-grey;
+  padding:0.3em;
+  margin-bottom: 0.5em;
+  display:inline-block;
+  width:100%;
+
+  h3 {
+    @include subtitle-text;
+    font-size: 1.5em;
+
+    margin-top:0.3em;
+
+    &:first-child {
+      margin-top:0.3em;
+    }
+  }
+
+  h5 {
+    @include regular-text;
+    float:right;
+    color: $light-blue;
+    padding:0.3em;
+    cursor:pointer;
+  }
+  .choices {
+    display: block;
+    clear: both;
+    margin:0 auto;
+    ul {
+      list-style: none;
+      li {
+        @include regular-text;
+        cursor:pointer;
+        height:2em;
+        line-height:2em;
+        &:hover {
+          background-color: $light-blue;
+          color: $dark-blue;
+        }
+      }
+    }
+  }
+}

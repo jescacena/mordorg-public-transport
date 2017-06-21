@@ -12,6 +12,8 @@ import { DepartureListBoxComponent } from './departure-list-box/departure-list-b
 
 import { DateUtilsService } from './shared/date-utils.service';
 import { DataService } from './shared/data.service';
+import { HomeWithSelectorComponent } from './home/home-with-selector.component';
+import { DirectionSelectorComponent } from './home/direction-selector/direction-selector.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { DataService } from './shared/data.service';
     HomeComponent,
     OneDirectionComponent,
     TransportDetailComponent,
-    DepartureListBoxComponent
+    DepartureListBoxComponent,
+    HomeWithSelectorComponent,
+    DirectionSelectorComponent
   ],
   imports: [
     BrowserModule,
