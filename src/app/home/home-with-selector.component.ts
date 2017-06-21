@@ -98,10 +98,10 @@ export class HomeWithSelectorComponent implements OnInit {
       case DirectionsEnum.CercedillaMadrid:
         //Train
         const trainTodayDeparturesC2A = this.dateUtilsService.parseTrainTimeTableByDate(this.trainC2TimetableResponse,'C2A',momentDate);
-        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesC2A, 5);
+        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesC2A, 3);
         //Bus 684
         const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'C2M',momentDate);
-        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, 5);
+        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, 3);
 
         //Concat train and bus in mixed
         this.mixDepartures = this.busDepartures.concat(this.trainDepartures);
@@ -109,10 +109,10 @@ export class HomeWithSelectorComponent implements OnInit {
 
       case DirectionsEnum.MadridCercedilla:
         const trainTodayDeparturesA2C = this.dateUtilsService.parseTrainTimeTableByDate(this.trainC2TimetableResponse,'A2C',momentDate);
-        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, 5);
+        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, 3);
 
         const busTodayDeparturesM2C = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'M2C',momentDate);
-        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, 5);
+        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, 3);
 
         //Concat train and bus in mixed
         this.mixDepartures = this.busDepartures.concat(this.trainDepartures);
