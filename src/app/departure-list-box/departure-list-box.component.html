@@ -15,12 +15,8 @@
       <tr *ngFor="let depart of departures">
         <td><div [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div></td>
         <td>
-           <span>
-             <span *ngIf="depart.momentDate.get('date') === nowMoment.get('date')">Hoy</span>
-             <span *ngIf="depart.momentDate.get('date') !== nowMoment.get('date')">Mañana</span>
-             a las
-           </span>
-          {{depart.momentDate.format('HH')}}h {{depart.momentDate.format('mm')}}m
+          {{ depart.momentDate | formatWhen }}
+          <!-- / {{ depart.momentDate.format('HH-mm') }} -->
         </td>
         <td>TODO Link estacion cercedilla</td>
       </tr>
