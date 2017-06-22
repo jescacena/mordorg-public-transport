@@ -35,6 +35,13 @@
         &:first-child {
           text-align: center;
         }
+        &:nth-child(3) {
+          font-size: 0.8em;
+        }
+
+        span.glyphicon {
+          color: $grey;
+        }
       }
 
     }

@@ -12,11 +12,28 @@
   h3 {
     @include subtitle-text;
     font-size: 1.5em;
-
     margin-top:0.3em;
-
+    span {
+      float: right;
+      font-size: 0.7em;
+      color: $light-blue;
+      @include handset {
+        float:none;
+        display: block;
+      }
+    }
     &:first-child {
       margin-top:0.3em;
+      margin-left:0.3em;
+      text-align: left;
+      @include handset {
+        text-align: center;
+      }
+    }
+
+    &:nth-child(2) {
+      clear: both;
+      margin-top: 0.5em;
     }
   }
 

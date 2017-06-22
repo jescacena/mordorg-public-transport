@@ -11,6 +11,7 @@
         <th>Tipo</th>
         <th>Cuándo</th>
         <th>Desde</th>
+        <th></th>
       </tr>
       <tr *ngFor="let depart of departures">
         <td><div [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div></td>
@@ -19,6 +20,7 @@
           <!-- / {{ depart.momentDate.format('HH-mm') }} -->
         </td>
         <td><a href="{{depart.placeLink}}" target="_blank">{{depart.placeLabel}}</a></td>
+        <td><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></td>
       </tr>
     </table>
   </div>

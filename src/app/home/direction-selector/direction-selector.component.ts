@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from "lodash";
+import * as moment from 'moment';
 
 import { DataService } from '../../shared/data.service';
 import { DirectionsEnum } from '../../model/directions.enum';
@@ -15,6 +16,8 @@ export class DirectionSelectorComponent implements OnInit {
   showChoiceList:boolean = false;
   labelSelected:string;
   choiceSelected;
+  nowDateLabel = moment().locale('es').format('dddd, D [de] MMMM [de] YYYY');
+  // nowDateLabel = moment().locale('es').format('dddd D MMMM  YYYY');
 
   choiceList = [
     {
