@@ -27,9 +27,19 @@ export class HomeWithSelectorComponent implements OnInit {
 
   bankHolidayListResponse: Response;
 
+  //Line data
+  bus684LinePubtraResponse;
+  trainC2LinePubtraResponse;
+
   //Timetables for bus 684 and train c2
-  bus684TimetableResponse: Response;
-  trainC2TimetableResponse: Response;
+  bus684TimetableResponse;
+  trainC2TimetableResponse;
+
+  //Stations start and end
+  bus684StationStartCercedilla;
+  bus684StationEndMadrid;
+  trainC2StationStartCercedilla;
+  trainC2StationEndMadrid;
 
   //Next departures arrays
   busDepartures:Array<Departure>;
@@ -57,11 +67,23 @@ export class HomeWithSelectorComponent implements OnInit {
     console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
     //TODO Fetch initial next departures
-    this.homeService.getAllTimetables().subscribe(
+    this.homeService.getAllLinesData().subscribe(
       (dataArray: Array<Response>) => {
-        console.log('JES getAllTimetables respondataArrays-->', dataArray);
-        this.trainC2TimetableResponse = dataArray[0].json()[0];
-        this.bus684TimetableResponse = dataArray[1].json()[0];
+        console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
+        console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
+        this.trainC2LinePubtraResponse = dataArray[0].json()[0];
+        this.bus684LinePubtraResponse = dataArray[1].json()[0];
+
+        //Set timetables
+        this.trainC2TimetableResponse = this.trainC2LinePubtraResponse.timetable[0];
+        this.bus684TimetableResponse = this.bus684LinePubtraResponse.timetable[0];
+
+        //Set limit Stations
+        this.bus684StationStartCercedilla = this.bus684LinePubtraResponse.station_start[0];
+        this.bus684StationEndMadrid = this.bus684LinePubtraResponse.station_end[0];
+        this.trainC2StationStartCercedilla = this.trainC2LinePubtraResponse.station_start[0];
+        this.trainC2StationEndMadrid = this.trainC2LinePubtraResponse.station_end[0];
+
         this._buildMixDepaturesFromMoment(moment());
       },
       (error) => console.log(error)
@@ -103,6 +125,17 @@ export class HomeWithSelectorComponent implements OnInit {
         const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'C2M',momentDate);
         this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, 3);
 
+        //Set place station start
+        for(let depart of this.busDepartures) {
+          depart.placeLabel = this.bus684StationStartCercedilla.direccion;
+          depart.placeLink = "http://maps.google.com/?q="+this.bus684StationStartCercedilla.latlon;
+        }
+        //Set place station start
+        for(let depart of this.trainDepartures) {
+          depart.placeLabel = this.trainC2StationStartCercedilla.direccion;
+          depart.placeLink = "http://maps.google.com/?q="+this.trainC2StationStartCercedilla.latlon;
+        }
+
         //Concat train and bus in mixed
         this.mixDepartures = this.busDepartures.concat(this.trainDepartures);
         break;
@@ -113,6 +146,17 @@ export class HomeWithSelectorComponent implements OnInit {
 
         const busTodayDeparturesM2C = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'M2C',momentDate);
         this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, 3);
+
+        //Set place station start
+        for(let depart of this.busDepartures) {
+          depart.placeLabel = this.bus684StationEndMadrid.direccion;
+          depart.placeLink = "http://maps.google.com/?q="+this.bus684StationEndMadrid.latlon;
+        }
+        //Set place station start
+        for(let depart of this.trainDepartures) {
+          depart.placeLabel = this.trainC2StationEndMadrid.direccion;
+          depart.placeLink = "http://maps.google.com/?q="+this.trainC2StationEndMadrid.latlon;
+        }
 
         //Concat train and bus in mixed
         this.mixDepartures = this.busDepartures.concat(this.trainDepartures);

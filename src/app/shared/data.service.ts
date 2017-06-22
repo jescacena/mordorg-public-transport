@@ -41,4 +41,15 @@ export class DataService {
   getCCPOIS_TrainTimetable(trainId) {
     return this.http.get('http://jesidea.com/cercepois/wp-json/wp/v2/timepubtra-train-'+trainId);
   }
+
+  //http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-c2
+  getCCPOIS_TrainLinePubtra(trainId) {
+    return this.http.get('http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-'+trainId);
+  }
+
+  //http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-c2
+  getCCPOIS_BusLinePubtra(busId) {
+    return this.http.get('http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-'+busId);
+  }
+
 }
