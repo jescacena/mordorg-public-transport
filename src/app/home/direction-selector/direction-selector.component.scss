@@ -43,6 +43,9 @@
     color: $light-blue;
     padding:0.3em;
     cursor:pointer;
+    @include handset {
+      font-size: 0.8em;
+    }
   }
   .choices {
     display: block;

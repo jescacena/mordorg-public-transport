@@ -6,6 +6,9 @@
   img {
     width:5em;
     float:left;
+    @include handset {
+      width:4em;
+    }
   }
 
   h1 {
@@ -13,10 +16,17 @@
     padding-top:0em;
     margin-left:0.5em;
     display:inline-block;
+    @include handset {
+      font-size: 1.7em;
+      margin-top: 0.5em;
+    }
   }
 
   small {
     color: $dark-blue;
+    @include handset {
+      display: block;
+    }
   }
 
   .navbar-collapse {

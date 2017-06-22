@@ -2,8 +2,10 @@
   <h3>Próximas salidas <span class="date">{{nowDateLabel}}</span></h3>
   <h3>{{labelSelected}}</h3>
   <h5 (click)="toggleChoiceList()">Cambiar
-    <span class="arrow" *ngIf="!showChoiceList">&gt;</span>
-    <span class="arrow" *ngIf="showChoiceList">v</span>
+    <span class="arrow glyphicon glyphicon-menu-right" aria-hidden="true" *ngIf="!showChoiceList"></span>
+    <span class="arrow glyphicon glyphicon-menu-down" aria-hidden="true" *ngIf="showChoiceList"></span>
+    <!-- <span class="arrow" *ngIf="!showChoiceList">&gt;</span>
+    <span class="arrow" *ngIf="showChoiceList">v</span> -->
   </h5>
   <div class="choices" *ngIf="showChoiceList">
     <ul>
