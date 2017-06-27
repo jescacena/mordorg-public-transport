@@ -5,7 +5,7 @@
   </div>
 
   <!-- <pre style="font-size:0.7em;text-align:left;">{{departures | json}}</pre> -->
-  <div class="content">
+  <div class="content {{customClass}}">
     <table class="table table-condensed table-striped table-hover" *ngIf="departures">
       <tr>
         <th>Tipo</th>
@@ -20,6 +20,9 @@
         <td><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></td>
       </tr>
     </table>
+    <div class="more" *ngIf="customClass === 'one-direction'" (click)="loadMore()">
+      <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+    </div>
   </div>
 
 </div>

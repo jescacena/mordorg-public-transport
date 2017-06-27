@@ -97,7 +97,7 @@ export class DateUtilsService {
   * Get next nightly departures from momentDate in a list of departures
   * @param {object} momentDate
   * @param {object} departures Array of departures
-  * @param {number} count number of next departures
+  * @param {number} count number of next departures / null for ALL
   * @return {object} Departure
   */
   getNextNightlyDepartures(momentDate , departures: Array<Departure>, count) {
@@ -105,10 +105,14 @@ export class DateUtilsService {
       return departure && departure.isNightly;
     });
 
-    const result2: Array<Departure> = [];
+    let result2: Array<Departure> = [];
 
-    for (let i = 0; i < count; i++) {
-        result2.push(result[i]);
+    if(count) {
+      for (let i = 0; i < count ; i++) {
+          result2.push(result[i]);
+      }
+    } else {
+      result2 = result;
     }
 
     return result2;
@@ -119,7 +123,7 @@ export class DateUtilsService {
   * Get next departures from momentDate in a list of departures
   * @param {object} momentDate
   * @param {object} departures Array of departures
-  * @param {number} count number of next departures
+  * @param {number} count number of next departures / null for ALL
   * @return {object} Departure
   */
   getNextDepartures(momentDate , departures: Array<Departure>, count) {
@@ -127,12 +131,27 @@ export class DateUtilsService {
     for (let i = 0; i < departures.length; i++) {
       if(departures[i].momentDate.isAfter(momentDate)) {
         result.push(departures[i]);
-        for (let j = 1; j < count; j++) {
-          result.push(departures[i+j]);
+        if(count) {
+          for (let j = 1; j < count; j++) {
+            if(departures[i+j]) {
+              result.push(departures[i+j]);
+            }
+          }
+        } else {
+          for (let j = 1; j < departures.length; j++) {
+            if(departures[i+j]) {
+              result.push(departures[i+j]);
+            }
+          }
         }
         break;
       }
     }
+    //Sort ascending
+    // result.sort(function(a, b) {
+    //   return (a.momentDate.isAfter(b.momentDate))? 1 : -1;
+    // });
+
     return result;
   }
 

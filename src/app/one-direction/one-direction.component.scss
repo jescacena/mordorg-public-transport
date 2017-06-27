@@ -1,0 +1,27 @@
+@import '../../assets/styles/variables.scss';
+
+.row.one-direction {
+  @include handset {
+    padding-right: 15px;
+    padding-left: 15px;
+    display: inline-block;
+  }
+
+  .header {
+    background-color: $dark-blue;
+    border-radius: 5px;
+    color: $light-grey;
+    padding:0.3em;
+    margin-bottom: 0.5em;
+    display:inline-block;
+    width:100%;
+
+    h3 {
+      @include subtitle-text;
+      font-size: 1.5em;
+      margin-top:0.3em;
+    }
+  }
+
+
+}

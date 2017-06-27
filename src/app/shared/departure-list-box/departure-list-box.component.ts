@@ -17,6 +17,7 @@ export class DepartureListBoxComponent implements OnInit {
 
   @Input() count: number;
   @Input() feedType: string;
+  @Input() customClass: string;
 
   subscription: Subscription;
 

@@ -20,29 +20,35 @@ export class DeparturesService {
   * @param {object} targetBusStation targetStation
   * @param {object} cercedillaTrainStation cercedillaStation
   * @param {object} targetTrainStation targetStation
+  * @param {number} count number of departures to be retrieved (dividible by 2)  ---> null for ALL
   * @return {object} Array of Departure
   */
   buildMixDepaturesFromMoment(momentDate,
-                              directionSelected , 
+                              directionSelected ,
                               trainTT ,
                               busTT ,
                               cercedillaBusStation ,
                               targetBusStation,
                               cercedillaTrainStation ,
-                              targetTrainStation) {
+                              targetTrainStation,
+                              count:number = null) {
     let result: Array<Departure>;
     let trainNextDeparts: Array<Departure>;
     let busNextDeparts: Array<Departure>;
 
 
+    const countLocalByType = (!count || count%2 !== 0)? null : count/2;
+
     switch(directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
         //Train
         const trainTodayDeparturesC2A = this.dateUtilsService.parseTrainTimeTableByDate(trainTT,'C2A',momentDate);
-        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesC2A, 3);
+        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate,
+                                                                  trainTodayDeparturesC2A,
+                                                                  countLocalByType);
         //Bus 684
         const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(busTT,'C2M',momentDate);
-        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, 3);
+        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, countLocalByType);
 
         //Set place station start
         for(let depart of busNextDeparts) {
@@ -60,10 +66,10 @@ export class DeparturesService {
 
       case DirectionsEnum.MadridCercedilla:
         const trainTodayDeparturesA2C = this.dateUtilsService.parseTrainTimeTableByDate(trainTT,'A2C',momentDate);
-        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, 3);
+        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, countLocalByType);
 
         const busTodayDeparturesM2C = this.dateUtilsService.parseBusTimeTableByDate(busTT,'M2C',momentDate);
-        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, 3);
+        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, countLocalByType);
 
         //Set place station start
         for(let depart of busNextDeparts) {
@@ -89,7 +95,7 @@ export class DeparturesService {
     if(result) {
       //Sort ascending
       result.sort(function(a, b) {
-        return a.momentDate.isAfter(b.momentDate);
+        return (a.momentDate.isAfter(b.momentDate))? 1 : -1;
       });
       console.log('JES buildMixDepaturesFromMoment result',result);
     }

@@ -5,6 +5,8 @@ import * as moment from 'moment';
 
 import { Departure } from '../shared/model/departure.class';
 import { DirectionsEnum } from '../shared/model/directions.enum';
+import { DirectionLabels } from '../shared/model/direction-labels.constant';
+
 import { DateUtilsService } from '../shared/services/date-utils.service';
 import { DataService } from '../shared/services/data.service';
 import { DeparturesService } from '../shared/services/departures.service';
@@ -12,7 +14,7 @@ import { DeparturesService } from '../shared/services/departures.service';
 @Component({
   selector: 'app-one-direction',
   templateUrl: './one-direction.component.html',
-  styleUrls: ['./one-direction.component.css']
+  styleUrls: ['./one-direction.component.scss']
 })
 export class OneDirectionComponent implements OnInit {
 
@@ -38,6 +40,7 @@ export class OneDirectionComponent implements OnInit {
   mixDepartures: Array<Departure>;
 
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
+  directionSelectedLabel:string;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
@@ -47,6 +50,7 @@ export class OneDirectionComponent implements OnInit {
 
   ngOnInit() {
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);
+    this.directionSelectedLabel = DirectionLabels[this.directionSelected];
 
     //Resolve bank holidays and init dateUtilsService
     this.route.data.subscribe(
@@ -83,6 +87,11 @@ export class OneDirectionComponent implements OnInit {
 
 
   }
+
+  /**
+  * @name _updateMixDepartures
+  * @description Set departures model to next departures (ALL)
+  */
 
   _updateMixDepartures() {
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(moment(),

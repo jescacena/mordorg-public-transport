@@ -25,51 +25,51 @@ export class AppComponent implements OnInit{
   constructor(private dataService: DataService, private dateUtilsService:DateUtilsService) {}
 
   ngOnInit() {
-    this.dataService.getCCPOIS_BankHolidays(406).subscribe(
-      (response: Response) => {
-        const data = response.json();
-        console.log('JES getCCPOIS_BankHolidays response-->', data);
-        this.dateUtilsService.setBankHolydays(data.day_list);
-      },
-      (error) => console.log(error)
-    );
-
-
-    this.dataService.getCCPOIS_TrainTimetable('c2').subscribe(
-      (response: Response) => {
-        const data = response.json();
-        console.log('JES getCCPOIS_TrainTimetable response-->', data);
-        //Build departures from this day and tomorrow
-
-        const allDepartures684_C2M = this.dateUtilsService.parseTrainTimeTableByDate(data[0],'C2A',this.nowMoment);
-        this.departsTrainC2CerceMadrid = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_C2M, 5);
-        console.log('JES departsTrainC2CerceMadrid-->', this.departsTrainC2CerceMadrid);
-
-        const allDepartures684_M2C = this.dateUtilsService.parseTrainTimeTableByDate(data[0],'A2C',this.nowMoment);
-        this.departsTrainC2MadridCerce = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_M2C, 5);
-        console.log('JES departsTrainC2MadridCerce-->', this.departsTrainC2MadridCerce);
-
-      },
-      (error) => console.log(error)
-    );
-
-    this.dataService.getCCPOIS_BusTimetable('684').subscribe(
-      (response: Response) => {
-        const data = response.json();
-        console.log('JES getCCPOIS_BusTimetable response-->', data);
-        //Build departures from this day and tomorrow
-
-        const allDepartures684_C2M = this.dateUtilsService.parseBusTimeTableByDate(data[0],'C2M',this.nowMoment);
-        this.departsBus684CerceMadrid = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_C2M, 5);
-        console.log('JES departsBus684CerceMadrid-->', this.departsBus684CerceMadrid);
-
-        const allDepartures684_M2C = this.dateUtilsService.parseBusTimeTableByDate(data[0],'M2C',this.nowMoment);
-        this.departsBus684MadridCerce = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_M2C, 5);
-        console.log('JES departsBus684MadridCerce-->', this.departsBus684MadridCerce);
-
-      },
-      (error) => console.log(error)
-    );
+    // this.dataService.getCCPOIS_BankHolidays(406).subscribe(
+    //   (response: Response) => {
+    //     const data = response.json();
+    //     console.log('JES getCCPOIS_BankHolidays response-->', data);
+    //     this.dateUtilsService.setBankHolydays(data.day_list);
+    //   },
+    //   (error) => console.log(error)
+    // );
+    //
+    //
+    // this.dataService.getCCPOIS_TrainTimetable('c2').subscribe(
+    //   (response: Response) => {
+    //     const data = response.json();
+    //     console.log('JES getCCPOIS_TrainTimetable response-->', data);
+    //     //Build departures from this day and tomorrow
+    //
+    //     const allDepartures684_C2M = this.dateUtilsService.parseTrainTimeTableByDate(data[0],'C2A',this.nowMoment);
+    //     this.departsTrainC2CerceMadrid = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_C2M, 5);
+    //     console.log('JES departsTrainC2CerceMadrid-->', this.departsTrainC2CerceMadrid);
+    //
+    //     const allDepartures684_M2C = this.dateUtilsService.parseTrainTimeTableByDate(data[0],'A2C',this.nowMoment);
+    //     this.departsTrainC2MadridCerce = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_M2C, 5);
+    //     console.log('JES departsTrainC2MadridCerce-->', this.departsTrainC2MadridCerce);
+    //
+    //   },
+    //   (error) => console.log(error)
+    // );
+    //
+    // this.dataService.getCCPOIS_BusTimetable('684').subscribe(
+    //   (response: Response) => {
+    //     const data = response.json();
+    //     console.log('JES getCCPOIS_BusTimetable response-->', data);
+    //     //Build departures from this day and tomorrow
+    //
+    //     const allDepartures684_C2M = this.dateUtilsService.parseBusTimeTableByDate(data[0],'C2M',this.nowMoment);
+    //     this.departsBus684CerceMadrid = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_C2M, 5);
+    //     console.log('JES departsBus684CerceMadrid-->', this.departsBus684CerceMadrid);
+    //
+    //     const allDepartures684_M2C = this.dateUtilsService.parseBusTimeTableByDate(data[0],'M2C',this.nowMoment);
+    //     this.departsBus684MadridCerce = this.dateUtilsService.getNextDepartures(this.nowMoment, allDepartures684_M2C, 5);
+    //     console.log('JES departsBus684MadridCerce-->', this.departsBus684MadridCerce);
+    //
+    //   },
+    //   (error) => console.log(error)
+    // );
 
 
 

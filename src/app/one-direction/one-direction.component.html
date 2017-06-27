@@ -1,8 +1,11 @@
-<div class="row text-center home">
+<div class="row text-center one-direction">
   <div class="col-md-6 col-xs-12 col-md-offset-3">
-    <h2>{{directionSelectedLabel}}</h2>
+    <div class="header">
+      <h3>{{directionSelectedLabel}}</h3>
+    </div>
     <app-departure-list-box
       [feedType]="'mixDepartures'"
+      [customClass]="'one-direction'"
       *ngIf="!showNoDataAvailable">
     </app-departure-list-box>
   </div>

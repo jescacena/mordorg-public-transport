@@ -17,6 +17,21 @@
 }
 
 .content {
+  &.one-direction {
+    max-height: 25em;
+    display: inline-block;
+    overflow: scroll;
+    border-radius: 5px;
+    .more {
+      position: absolute;
+      background-color: $light-blue;
+      opacity: .4;
+      top: 26.7em;
+      width: 93%;
+      left: 1.2em;
+      overflow: hidden;
+    }
+  }
   table {
     border-collapse: separate;
     border-spacing: 0;

@@ -118,6 +118,10 @@ export class HomeWithSelectorComponent implements OnInit {
 
   }
 
+  /**
+  * @name _updateMixDepartures
+  * @description Set departures model to next 6 departures
+  */
   _updateMixDepartures() {
     this.showNoDataAvailable = false;
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(moment(),
@@ -127,7 +131,8 @@ export class HomeWithSelectorComponent implements OnInit {
                                                                             this.bus684StationStartCercedilla,
                                                                             this.bus684StationEndMadrid,
                                                                             this.trainC2StationStartCercedilla,
-                                                                            this.trainC2StationEndMadrid);
+                                                                            this.trainC2StationEndMadrid,
+                                                                            6);
     if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{
         //Notify view by observable subject
