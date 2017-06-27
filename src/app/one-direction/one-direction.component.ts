@@ -3,11 +3,11 @@ import { Response } from '@angular/http';
 import {ActivatedRoute, Data} from '@angular/router';
 import * as moment from 'moment';
 
-import { Departure } from '../model/departure.class';
-import { DirectionsEnum } from '../model/directions.enum';
-import { DateUtilsService } from '../shared/date-utils.service';
-import { DataService } from '../shared/data.service';
-import { DeparturesService } from '../shared/departures.service';
+import { Departure } from '../shared/model/departure.class';
+import { DirectionsEnum } from '../shared/model/directions.enum';
+import { DateUtilsService } from '../shared/services/date-utils.service';
+import { DataService } from '../shared/services/data.service';
+import { DeparturesService } from '../shared/services/departures.service';
 
 @Component({
   selector: 'app-one-direction',

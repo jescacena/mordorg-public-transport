@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
-import {ActivatedRoute, Data} from '@angular/router';
+import {ActivatedRoute, Router,Data} from '@angular/router';
 import * as moment from 'moment';
 import * as _ from "lodash";
 
-import { DateUtilsService } from '../shared/date-utils.service';
-import { DeparturesService } from '../shared/departures.service';
-import { DataService } from '../shared/data.service';
-import { Departure } from '../model/departure.class';
+import { DateUtilsService } from '../../shared/services/date-utils.service';
+import { DeparturesService } from '../../shared/services/departures.service';
+import { DataService } from '../../shared/services/data.service';
+import { Departure } from '../../shared/model/departure.class';
+import { DirectionsEnum } from '../../shared/model/directions.enum';
+
 import { HomeService } from './home.service';
-import { DirectionsEnum } from '../model/directions.enum';
 
 
 
@@ -49,6 +50,7 @@ export class HomeWithSelectorComponent implements OnInit {
   showNoDataAvailable:boolean = false;
 
   constructor(private route:ActivatedRoute,
+              private router: Router,
               private dateUtilsService: DateUtilsService,
               private departuresService: DeparturesService,
               private dataService: DataService,
@@ -134,6 +136,10 @@ export class HomeWithSelectorComponent implements OnInit {
     } else {
       this.showNoDataAvailable = true;
     }
+  }
+
+  gotoMixDirectionSelected() {
+   this.router.navigate(['one-direction', this.dataService.directionSelected]);
   }
 
 }

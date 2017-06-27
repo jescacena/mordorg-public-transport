@@ -4,37 +4,32 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { OneDirectionComponent } from './one-direction/one-direction.component';
 import { TransportDetailComponent } from './transport-detail/transport-detail.component';
-import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
 
-import { DateUtilsService } from './shared/date-utils.service';
-import { DataService } from './shared/data.service';
-import { DeparturesService } from './shared/departures.service';
+import { DateUtilsService } from './shared/services/date-utils.service';
+import { DataService } from './shared/services/data.service';
+import { DeparturesService } from './shared/services/departures.service';
 
-import { FormatWhenPipe } from './shared/format-when.pipe';
-import { HomeWithSelectorComponent } from './home/home-with-selector.component';
-import { DirectionSelectorComponent } from './home/direction-selector/direction-selector.component';
+
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { OneDirectionModule } from './one-direction/one-direction.module';
+import { TransportDetailModule } from './transport-detail/transport-detail.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    OneDirectionComponent,
-    TransportDetailComponent,
-    DepartureListBoxComponent,
-    HomeWithSelectorComponent,
-    DirectionSelectorComponent,
-    FormatWhenPipe
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    OneDirectionModule,
+    TransportDetailModule,
+    SharedModule
   ],
   providers: [DateUtilsService,DataService, DeparturesService],
   bootstrap: [AppComponent]

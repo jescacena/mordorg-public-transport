@@ -1,4 +1,4 @@
-@import '../../assets/styles/variables.scss';
+@import '../../../assets/styles/variables.scss';
 
 .tipo-bus {
   @include bus-icon-bg;
@@ -61,29 +61,6 @@
         }
       }
 
-    }
-  }
-}
-
-.button-group {
-  li {
-    width: 50%;
-    float:left;
-    @include handset {
-      width:100%;
-    }
-
-    button {
-      background-color: $dark-blue;
-      border-radius: 10px;
-      color:$light-grey;
-      font-size: 1em;
-      width:70%;
-      @include handset {
-        width:100%;
-        margin-bottom: 1em;
-      }
-      margin:0 auto;
     }
   }
 }

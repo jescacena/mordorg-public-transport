@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './shared/data.service';
-import { DateUtilsService } from './shared/date-utils.service';
+import { DataService } from './shared/services/data.service';
+import { DateUtilsService } from './shared/services/date-utils.service';
 import { Response } from '@angular/http';
-import { Departure } from './model/departure.class';
+import { Departure } from './shared/model/departure.class';
 import * as moment from 'moment';
 
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from "lodash";
 import * as moment from 'moment';
 
-import { DataService } from '../../shared/data.service';
-import { DirectionsEnum } from '../../model/directions.enum';
+import { DataService } from '../../../shared/services/data.service';
+import { DirectionsEnum } from '../../../shared/model/directions.enum';
 
 
 @Component({

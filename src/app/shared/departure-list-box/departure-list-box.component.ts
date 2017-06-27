@@ -5,7 +5,7 @@ import 'rxjs/Rx';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DataService } from '../shared/data.service';
+import { DataService } from '../services/data.service';
 import { Departure } from '../model/departure.class';
 
 @Component({
@@ -61,8 +61,6 @@ export class DepartureListBoxComponent implements OnInit {
     }
   }
 
-  gotoMixDirectionSelected() {
-   this.router.navigate(['one-direction', this.dataService.directionSelected]);
-  }
+
 
 }

@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {ActivatedRoute, Data} from '@angular/router';
-import { DateUtilsService } from '../shared/date-utils.service';
-import { DataService } from '../shared/data.service';
 import { Response } from '@angular/http';
-
-import { Departure } from '../model/departure.class';
-
 import * as moment from 'moment';
-
 import * as _ from "lodash";
+
+import { DateUtilsService } from '../../shared/services/date-utils.service';
+import { DataService } from '../../shared/services/data.service';
+import { Departure } from '../../shared/model/departure.class';
 
 import { HomeService } from './home.service';
 

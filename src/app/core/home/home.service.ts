@@ -1,8 +1,8 @@
 import {Observable} from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 
-import { DataService } from '../shared/data.service';
-import { DateUtilsService } from '../shared/date-utils.service';
+import { DataService } from '../../shared/services/data.service';
+import { DateUtilsService } from '../../shared/services/date-utils.service';
 
 @Injectable()
 export class HomeService {

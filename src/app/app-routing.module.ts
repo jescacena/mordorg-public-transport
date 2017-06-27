@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { HomeWithSelectorComponent } from './home/home-with-selector.component';
+import { HomeComponent } from './core/home/home.component';
+import { HomeWithSelectorComponent } from './core/home/home-with-selector.component';
 import { OneDirectionComponent } from './one-direction/one-direction.component';
 
-import { BankHolidayListResolver } from './shared/bank-holidays-resolver.service';
+import { BankHolidayListResolver } from './shared/services/bank-holidays-resolver.service';
 // import {DataService} from './shared/data.service';
 
 
