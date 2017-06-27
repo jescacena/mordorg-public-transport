@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/Rx';
 import * as moment from 'moment';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { DataService } from '../shared/data.service';
 import { Departure } from '../model/departure.class';
@@ -21,11 +22,18 @@ export class DepartureListBoxComponent implements OnInit {
 
   departures: Array<Departure>;
 
+  directionSelected:number;
+
   nowMoment= moment();
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router) { }
+
 
   ngOnInit() {
+
+    this.directionSelected = this.dataService.directionSelected;
 
     if(this.feedType === 'mixDeparturesCerceMadrid') {
       this.subscription = this.dataService.mixDeparturesCerceMadrid.subscribe(
@@ -51,6 +59,10 @@ export class DepartureListBoxComponent implements OnInit {
           }
       });
     }
+  }
+
+  gotoMixDirectionSelected() {
+   this.router.navigate(['one-direction', this.dataService.directionSelected]);
   }
 
 }

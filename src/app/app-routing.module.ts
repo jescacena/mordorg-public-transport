@@ -12,7 +12,7 @@ import { BankHolidayListResolver } from './shared/bank-holidays-resolver.service
 const appRoutes: Routes = [
   { path: '', component: HomeWithSelectorComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   // { path: '', component: HomeComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
-  { path: 'one-direction', component: OneDirectionComponent},
+  { path: 'one-direction/:direction', component: OneDirectionComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   // { path: 'one-direction', loadChildren: './one-direction/one-direction.module#OneDirectionModule'},
   // { path: 'transport-detail', loadChildren: './transport-detail/transport-detail.module#TransportDetailModule'}
 ];

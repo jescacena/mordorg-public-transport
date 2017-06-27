@@ -1,7 +1,13 @@
 @import '../../assets/styles/variables.scss';
 
 .page-header {
-  margin:0.5em 0 0 0;
+  margin:0.5em 0 2em 0;
+  @include handset {
+    margin: 40px 0 20px;
+    .col-xs-11 {
+      padding: 0;
+    }
+  }
   border:0;
   img {
     width:5em;
@@ -13,10 +19,11 @@
 
   h1 {
     @include large-text;
-    padding-top:0em;
+    padding-top:0.5em;
     margin-left:0.5em;
     display:inline-block;
     @include handset {
+      padding-top:0em;
       font-size: 1.7em;
       margin-top: 0.5em;
     }

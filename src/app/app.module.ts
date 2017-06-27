@@ -12,6 +12,8 @@ import { DepartureListBoxComponent } from './departure-list-box/departure-list-b
 
 import { DateUtilsService } from './shared/date-utils.service';
 import { DataService } from './shared/data.service';
+import { DeparturesService } from './shared/departures.service';
+
 import { FormatWhenPipe } from './shared/format-when.pipe';
 import { HomeWithSelectorComponent } from './home/home-with-selector.component';
 import { DirectionSelectorComponent } from './home/direction-selector/direction-selector.component';
@@ -34,7 +36,7 @@ import { DirectionSelectorComponent } from './home/direction-selector/direction-
     HttpModule,
     AppRoutingModule
   ],
-  providers: [DateUtilsService,DataService],
+  providers: [DateUtilsService,DataService, DeparturesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

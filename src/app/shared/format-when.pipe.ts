@@ -20,7 +20,7 @@ export class FormatWhenPipe implements PipeTransform{
     result = dayType + _.padStart(hour,2,'0') + ':' + _.padEnd(minute,2,'0');
 
     if(dateDiff < 30) {
-      result = (dateDiff === 0)? result + " (saliendo...)" : result + " (en " + dateDiff + " minutos)";
+      result = (dateDiff === 0)? result + " (saliendo...)" : result + " <span class='en'>(en " + dateDiff + " minutos)</span>";
     }
 
     return result;

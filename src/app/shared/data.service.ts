@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {Subject} from 'rxjs/Subject';
-
+import {Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class DataService {
@@ -12,6 +12,8 @@ export class DataService {
 
   //When user change direction on home direction selector
   newDirectionSelected = new Subject();
+
+  directionSelected:number;
 
   constructor(private http: Http) {}
 
@@ -24,6 +26,19 @@ export class DataService {
     return resultPromise;
   }
 
+
+  /**
+  * Get all lines data from CCPOIS in wordpress
+  * @return {object} Array: 0-tren c2 , 1-bus684
+  */
+  getAllLinesData() {
+    return Observable.forkJoin(
+      this.getCCPOIS_TrainLinePubtra('c2'),
+      this.getCCPOIS_BusLinePubtra('684')
+      // this.dataService.getCCPOIS_TrainTimetable('c2'),
+      // this.dataService.getCCPOIS_BusTimetable('684')
+    );
+  }
 
   // http://jesidea.com/cercepois/wp-json/wp/v2/bank_holidays/406
   getCCPOIS_BankHolidays(calendarId){

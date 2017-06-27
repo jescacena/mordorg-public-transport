@@ -3,11 +3,17 @@
 .tipo-bus {
   @include bus-icon-bg;
   background-position: 1.2em 0.3em;
+  @include handset {
+    background-position: 0.3em 0.1em;
+  }
 }
 
 .tipo-tren {
   @include tren-icon-bg;
   background-position: 1.2em 0.3em;
+  @include handset {
+    background-position: 0.3em 0.1em;
+  }
 }
 
 .content {
@@ -21,6 +27,8 @@
     overflow:hidden;
     padding: 0px;
     font-size: 1.2em;
+
+
     tr {
       background-color: $light-grey;
       text-align: left;
@@ -34,6 +42,15 @@
       td,th {
         &:first-child {
           text-align: center;
+        }
+        &:nth-child(2) {
+          @include handset {
+            font-size: 0.9em;
+            span.en {
+              font-size: 0.7em;
+              display: block;
+            }
+          }
         }
         &:nth-child(3) {
           font-size: 0.8em;
@@ -52,6 +69,9 @@
   li {
     width: 50%;
     float:left;
+    @include handset {
+      width:100%;
+    }
 
     button {
       background-color: $dark-blue;
@@ -59,6 +79,10 @@
       color:$light-grey;
       font-size: 1em;
       width:70%;
+      @include handset {
+        width:100%;
+        margin-bottom: 1em;
+      }
       margin:0 auto;
     }
   }

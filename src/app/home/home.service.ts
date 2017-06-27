@@ -12,16 +12,4 @@ export class HomeService {
               private DateUtilsService: DateUtilsService) {}
 
 
-  /**
-  * Get all lines data from CCPOIS in wordpress
-  * @return {object} Array: 0-tren c2 , 1-bus684
-  */
-  getAllLinesData() {
-    return Observable.forkJoin(
-      this.dataService.getCCPOIS_TrainLinePubtra('c2'),
-      this.dataService.getCCPOIS_BusLinePubtra('684')
-      // this.dataService.getCCPOIS_TrainTimetable('c2'),
-      // this.dataService.getCCPOIS_BusTimetable('684')
-    );
-  }
 }

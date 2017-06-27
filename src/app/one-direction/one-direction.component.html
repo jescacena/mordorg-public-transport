@@ -1,3 +1,9 @@
-<p>
-  one-direction works!
-</p>
+<div class="row text-center home">
+  <div class="col-md-6 col-xs-12 col-md-offset-3">
+    <h2>{{directionSelectedLabel}}</h2>
+    <app-departure-list-box
+      [feedType]="'mixDepartures'"
+      *ngIf="!showNoDataAvailable">
+    </app-departure-list-box>
+  </div>
+</div>

@@ -6,5 +6,7 @@ export const enum DirectionsEnum {
     InstitutoHospitalFuenfria,
     HospitalFuenfriaInstituto,
     CercedillaHospitalVilalba,
-    HospitalVillalbaCercedila
+    HospitalVillalbaCercedila,
+    CercedillaCotos,
+    CotosCercedilla
 }

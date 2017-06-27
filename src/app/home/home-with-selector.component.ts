@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http';
 import 'rxjs/Rx';
 import {ActivatedRoute, Data} from '@angular/router';
-import { DateUtilsService } from '../shared/date-utils.service';
-import { DataService } from '../shared/data.service';
-import { Response } from '@angular/http';
-
-import { Departure } from '../model/departure.class';
-
 import * as moment from 'moment';
-
 import * as _ from "lodash";
 
+import { DateUtilsService } from '../shared/date-utils.service';
+import { DeparturesService } from '../shared/departures.service';
+import { DataService } from '../shared/data.service';
+import { Departure } from '../model/departure.class';
 import { HomeService } from './home.service';
 import { DirectionsEnum } from '../model/directions.enum';
 
@@ -52,6 +50,7 @@ export class HomeWithSelectorComponent implements OnInit {
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
+              private departuresService: DeparturesService,
               private dataService: DataService,
               private homeService: HomeService) { }
 
@@ -67,7 +66,7 @@ export class HomeWithSelectorComponent implements OnInit {
     console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
     //TODO Fetch initial next departures
-    this.homeService.getAllLinesData().subscribe(
+    this.dataService.getAllLinesData().subscribe(
       (dataArray: Array<Response>) => {
         console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
         console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
@@ -84,7 +83,11 @@ export class HomeWithSelectorComponent implements OnInit {
         this.trainC2StationStartCercedilla = this.trainC2LinePubtraResponse.station_start[0];
         this.trainC2StationEndMadrid = this.trainC2LinePubtraResponse.station_end[0];
 
-        this._buildMixDepaturesFromMoment(moment());
+        this.dataService.directionSelected = this.directionSelected;
+
+        this._updateMixDepartures();
+
+
       },
       (error) => console.log(error)
     );
@@ -105,83 +108,32 @@ export class HomeWithSelectorComponent implements OnInit {
         const self = this;
         setTimeout(()=>{
           this.directionSelected = choiceSelected.code;
-          this._buildMixDepaturesFromMoment(moment());
+          this.dataService.directionSelected = choiceSelected.code;
+          this._updateMixDepartures();
         },50);
       }
     );
 
   }
 
-  _buildMixDepaturesFromMoment(momentDate) {
-    // this.homeService.buildMixDepartures(dataArray,now);
+  _updateMixDepartures() {
     this.showNoDataAvailable = false;
-
-    switch(this.directionSelected) {
-      case DirectionsEnum.CercedillaMadrid:
-        //Train
-        const trainTodayDeparturesC2A = this.dateUtilsService.parseTrainTimeTableByDate(this.trainC2TimetableResponse,'C2A',momentDate);
-        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesC2A, 3);
-        //Bus 684
-        const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'C2M',momentDate);
-        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, 3);
-
-        //Set place station start
-        for(let depart of this.busDepartures) {
-          depart.placeLabel = this.bus684StationStartCercedilla.direccion;
-          depart.placeLink = "http://maps.google.com/?q="+this.bus684StationStartCercedilla.latlon;
-        }
-        //Set place station start
-        for(let depart of this.trainDepartures) {
-          depart.placeLabel = this.trainC2StationStartCercedilla.direccion;
-          depart.placeLink = "http://maps.google.com/?q="+this.trainC2StationStartCercedilla.latlon;
-        }
-
-        //Concat train and bus in mixed
-        this.mixDepartures = this.busDepartures.concat(this.trainDepartures);
-        break;
-
-      case DirectionsEnum.MadridCercedilla:
-        const trainTodayDeparturesA2C = this.dateUtilsService.parseTrainTimeTableByDate(this.trainC2TimetableResponse,'A2C',momentDate);
-        this.trainDepartures = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, 3);
-
-        const busTodayDeparturesM2C = this.dateUtilsService.parseBusTimeTableByDate(this.bus684TimetableResponse,'M2C',momentDate);
-        this.busDepartures = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, 3);
-
-        //Set place station start
-        for(let depart of this.busDepartures) {
-          depart.placeLabel = this.bus684StationEndMadrid.direccion;
-          depart.placeLink = "http://maps.google.com/?q="+this.bus684StationEndMadrid.latlon;
-        }
-        //Set place station start
-        for(let depart of this.trainDepartures) {
-          depart.placeLabel = this.trainC2StationEndMadrid.direccion;
-          depart.placeLink = "http://maps.google.com/?q="+this.trainC2StationEndMadrid.latlon;
-        }
-
-        //Concat train and bus in mixed
-        this.mixDepartures = this.busDepartures.concat(this.trainDepartures);
-        break;
-
-      default:
-        console.log('Direction '+this.directionSelected+'not available!');
-        this.mixDepartures = null;
-        this.showNoDataAvailable = true;
-        break;
-    }
-
-    if(this.mixDepartures) {
-      //Sort ascending
-      this.mixDepartures.sort(function(a, b) {
-        return a.momentDate.isAfter(b.momentDate);
-      });
-      console.log('JES this.mixDepartures',this.mixDepartures);
+    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(moment(),
+                                                                            this.directionSelected,
+                                                                            this.trainC2TimetableResponse,
+                                                                            this.bus684TimetableResponse,
+                                                                            this.bus684StationStartCercedilla,
+                                                                            this.bus684StationEndMadrid,
+                                                                            this.trainC2StationStartCercedilla,
+                                                                            this.trainC2StationEndMadrid);
+    if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{
+        //Notify view by observable subject
         this.dataService.mixDepartures.next(this.mixDepartures);
       },50);
+    } else {
+      this.showNoDataAvailable = true;
     }
-
-
-
   }
 
 }
