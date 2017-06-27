@@ -1,5 +1,12 @@
 @import '../../../assets/styles/variables.scss';
 
+.loading {
+  padding:2em;
+  .fa-spin {
+    color:$light-blue;
+  }
+}
+
 .tipo-bus {
   @include bus-icon-bg;
   background-position: 1.2em 0.3em;
