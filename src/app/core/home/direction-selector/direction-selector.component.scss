@@ -9,6 +9,23 @@
   display:inline-block;
   width:100%;
 
+  .head {
+    h3 {
+      display:inline-block;
+      float:left;
+    }
+    form {
+      float: right;
+      width: 8.5em;
+      margin:0.2em 0.2em 0 0;
+      padding:0;
+
+      input {
+        padding-left: 3.5em;
+      }
+    }
+  }
+
   h3 {
     @include subtitle-text;
     font-size: 1.5em;

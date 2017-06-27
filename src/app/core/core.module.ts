@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { HomeWithSelectorComponent } from './home/home-with-selector.component';
 import { DirectionSelectorComponent } from './home/direction-selector/direction-selector.component';
+import { MyDatePickerModule } from 'mydatepicker';
+import { FormsModule } from '@angular/forms';
+
+
 
 
 import { HeaderComponent } from './header/header.component';
@@ -27,7 +31,9 @@ import { DataService } from '../shared/services/data.service';
   imports: [
     CommonModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MyDatePickerModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
