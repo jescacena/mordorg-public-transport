@@ -26,7 +26,7 @@
 .content {
   &.one-direction {
     max-height: 25em;
-    display: inline-block;
+    // display: inline-block;
     overflow: scroll;
     border-radius: 5px;
     .more {

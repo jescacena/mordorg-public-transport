@@ -1,0 +1,57 @@
+@import '../../../assets/styles/variables.scss';
+
+.button-group {
+  li {
+    width: 50%;
+    float:left;
+    @include handset {
+      width:100%;
+    }
+
+    button {
+      background-color: $dark-blue;
+      border-radius: 10px;
+      color:$light-grey;
+      font-size: 1em;
+      width:70%;
+      @include handset {
+        width:100%;
+        margin-bottom: 1em;
+      }
+      margin:0 auto;
+    }
+
+    &.date-selector {
+      background-color: $dark-blue;
+      border-radius: 10px;
+      height: 2.8em;
+      cursor:pointer;
+      h4 {
+        display:inline-block;
+        position: relative;
+        font-weight: 400;
+        top: -1em;
+        font-size: 1em;
+        margin:0;
+        padding: 0.7em 0.4em 0 0;
+        color: $light-grey;
+      }
+
+      form {
+        // float: right;
+        display: inline-block;
+        width: 8em;
+        margin:0.4em 0.2em 0 0;
+        padding:0;
+
+        input {
+          padding-left: 3.5em;
+        }
+
+       .mydp .btnpicker {
+         background-color: $blue;
+       }
+      }
+    }
+  }
+}

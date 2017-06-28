@@ -19,7 +19,6 @@ import { fadeInAnimation } from '../../shared/fade-in.animation';
 import { HomeService } from './home.service';
 
 
-
 @Component({
   selector: 'app-home-with-selector',
   templateUrl: './home-with-selector.component.html',
@@ -60,28 +59,7 @@ export class HomeWithSelectorComponent implements OnInit {
   dateSelectedLabel:string = "de Hoy";
 
   nowDateLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
-  private nowDayPicker: IMyDate = { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') };
-  private myDatePickerOptions: IMyDpOptions = {
-      // other options...
-      dateFormat: 'dd-mm-yyyy',
-      showClearDateBtn: false,
-      disableUntil: this.nowDayPicker,
-      editableDateField: false,
-      alignSelectorRight:true,
-      yearSelector:true,
-      maxYear:this.dateSelected.get('year'),
-      openSelectorTopOfInput:true,
-      showSelectorArrow:false
 
-  };
-
-  // Initialize selector state to false
-  private selector: IMySelector = {
-      open: false
-  };
-
-  // Define the view child variable
-  @ViewChild('mydp') mydp: MyDatePicker;
 
   showNoDataAvailable:boolean = false;
 
@@ -172,39 +150,6 @@ export class HomeWithSelectorComponent implements OnInit {
 
   }
 
-
-  // dateChanged callback function called when the user select the date. This is mandatory callback
-  // in this option. There are also optional inputFieldChanged and calendarViewChanged callbacks.
-  onDateChanged(event: IMyDateModel) {
-      // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-      console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-      this.dateSelected.set('date',event.date.day);
-      this.dateSelected.set('month',event.date.month-1);
-      this.dateSelected.set('year',event.date.year);
-      // this.nowDateLabel = this.daySelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
-      //Notify listeners
-      // this.dataService.newDateSelected.next(this.dateSelected);
-      this.gotoMixDirectionSelected();
-  }
-
-  // Calling this function opens the selector if it is closed and
-  // closes the selector if it is open
-  // onToggleSelector(event: any) {
-  //     // event.stopPropagation();
-  //     this.mydp.openBtnClicked();
-  // }
-  //
-  openSelector() {
-    this.selector = {
-        open: true
-    };
-  }
-  //
-  // closeSelector() {
-  //     this.selector = {
-  //         open: false
-  //     };
-  // }
 
   /**
   * @name _updateMixDepartures

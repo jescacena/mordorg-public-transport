@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MyDatePickerModule } from 'mydatepicker';
+import { FormsModule } from '@angular/forms';
 
 import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
 
@@ -9,6 +11,7 @@ import { DirectionsEnum } from './model/directions.enum';
 import { TransportTypeEnum } from './model/transport-type.enum';
 import { FormatWhenPipe } from './pipes/format-when.pipe';
 import { fadeInAnimation } from './fade-in.animation';
+import { ActionsButtonGroupComponent } from './actions-button-group/actions-button-group.component';
 
 
 
@@ -18,13 +21,17 @@ import { fadeInAnimation } from './fade-in.animation';
     // BankHoliday,
     // Departure,
     FormatWhenPipe,
+    ActionsButtonGroupComponent,
     // fadeInAnimation
   ],
   imports : [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    MyDatePickerModule
   ],
   exports: [
     DepartureListBoxComponent,
+    ActionsButtonGroupComponent,
     // BankHoliday,
     // Departure,
     FormatWhenPipe,

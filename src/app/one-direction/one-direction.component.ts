@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import {ActivatedRoute, Data} from '@angular/router';
+import {ActivatedRoute, Data, Params} from '@angular/router';
 import * as moment from 'moment';
 
 import { Departure } from '../shared/model/departure.class';
@@ -45,6 +45,9 @@ export class OneDirectionComponent implements OnInit {
 
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
   directionSelectedLabel:string;
+  dateParam:string;
+  dateSelected;
+  dateSelectedLabel:string;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
@@ -53,8 +56,13 @@ export class OneDirectionComponent implements OnInit {
             ) { }
 
   ngOnInit() {
+    //Get direction from route params
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);
     this.directionSelectedLabel = DirectionLabels[this.directionSelected];
+
+    //Parse date from route params
+    this._parseParamDate();
+
 
     //Resolve bank holidays and init dateUtilsService
     this.route.data.subscribe(
@@ -85,6 +93,13 @@ export class OneDirectionComponent implements OnInit {
 
         this._updateMixDepartures();
 
+        this.route.params.subscribe(
+         (params: Params) => {
+           this._parseParamDate();
+           this._updateMixDepartures();
+         });
+
+
       },
       (error) => console.log(error)
     );
@@ -93,12 +108,25 @@ export class OneDirectionComponent implements OnInit {
   }
 
   /**
+  * Parse date selected from route params
+  */
+  _parseParamDate() {
+    this.dateParam = this.route.snapshot.params['date'];
+    const tokens = this.route.snapshot.params['date'].split('-');
+    const day = parseInt(tokens[0]);
+    const month = parseInt(tokens[1]);
+    const year = parseInt(tokens[2]);
+    this.dateSelected = moment().set({'year': year, 'month': month-1 , 'date': day , 'hour': 0, 'minute': 0});
+    this.dateSelectedLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+  }
+
+  /**
   * @name _updateMixDepartures
   * @description Set departures model to next departures (ALL)
   */
 
   _updateMixDepartures() {
-    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(moment(),
+    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
                                                                             this.trainC2TimetableResponse,
                                                                             this.bus684TimetableResponse,

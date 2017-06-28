@@ -97,7 +97,7 @@ export class DeparturesService {
       result.sort(function(a, b) {
         return (a.momentDate.isAfter(b.momentDate))? 1 : -1;
       });
-      console.log('JES buildMixDepaturesFromMoment result',result);
+      // console.log('JES buildMixDepaturesFromMoment result',result);
     }
 
     return result;

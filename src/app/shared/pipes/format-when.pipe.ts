@@ -12,15 +12,19 @@ export class FormatWhenPipe implements PipeTransform{
 
     let result:string;
 
-    const dateDiff = momentDate.diff(moment(),'minutes');
-    // console.log('JES janderrrr dateDiff',dateDiff);
-    const dayType = (momentDate.get('date') === moment().get('date'))? '': 'Mañana a las ';
+    const nowMoment  = moment();
+    const momentTomorrow = moment().add(1, 'days');
+
+    const dateDiffInMinutes = momentDate.diff(nowMoment,'minutes');
+    // console.log('JES FormatWhenPipe nowMoment momentTomorrow momentDate',nowMoment.format('DD-MM-YYYY'),momentTomorrow.format('DD-MM-YYYY'),momentDate.format('DD-MM-YYYY'));
+    let dayType = (momentDate.isSame(momentTomorrow, 'day'))?  'Mañana a las ' : '';
+    dayType = (momentDate.isSame(nowMoment, 'day'))?  'Hoy a las ' : dayType;
     const hour = momentDate.hour();
     const minute = momentDate.minute();
-    result = dayType + _.padStart(hour,2,'0') + ':' + _.padEnd(minute,2,'0');
+    result = dayType + _.padStart(hour,2,'0') + ':' + _.padStart(minute,2,'0');
 
-    if(dateDiff < 30) {
-      result = (dateDiff === 0)? result + " (saliendo...)" : result + " <span class='en'>(en " + dateDiff + " minutos)</span>";
+    if(dateDiffInMinutes < 30) {
+      result = (dateDiffInMinutes === 0)? result + " (saliendo...)" : result + " <span class='en'>(en " + dateDiffInMinutes + " minutos)</span>";
     }
 
     return result;
