@@ -13,7 +13,11 @@ export class DataService {
   //When user change direction on home direction selector
   newDirectionSelected = new Subject();
 
+  //When user change date selected on home date picker
+  newDateSelected = new Subject();
+
   directionSelected:number;
+  dateSelected:Object;
 
   constructor(private http: Http) {}
 

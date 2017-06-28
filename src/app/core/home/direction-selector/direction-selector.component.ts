@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from "lodash";
 import * as moment from 'moment';
-import {IMyDpOptions,IMyDate} from 'mydatepicker';
+import {IMyDpOptions,IMyDate,IMyDateModel} from 'mydatepicker';
 
 import { DataService } from '../../../shared/services/data.service';
 import { DirectionsEnum } from '../../../shared/model/directions.enum';
@@ -17,18 +17,8 @@ export class DirectionSelectorComponent implements OnInit {
   showChoiceList:boolean = false;
   labelSelected:string;
   choiceSelected;
-  nowDateLabel = moment().locale('es').format('dddd, D [de] MMMM [de] YYYY');
-  // nowDateLabel = moment().locale('es').format('dddd D MMMM  YYYY');
-  private nowDay = moment();
-  private nowDayPicker: IMyDate = { year: this.nowDay.get('year'), month: this.nowDay.get('month'), day: this.nowDay.get('date') };
-  private myDatePickerOptions: IMyDpOptions = {
-      // other options...
-      dateFormat: 'dd.mm.yyyy',
-      showClearDateBtn: false,
-      disableUntil: this.nowDayPicker
-
-  };
-  private dateSelected: Object = { date: { year: this.nowDay.get('year'), month: this.nowDay.get('month'), day: this.nowDay.get('date') } };
+  private daySelected = moment();
+  nowDateLabel = this.daySelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
 
   choiceList = [
     {

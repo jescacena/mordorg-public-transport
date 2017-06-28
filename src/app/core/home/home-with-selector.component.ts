@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
 import {ActivatedRoute, Router,Data} from '@angular/router';
 import * as moment from 'moment';
 import * as _ from "lodash";
+import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydatepicker';
+
 
 import { DateUtilsService } from '../../shared/services/date-utils.service';
 import { DeparturesService } from '../../shared/services/departures.service';
 import { DataService } from '../../shared/services/data.service';
 import { Departure } from '../../shared/model/departure.class';
 import { DirectionsEnum } from '../../shared/model/directions.enum';
+import { fadeInAnimation } from '../../shared/fade-in.animation';
+
 
 import { HomeService } from './home.service';
 
@@ -20,6 +24,8 @@ import { HomeService } from './home.service';
   selector: 'app-home-with-selector',
   templateUrl: './home-with-selector.component.html',
   styleUrls: ['./home-with-selector.component.scss'],
+  animations: [fadeInAnimation],
+  host: { '[@fadeInAnimation]': ''},
   providers: [HomeService]
 })
 export class HomeWithSelectorComponent implements OnInit {
@@ -46,6 +52,36 @@ export class HomeWithSelectorComponent implements OnInit {
   mixDepartures: Array<Departure>;
 
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
+  dateSelected = moment();
+
+  private dateSelectedDP: Object = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
+
+
+  dateSelectedLabel:string = "de Hoy";
+
+  nowDateLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+  private nowDayPicker: IMyDate = { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') };
+  private myDatePickerOptions: IMyDpOptions = {
+      // other options...
+      dateFormat: 'dd-mm-yyyy',
+      showClearDateBtn: false,
+      disableUntil: this.nowDayPicker,
+      editableDateField: false,
+      alignSelectorRight:true,
+      yearSelector:true,
+      maxYear:this.dateSelected.get('year'),
+      openSelectorTopOfInput:true,
+      showSelectorArrow:false
+
+  };
+
+  // Initialize selector state to false
+  private selector: IMySelector = {
+      open: false
+  };
+
+  // Define the view child variable
+  @ViewChild('mydp') mydp: MyDatePicker;
 
   showNoDataAvailable:boolean = false;
 
@@ -114,9 +150,61 @@ export class HomeWithSelectorComponent implements OnInit {
           this._updateMixDepartures();
         },50);
       }
+
+    );
+    this.dataService.newDateSelected.subscribe(
+      (dateSelected:any)=> {
+        const self = this;
+        setTimeout(()=>{
+          this.dateSelected = dateSelected;
+          this.dataService.dateSelected = dateSelected;
+          // let daySelectedAux = moment();
+          // daySelectedAux.set('date',dateSelected.get('hour'));
+          // daySelectedAux.set('month',dateSelected.get('month'));
+          // daySelectedAux.set('year',dateSelected.get('year'));
+          //
+          // this.dateSelectedLabel = " del " + daySelectedAux.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+
+          this._updateMixDepartures();
+        },50);
+      }
     );
 
   }
+
+
+  // dateChanged callback function called when the user select the date. This is mandatory callback
+  // in this option. There are also optional inputFieldChanged and calendarViewChanged callbacks.
+  onDateChanged(event: IMyDateModel) {
+      // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+      console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+      this.dateSelected.set('date',event.date.day);
+      this.dateSelected.set('month',event.date.month-1);
+      this.dateSelected.set('year',event.date.year);
+      // this.nowDateLabel = this.daySelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+      //Notify listeners
+      // this.dataService.newDateSelected.next(this.dateSelected);
+      this.gotoMixDirectionSelected();
+  }
+
+  // Calling this function opens the selector if it is closed and
+  // closes the selector if it is open
+  // onToggleSelector(event: any) {
+  //     // event.stopPropagation();
+  //     this.mydp.openBtnClicked();
+  // }
+  //
+  openSelector() {
+    this.selector = {
+        open: true
+    };
+  }
+  //
+  // closeSelector() {
+  //     this.selector = {
+  //         open: false
+  //     };
+  // }
 
   /**
   * @name _updateMixDepartures
@@ -124,7 +212,7 @@ export class HomeWithSelectorComponent implements OnInit {
   */
   _updateMixDepartures() {
     this.showNoDataAvailable = false;
-    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(moment(),
+    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
                                                                             this.trainC2TimetableResponse,
                                                                             this.bus684TimetableResponse,
@@ -144,7 +232,7 @@ export class HomeWithSelectorComponent implements OnInit {
   }
 
   gotoMixDirectionSelected() {
-   this.router.navigate(['one-direction', this.dataService.directionSelected]);
+   this.router.navigate(['one-direction', this.dataService.directionSelected, this.dateSelected.format('DD-MM-YYYY')]);
   }
 
 }

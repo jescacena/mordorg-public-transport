@@ -8,6 +8,8 @@ import { Departure } from './model/departure.class';
 import { DirectionsEnum } from './model/directions.enum';
 import { TransportTypeEnum } from './model/transport-type.enum';
 import { FormatWhenPipe } from './pipes/format-when.pipe';
+import { fadeInAnimation } from './fade-in.animation';
+
 
 
 @NgModule({
@@ -15,7 +17,8 @@ import { FormatWhenPipe } from './pipes/format-when.pipe';
     DepartureListBoxComponent,
     // BankHoliday,
     // Departure,
-    FormatWhenPipe
+    FormatWhenPipe,
+    // fadeInAnimation
   ],
   imports : [
     CommonModule
@@ -24,7 +27,8 @@ import { FormatWhenPipe } from './pipes/format-when.pipe';
     DepartureListBoxComponent,
     // BankHoliday,
     // Departure,
-    FormatWhenPipe
+    FormatWhenPipe,
+    // fadeInAnimation
     // DirectionsEnum,
     // TransportTypeEnum
   ]

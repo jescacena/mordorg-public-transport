@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { MyDatePickerModule } from 'mydatepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +33,8 @@ import { TransportDetailModule } from './transport-detail/transport-detail.modul
     OneDirectionModule,
     TransportDetailModule,
     SharedModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    BrowserAnimationsModule
   ],
   providers: [DateUtilsService,DataService, DeparturesService],
   bootstrap: [AppComponent]

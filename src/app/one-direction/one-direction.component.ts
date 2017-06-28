@@ -10,11 +10,15 @@ import { DirectionLabels } from '../shared/model/direction-labels.constant';
 import { DateUtilsService } from '../shared/services/date-utils.service';
 import { DataService } from '../shared/services/data.service';
 import { DeparturesService } from '../shared/services/departures.service';
+import { fadeInAnimation } from '../shared/fade-in.animation';
+
 
 @Component({
   selector: 'app-one-direction',
   templateUrl: './one-direction.component.html',
-  styleUrls: ['./one-direction.component.scss']
+  styleUrls: ['./one-direction.component.scss'],
+  animations: [fadeInAnimation],
+  host: { '[@fadeInAnimation]': ''}
 })
 export class OneDirectionComponent implements OnInit {
 

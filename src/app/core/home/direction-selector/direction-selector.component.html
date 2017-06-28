@@ -1,10 +1,7 @@
 <div class="direction-selector">
   <div class="head">
     <h3>Próximas salidas</h3>
-    <form #myForm="ngForm" novalidate>
-      <my-date-picker name="mydate" locale="es" [options]="myDatePickerOptions"
-                        [(ngModel)]="dateSelected" required></my-date-picker>
-    </form>
+    <h4>{{ nowDateLabel }}</h4>
   </div>
   <h3>{{labelSelected}}</h3>
   <h5 (click)="toggleChoiceList()">Cambiar

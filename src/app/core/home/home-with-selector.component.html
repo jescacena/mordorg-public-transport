@@ -9,8 +9,24 @@
     <div class="alert alert-warning" role="alert" *ngIf="showNoDataAvailable">No Data Available</div>
 
     <ul class="button-group" *ngIf="!showNoDataAvailable">
-      <li><button type="button" class="btn btn-lg btn-block" (click)="gotoMixDirectionSelected()">Ver todos los horarios de hoy</button></li>
-      <li><button type="button" class="btn btn-lg btn-block">Ver por fecha</button></li>
+      <li>
+        <button type="button" class="btn btn-lg btn-block" (click)="gotoMixDirectionSelected()">Ver todos los horarios {{dateSelectedLabel}}
+        </button>
+      </li>
+      <li (click)="openSelector()">
+        <h4>Ver los horarios por fecha:</h4>
+
+        <!-- <h4>{{nowDateLabel}}</h4> -->
+        <form #myForm="ngForm" novalidate>
+          <my-date-picker #mydp="mydatepicker"
+                          name="mydate"
+                          locale="es"
+                          [options]="myDatePickerOptions"
+                          (dateChanged)="onDateChanged($event)"
+                          [(ngModel)]="dateSelectedDP" required></my-date-picker>
+
+        </form>
+      </li>
     </ul>
 
   </div>
