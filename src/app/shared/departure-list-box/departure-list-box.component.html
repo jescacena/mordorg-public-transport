@@ -1,4 +1,4 @@
-<div>
+<div class="departure-list-box">
 
   <!-- <div class="loading"> -->
   <div class="loading" *ngIf="!departures">
@@ -6,7 +6,7 @@
   </div>
 
   <!-- <pre style="font-size:0.7em;text-align:left;">{{departures | json}}</pre> -->
-  <div class="content {{customClass}}">
+  <div class="content {{customClass}}" (scroll)="onScroll($event)">
     <table class="table table-condensed table-striped table-hover" *ngIf="departures">
       <tr>
         <th>Tipo</th>
@@ -22,9 +22,12 @@
         <td><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></td>
       </tr>
     </table>
-    <div class="more" *ngIf="customClass === 'one-direction'" (click)="loadMore()">
-      <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-    </div>
+  </div>
+  <div class="arrow top" *ngIf="customClass === 'one-direction' && !scrollAtTop">
+    <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+  </div>
+  <div class="arrow down" *ngIf="customClass === 'one-direction' && !scrollAtBottom">
+    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
   </div>
 
 </div>

@@ -5,8 +5,10 @@
   margin:0 auto;
   height:100%;
 
-  .head {
-    // @include bus-icon-bg;
+  .next-departures-head {
+    font-size: 1.1em;
+    color:$light-blue;
+    margin:1em auto;
   }
 
 }

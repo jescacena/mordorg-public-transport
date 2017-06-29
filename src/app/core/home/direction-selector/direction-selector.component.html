@@ -1,15 +1,15 @@
 <div class="direction-selector">
-  <div class="head">
-    <h3>Próximas salidas</h3>
+  <div class="left">
+    <h3>{{labelSelected}}</h3>
+    <div class="change-direction" (click)="toggleChoiceList()">
+      <span class="arrow glyphicon glyphicon-menu-right" aria-hidden="true" *ngIf="!showChoiceList"></span>
+      <span class="arrow glyphicon glyphicon-menu-down" aria-hidden="true" *ngIf="showChoiceList"></span>
+    </div>
+  </div>
+  <div class="right">
     <h4>{{ nowDateLabel }}</h4>
   </div>
-  <h3>{{labelSelected}}</h3>
-  <h5 (click)="toggleChoiceList()">Cambiar
-    <span class="arrow glyphicon glyphicon-menu-right" aria-hidden="true" *ngIf="!showChoiceList"></span>
-    <span class="arrow glyphicon glyphicon-menu-down" aria-hidden="true" *ngIf="showChoiceList"></span>
-    <!-- <span class="arrow" *ngIf="!showChoiceList">&gt;</span>
-    <span class="arrow" *ngIf="showChoiceList">v</span> -->
-  </h5>
+    <!-- <h3>Próximas salidas</h3> -->
   <div class="choices" *ngIf="showChoiceList">
     <ul>
       <li

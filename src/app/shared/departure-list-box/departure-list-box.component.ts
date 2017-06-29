@@ -27,6 +27,9 @@ export class DepartureListBoxComponent implements OnInit {
 
   nowMoment= moment();
 
+  scrollAtBottom: boolean = false;
+  scrollAtTop: boolean = true;
+
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -60,6 +63,14 @@ export class DepartureListBoxComponent implements OnInit {
           }
       });
     }
+  }
+
+  onScroll(event) {
+    // console.log('JES onscroll' , event.target.scrollTop , event.target.scrollHeight);
+    const target = event.target;
+
+    this.scrollAtTop = (target.scrollTop < 1);
+    this.scrollAtBottom = (target.offsetHeight + target.scrollTop == target.scrollHeight);
   }
 
 

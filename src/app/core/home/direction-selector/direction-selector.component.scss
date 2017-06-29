@@ -4,32 +4,49 @@
   background-color: $dark-blue;
   border-radius: 5px;
   color: $light-grey;
-  padding:0.3em;
+  padding:0.6em;
   margin-bottom: 0.5em;
   display:inline-block;
   width:100%;
 
-  .head {
+  .left {
+    float:left;
     h3 {
-      display:inline-block;
-      float:left;
+      margin:0.2em 0 0 0;
     }
+    .change-direction {
+      @include regular-text;
+      display:inline-block;
+      color: $light-grey;
+      padding:0.3em;
+      cursor:pointer;
+      @include handset {
+        font-size: 0.8em;
+      }
+
+      .glyphicon {
+        font-size: 1.2em;
+        top: 4px;
+      }
+    }
+  }
+  .right {
+    float:right;
     h4 {
       display:inline-block;
-      float:right;
       font-size: 1em;
-      margin:0;
-      padding: 0.7em 0.4em 0 0;
+      margin: 0.5em 0.4em 0 0;
       color: $light-blue;
 
     }
-
   }
 
   h3 {
     @include subtitle-text;
     font-size: 1.5em;
     margin-top:0.3em;
+    display:inline-block;
+    float:left;
     span {
       float: right;
       font-size: 0.7em;
@@ -54,16 +71,6 @@
     }
   }
 
-  h5 {
-    @include regular-text;
-    float:right;
-    color: $light-blue;
-    padding:0.3em;
-    cursor:pointer;
-    @include handset {
-      font-size: 0.8em;
-    }
-  }
   .choices {
     display: block;
     clear: both;

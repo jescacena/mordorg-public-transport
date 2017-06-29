@@ -1,6 +1,6 @@
-<ul class="button-group">
+<ul class="button-group {{customClass}}">
   <li class="with-today" *ngIf="withToday">
-    <button type="button" class="btn btn-lg btn-block" (click)="gotoMixDirectionSelected()">Ver todos los horarios {{dateSelectedLabel}}
+    <button type="button" class="btn btn-lg btn-block" (click)="gotoMixDirectionSelected()">Ver todos los horarios de hoy
     </button>
   </li>
   <li class="date-selector" (click)="openSelector()">

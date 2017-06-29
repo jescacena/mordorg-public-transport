@@ -9,7 +9,7 @@
 
 .tipo-bus {
   @include bus-icon-bg;
-  background-position: 1.2em 0.3em;
+  background-position: 0.5em 0.3em;
   @include handset {
     background-position: 0.3em 0.1em;
   }
@@ -17,72 +17,101 @@
 
 .tipo-tren {
   @include tren-icon-bg;
-  background-position: 1.2em 0.3em;
+  background-position: 0.5em 0.3em;
   @include handset {
     background-position: 0.3em 0.1em;
   }
 }
 
-.content {
-  &.one-direction {
-    max-height: 25em;
-    // display: inline-block;
-    overflow: scroll;
-    border-radius: 5px;
-    .more {
-      position: absolute;
-      background-color: $light-blue;
-      opacity: .4;
-      top: 26.7em;
-      width: 93%;
-      left: 1.2em;
-      overflow: hidden;
+.departure-list-box {
+  position:relative;
+  .content {
+    &.one-direction {
+      max-height: 25em;
+      position:relative;
+      overflow: scroll;
+      border-radius: 5px;
     }
-  }
-  table {
-    border-collapse: separate;
-    border-spacing: 0;
-    // border-radius: 10px;
-    // border: 1px solid black;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    overflow:hidden;
-    padding: 0px;
-    font-size: 1.2em;
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      overflow:hidden;
+      padding: 0px;
+      font-size: 1.2em;
+      margin-bottom: 0;
 
 
-    tr {
-      background-color: $light-grey;
-      text-align: left;
-      &:first-child {
-        text-align: center;
-      }
-      &:hover {
-        background-color: $grey-2;
-      }
-
-      td,th {
+      tr {
+        background-color: $light-grey;
+        text-align: left;
+        font-size: 0.9em;
         &:first-child {
           text-align: center;
         }
-        &:nth-child(2) {
-          @include handset {
-            font-size: 0.9em;
-            span.en {
-              font-size: 0.7em;
-              display: block;
-            }
+        &:hover {
+          background-color: $grey-2;
+        }
+
+        th {
+          &:first-child {
+            text-align: center;
           }
         }
-        &:nth-child(3) {
-          font-size: 0.8em;
+        td {
+          &:first-child {
+            text-align: center;
+          }
+          &:nth-child(2) {
+            @include handset {
+              font-size: 0.9em;
+              span.en {
+                font-size: 0.7em;
+                display: block;
+              }
+            }
+          }
+          &:nth-child(3) {
+            font-size: 0.8em;
+          }
+
+          span.glyphicon {
+            color: $grey;
+          }
         }
 
-        span.glyphicon {
-          color: $grey;
-        }
       }
-
     }
   }
+
+  .arrow {
+    position: absolute;
+    background-color: $light-blue;
+    opacity: .4;
+    z-index:50;
+    width: 100%;
+    left: 0em;
+    overflow: hidden;
+    &.down {
+      top: 23.6em;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &.top {
+      top: 0em;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -moz-border-radius-topleft: 5px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+    }
+  }
+
+
 }

@@ -17,14 +17,15 @@ import { DataService } from '../../shared/services/data.service';
 })
 export class ActionsButtonGroupComponent implements OnInit {
   @Input() withToday: boolean;
+  @Input() customClass: string;
 
 
   dateSelected: any;
 
-  private dateSelectedDP: Object;
+  dateSelectedDP: Object;
 
-  private nowDayPicker: IMyDate;
-  private myDatePickerOptions: IMyDpOptions;
+  nowDayPicker: IMyDate;
+  myDatePickerOptions: IMyDpOptions;
 
   // Initialize selector state to false
   private selector: IMySelector = {

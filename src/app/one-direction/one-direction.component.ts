@@ -118,6 +118,7 @@ export class OneDirectionComponent implements OnInit {
     const year = parseInt(tokens[2]);
     this.dateSelected = moment().set({'year': year, 'month': month-1 , 'date': day , 'hour': 0, 'minute': 0});
     this.dateSelectedLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+    this.dataService.dateSelected = this.dateSelected;
   }
 
   /**

@@ -9,6 +9,9 @@
     }
 
     button {
+      &:first-child {
+        float:left;
+      }
       background-color: $dark-blue;
       border-radius: 10px;
       color:$light-grey;
@@ -53,5 +56,14 @@
        }
       }
     }
+  }
+
+  &.one-direction {
+    margin-top:1em;
+    li {
+      float:none;
+      width:100%;
+    }
+
   }
 }
