@@ -1,0 +1,28 @@
+@import '../../assets/styles/variables.scss';
+
+.contact {
+  p {
+    @include regular-text;
+    color: $light-grey;
+    font-weight: 600;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    margin: 0em auto;
+    &:first-child {
+      margin-top: 2em;
+    }
+    max-width: 50%;
+    @include tablet {
+      max-width: 80%;
+    }
+    @include handset {
+      max-width: 80%;
+      font-size: 1em;
+
+    }
+    &.email {
+      margin-top: 2em;
+      color:$yellow;
+    }
+  }
+}

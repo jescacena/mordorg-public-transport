@@ -1,7 +1,5 @@
-# angular2-amos-seed
-Angular 2 Project Seed
+# El intercambiador de Mordorg
 
-Seed for an Angular2 Project
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.0.
 
@@ -67,6 +65,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+Buil for PRODUCTION
+```
+ng build --pro --aot --base-href http://intercambiador.cercemap.org
+```
 
 ## Running unit tests
 

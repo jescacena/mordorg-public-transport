@@ -15,7 +15,9 @@
         <th></th>
       </tr>
       <tr *ngFor="let depart of departures">
-        <td><div [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div></td>
+        <td>
+          <div #pop="bs-tooltip" triggers="" (mouseover)="pop.show()" tooltip="{{depart.transportTypeLabel}}" [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">&nbsp;</div>
+        </td>
         <!-- <td>{{depart.momentDate.format('DD-MM-YYYY')}}</td> -->
         <td [innerHTML]="depart.momentDate | formatWhen">{{depart.momentDate.format('DD-MM-YYYY')}}</td>
         <td><a href="{{depart.placeLink}}" target="_blank">{{depart.placeLabel}}</a></td>

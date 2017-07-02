@@ -6,6 +6,8 @@ import { HomeWithSelectorComponent } from './home/home-with-selector.component';
 import { DirectionSelectorComponent } from './home/direction-selector/direction-selector.component';
 import { MyDatePickerModule } from 'mydatepicker';
 import { FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap';
+
 
 
 
@@ -33,7 +35,8 @@ import { DataService } from '../shared/services/data.service';
     SharedModule,
     AppRoutingModule,
     MyDatePickerModule,
-    FormsModule
+    FormsModule,
+    BsDropdownModule.forRoot()
   ],
   exports: [
     HeaderComponent,

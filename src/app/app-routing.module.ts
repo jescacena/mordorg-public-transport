@@ -4,6 +4,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './core/home/home.component';
 import { HomeWithSelectorComponent } from './core/home/home-with-selector.component';
 import { OneDirectionComponent } from './one-direction/one-direction.component';
+import { ContactComponent } from './contact/contact.component';
 
 import { BankHolidayListResolver } from './shared/services/bank-holidays-resolver.service';
 // import {DataService} from './shared/data.service';
@@ -12,6 +13,7 @@ import { BankHolidayListResolver } from './shared/services/bank-holidays-resolve
 const appRoutes: Routes = [
   { path: '', component: HomeWithSelectorComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   // { path: '', component: HomeComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
+  { path: 'contact', component: ContactComponent},
   { path: 'one-direction/:direction/:date', component: OneDirectionComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   // { path: 'one-direction', loadChildren: './one-direction/one-direction.module#OneDirectionModule'},
   // { path: 'transport-detail', loadChildren: './transport-detail/transport-detail.module#TransportDetailModule'}

@@ -341,13 +341,24 @@ export class DateUtilsService {
 
             //TODO set place and placeLink
             let departure = new Departure(momentToAdd,'','',departureType,isDirect,isNightly,transportType);
-
+            departure.transportTypeLabel = this._getTransportTypeLabel(transportType);
             result.push(departure);
           }
         }
     }
 
     return result;
+  }
+
+  _getTransportTypeLabel(transportType: number) {
+    switch(transportType) {
+        case TransportTypeEnum.Bus:
+      return 'Bus';
+        case TransportTypeEnum.Train:
+        return 'Tren';
+      default:
+        return null;
+    }
   }
 
 

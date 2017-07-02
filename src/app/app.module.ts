@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { MyDatePickerModule } from 'mydatepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TransportDetailComponent } from './transport-detail/transport-detail.component';
@@ -18,12 +17,14 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { OneDirectionModule } from './one-direction/one-direction.module';
 import { TransportDetailModule } from './transport-detail/transport-detail.module';
+import { ContactComponent } from './contact/contact.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

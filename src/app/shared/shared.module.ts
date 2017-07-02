@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'ngx-bootstrap';
+
 
 import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
 
@@ -27,7 +29,8 @@ import { ActionsButtonGroupComponent } from './actions-button-group/actions-butt
   imports : [
     CommonModule,
     FormsModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    TooltipModule.forRoot()
   ],
   exports: [
     DepartureListBoxComponent,
