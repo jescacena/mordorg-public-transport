@@ -15,6 +15,7 @@ export class Departure {
   isNightly: Boolean;
   transportType: number;  //
   transportTypeLabel: string;  //
+  label: string;  //
 
   constructor(momentDate,
               placeLink: string ,

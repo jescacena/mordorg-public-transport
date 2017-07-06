@@ -60,8 +60,18 @@
           }
         }
         td {
+          vertical-align: middle;
           &:first-child {
+            width:5em;
             text-align: center;
+            background-position: 2em 0.5em;
+            span {
+              font-size:0.6em;
+              display: block;
+              margin-top: 2em;
+
+            }
+
           }
           &:nth-child(2) {
             @include handset {

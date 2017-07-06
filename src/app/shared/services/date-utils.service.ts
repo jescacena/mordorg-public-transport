@@ -262,7 +262,9 @@ export class DateUtilsService {
     @param transportType {number} transport type
     @return {object} Array of departures
   */
-  parseTimetableEntryArrayToDepartures(ttEntryArray, momentDate, transportType): Array<Departure> {
+  parseTimetableEntryArrayToDepartures(ttEntryArray,
+    momentDate,
+    transportType): Array<Departure> {
     let result:Array<Departure>  = [];
     let dayTypeOfTheWeek:string = 'LV';
     let dayOfTheWeek;
@@ -308,6 +310,7 @@ export class DateUtilsService {
 
           case 'NVSG': {
             //set day flags
+            console.log('Nocturno!!!!!');
             dayOfTheWeek = this.getDayOfTheWeek(momentNew);
             isDayBeforeBankHoliday = this.isDayBeforeBankHoliday(momentNew);
 

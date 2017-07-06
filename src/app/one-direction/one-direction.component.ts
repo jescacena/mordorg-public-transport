@@ -28,16 +28,6 @@ export class OneDirectionComponent implements OnInit {
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
 
-  //Timetables for bus 684 and train c2
-  bus684TimetableResponse;
-  trainC2TimetableResponse;
-
-  //Stations start and end
-  bus684StationStartCercedilla;
-  bus684StationEndMadrid;
-  trainC2StationStartCercedilla;
-  trainC2StationEndMadrid;
-
   //Next departures arrays
   busDepartures:Array<Departure>;
   trainDepartures:Array<Departure>;
@@ -81,16 +71,6 @@ export class OneDirectionComponent implements OnInit {
         this.trainC2LinePubtraResponse = dataArray[0].json()[0];
         this.bus684LinePubtraResponse = dataArray[1].json()[0];
 
-        //Set timetables
-        this.trainC2TimetableResponse = this.trainC2LinePubtraResponse.timetable[0];
-        this.bus684TimetableResponse = this.bus684LinePubtraResponse.timetable[0];
-
-        //Set limit Stations
-        this.bus684StationStartCercedilla = this.bus684LinePubtraResponse.station_start[0];
-        this.bus684StationEndMadrid = this.bus684LinePubtraResponse.station_end[0];
-        this.trainC2StationStartCercedilla = this.trainC2LinePubtraResponse.station_start[0];
-        this.trainC2StationEndMadrid = this.trainC2LinePubtraResponse.station_end[0];
-
         this._updateMixDepartures();
 
         this.route.params.subscribe(
@@ -129,12 +109,8 @@ export class OneDirectionComponent implements OnInit {
   _updateMixDepartures() {
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
-                                                                            this.trainC2TimetableResponse,
-                                                                            this.bus684TimetableResponse,
-                                                                            this.bus684StationStartCercedilla,
-                                                                            this.bus684StationEndMadrid,
-                                                                            this.trainC2StationStartCercedilla,
-                                                                            this.trainC2StationEndMadrid);
+                                                                            this.trainC2LinePubtraResponse,
+                                                                            this.bus684LinePubtraResponse);
     if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{
         //Notify view by observable subject

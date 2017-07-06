@@ -14,30 +14,31 @@ export class DeparturesService {
   * Build an array of departures for both types: train and busses
   * @param {object} momentDate
   * @param {string} directionSelected directionSelected
-  * @param {object} trainTT train timetable
-  * @param {object} busTT bus timetable
-  * @param {object} cercedillaBusStation cercedillaStation
-  * @param {object} targetBusStation targetStation
-  * @param {object} cercedillaTrainStation cercedillaStation
-  * @param {object} targetTrainStation targetStation
+  * @param {object} trainData train line data
+  * @param {object} busData bus line data
   * @param {number} count number of departures to be retrieved (dividible by 2)  ---> null for ALL
   * @return {object} Array of Departure
   */
   buildMixDepaturesFromMoment(momentDate,
                               directionSelected ,
-                              trainTT ,
-                              busTT ,
-                              cercedillaBusStation ,
-                              targetBusStation,
-                              cercedillaTrainStation ,
-                              targetTrainStation,
+                              trainData,
+                              busData,
                               count:number = null) {
     let result: Array<Departure>;
     let trainNextDeparts: Array<Departure>;
     let busNextDeparts: Array<Departure>;
 
-
     const countLocalByType = (!count || count%2 !== 0)? null : count/2;
+
+    //Set timetables
+    let trainTT = trainData.timetable[0];
+    let busTT = busData.timetable[0];
+
+    //Set limit Stations
+    let cercedillaBusStation = busData.station_start[0];
+    let targetBusStation = busData.station_end[0];
+    let cercedillaTrainStation = trainData.station_start[0];
+    let targetTrainStation = trainData.station_end[0];
 
     switch(directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
@@ -50,12 +51,14 @@ export class DeparturesService {
         const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(busTT,'C2M',momentDate);
         busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, countLocalByType);
 
-        //Set place station start
+        //Set label & place station start
         for(let depart of busNextDeparts) {
+          depart.label = busData.nombre;
           depart.placeLabel = cercedillaBusStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaBusStation.latlon;
         }
         for(let depart of trainNextDeparts) {
+          depart.label = trainData.nombre;
           depart.placeLabel = cercedillaTrainStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaTrainStation.latlon;
         }
@@ -73,11 +76,13 @@ export class DeparturesService {
 
         //Set place station start
         for(let depart of busNextDeparts) {
+          depart.label = busData.nombre;
           depart.placeLabel = targetBusStation.direccion;
           depart.placeLink = "http://maps.google.com/?q="+targetBusStation.latlon;
         }
         //Set place station start
         for(let depart of trainNextDeparts) {
+          depart.label = trainData.nombre;
           depart.placeLabel = targetTrainStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + targetTrainStation.latlon;
         }
