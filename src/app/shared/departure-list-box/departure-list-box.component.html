@@ -15,16 +15,10 @@
         <th></th>
       </tr>
       <tr *ngFor="let depart of departures">
-        <td [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">
+        <td [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0, 'nocturno': depart.isNightly}">
           <span class="line-name">{{depart.label}}</span>
-
-          <!-- <span class="badge" [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">{{depart.label}}</span> -->
-
-          <!-- <div
-            [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0}">
-            <span class="badge">{{depart.label}}</span>
-          </div> -->
-          <!-- *<pre style="text-align:left; font-size:0.7em;">{{depart |json}}</pre>* -->
+          <span class="nocturnal" title="Servicio nocturno" *ngIf="depart.isNightly">(*Servicio Nocturno)</span>
+          <!-- <pre style="text-align:left; font-size:0.7em;">{{depart |json}}</pre> -->
         </td>
         <!-- <td>{{depart.momentDate.format('DD-MM-YYYY')}}</td> -->
         <td [innerHTML]="depart.momentDate | formatWhen">{{depart.momentDate.format('DD-MM-YYYY')}}</td>
