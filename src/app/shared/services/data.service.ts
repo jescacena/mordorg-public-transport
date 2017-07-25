@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Rx';
+import {TransportTypeEnum} from '../model/transport-type.enum';
+
 
 @Injectable()
 export class DataService {
@@ -30,6 +32,31 @@ export class DataService {
     return resultPromise;
   }
 
+
+
+  /**
+  * Get line data from CCPOIS in wordpress
+  * @param {string} lineId
+  * @param {number} transportType
+  * @return {object}
+  */
+  getLineData(lineId:string ,tranportType:number) {
+    // return getAllLinesData();
+    // return this.getCCPOIS_BusLinePubtra(lineId);
+
+    //Clean line id
+    lineId = lineId.replace('line-pubtra-','');
+    switch(tranportType) {
+      case TransportTypeEnum.Bus:
+        return this.getCCPOIS_BusLinePubtra(lineId);
+      case TransportTypeEnum.Train:
+        return this.getCCPOIS_TrainLinePubtra(lineId);
+
+      default:
+        return null;
+    }
+
+  }
 
   /**
   * Get all lines data from CCPOIS in wordpress

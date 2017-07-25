@@ -73,6 +73,9 @@ export class DepartureListBoxComponent implements OnInit {
     this.scrollAtBottom = (target.offsetHeight + target.scrollTop == target.scrollHeight);
   }
 
-
+  goTransportDetail(departureData) {
+    console.log('JES departureData',departureData);
+    this.router.navigate(['line-detail',departureData.transportType,departureData.lineType, departureData.direction]);
+  }
 
 }

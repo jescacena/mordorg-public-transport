@@ -11,6 +11,7 @@ import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydate
 import { DateUtilsService } from '../../shared/services/date-utils.service';
 import { DeparturesService } from '../../shared/services/departures.service';
 import { DataService } from '../../shared/services/data.service';
+import { CacheService } from '../../shared/services/cache.service';
 import { Departure } from '../../shared/model/departure.class';
 import { DirectionsEnum } from '../../shared/model/directions.enum';
 import { fadeInAnimation } from '../../shared/fade-in.animation';
@@ -58,6 +59,7 @@ export class HomeWithSelectorComponent implements OnInit {
               private dateUtilsService: DateUtilsService,
               private departuresService: DeparturesService,
               private dataService: DataService,
+              private cacheService: CacheService,
               private homeService: HomeService) { }
 
   ngOnInit() {
@@ -74,10 +76,13 @@ export class HomeWithSelectorComponent implements OnInit {
     //TODO Fetch initial next departures
     this.dataService.getAllLinesData().subscribe(
       (dataArray: Array<Response>) => {
-        console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
-        console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
         this.trainC2LinePubtraResponse = dataArray[0].json()[0];
         this.bus684LinePubtraResponse = dataArray[1].json()[0];
+
+        //Save to cache line data
+        this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
+        this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
+        console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
 
         this.dataService.directionSelected = this.directionSelected;
 

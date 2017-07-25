@@ -16,6 +16,8 @@ export class Departure {
   transportType: number;  //
   transportTypeLabel: string;  //
   label: string;  //
+  lineType: string;  //line-pubtra-c86
+  direction: number;  //DirectionsEnum : CercedillaMadrid / Madrid-Cercedilla
 
   constructor(momentDate,
               placeLink: string ,

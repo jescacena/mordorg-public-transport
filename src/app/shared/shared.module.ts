@@ -6,6 +6,8 @@ import { TooltipModule } from 'ngx-bootstrap';
 
 
 import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
+import { LineRouteComponent } from './line-route/line-route.component';
+import { StopDetailComponent } from './stop-detail/stop-detail.component';
 
 import { BankHoliday } from './model/bankHoliday.class';
 import { Departure } from './model/departure.class';
@@ -24,6 +26,8 @@ import { ActionsButtonGroupComponent } from './actions-button-group/actions-butt
     // Departure,
     FormatWhenPipe,
     ActionsButtonGroupComponent,
+    LineRouteComponent,
+    StopDetailComponent
     // fadeInAnimation
   ],
   imports : [
@@ -35,6 +39,8 @@ import { ActionsButtonGroupComponent } from './actions-button-group/actions-butt
   exports: [
     DepartureListBoxComponent,
     ActionsButtonGroupComponent,
+    LineRouteComponent,
+    StopDetailComponent,
     // BankHoliday,
     // Departure,
     FormatWhenPipe,

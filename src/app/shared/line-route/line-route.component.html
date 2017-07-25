@@ -1,0 +1,7 @@
+<ul class="line-route">
+  <li *ngFor="let station of stations; let i = index">
+    <div *ngIf="i===0 || i=== stations.length-1" class="bullet limit"></div>
+    <div *ngIf="i!==0 && i!== stations.length-1" class="bullet"></div>
+    <a href="#">{{station.address}}</a>
+  </li>
+</ul>

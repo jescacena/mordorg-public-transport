@@ -10,6 +10,7 @@ import { TransportDetailComponent } from './transport-detail/transport-detail.co
 
 import { DateUtilsService } from './shared/services/date-utils.service';
 import { DataService } from './shared/services/data.service';
+import { CacheService } from './shared/services/cache.service';
 import { DeparturesService } from './shared/services/departures.service';
 
 
@@ -37,7 +38,7 @@ import { ContactComponent } from './contact/contact.component';
     MyDatePickerModule,
     BrowserAnimationsModule
   ],
-  providers: [DateUtilsService,DataService, DeparturesService],
+  providers: [DateUtilsService,DataService,CacheService, DeparturesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

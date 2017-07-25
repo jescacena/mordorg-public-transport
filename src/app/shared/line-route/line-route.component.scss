@@ -1,0 +1,51 @@
+@import '../../../assets/styles/variables.scss';
+
+ul.line-route {
+  margin:2em auto;
+  li {
+    padding-left:2em;
+    height:5em;
+    position:relative;
+    a {
+      color:$light-grey;
+      float:left;
+      margin-left:1em;
+      line-height: 2em;
+      max-width: 21em;
+    }
+    div.bullet {
+      z-index:50;
+      display:inline-block;
+      float:left;
+      background-color: $light-grey;
+      height: 2em;
+      width: 2em;
+      border-radius: 50%;
+      border:3px solid $dark-blue;
+      &.limit {
+          background-color: $dark-blue;
+          &:before {
+            position: absolute;
+            content:'';
+            background-color: $light-grey;
+            height:1em;
+            width:1em;
+            top: 0.5em;
+            left: 2.5em;
+            border-radius: 50%;
+
+          }
+
+      }
+    }
+    &:not(:last-child):before {
+      position: absolute;
+      content:'';
+      background-color: $dark-blue;
+      height:3em;
+      width:0.2em;
+      top: 2em;
+      left: 3em;
+    }
+  }
+}

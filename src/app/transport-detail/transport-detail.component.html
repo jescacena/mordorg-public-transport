@@ -1,3 +1,23 @@
-<p>
-  transport-detail works!
-</p>
+<div class="row tranport-detail">
+  <div class="col-md-10 col-xs-12 col-md-offset-1">
+    <div class="header">
+      <h3>Bus 684: Sentido Cercedilla-Madrid</h3>
+      <h4>Parada Seleccionada: Avda Gonzalez Benjumea</h4>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5 col-xs-12">
+        <app-line-route
+          [stations]="line.stations"
+          [stationSelected]="'station-selected'">
+        </app-line-route>
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <app-stop-detail>
+
+        </app-stop-detail>
+      </div>
+    </div>
+
+  </div>
+</div>

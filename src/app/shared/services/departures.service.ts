@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Departure } from '../model/departure.class';
 import { DateUtilsService } from './date-utils.service';
 import { DirectionsEnum } from '../model/directions.enum';
+import { TransportTypeEnum } from '../model/transport-type.enum';
 
 
 
@@ -30,11 +31,15 @@ export class DeparturesService {
 
     const countLocalByType = (!count || count%2 !== 0)? null : count/2;
 
-    //Set timetables
+    //Get types
+    let trainLineType = trainData.type;
+    let busLineType = busData.type;
+
+    //Get timetables
     let trainTT = trainData.timetable[0];
     let busTT = busData.timetable[0];
 
-    //Set limit Stations
+    //Get limit Stations
     let cercedillaBusStation = busData.station_start[0];
     let targetBusStation = busData.station_end[0];
     let cercedillaTrainStation = trainData.station_start[0];
@@ -53,11 +58,17 @@ export class DeparturesService {
 
         //Set label & place station start
         for(let depart of busNextDeparts) {
+          depart.transportType = TransportTypeEnum.Bus;
+          depart.direction = DirectionsEnum.CercedillaMadrid;
+          depart.lineType = busLineType;
           depart.label = busData.nombre;
           depart.placeLabel = cercedillaBusStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaBusStation.latlon;
         }
         for(let depart of trainNextDeparts) {
+          depart.transportType = TransportTypeEnum.Train;
+          depart.direction = DirectionsEnum.CercedillaMadrid;
+          depart.lineType = trainLineType;
           depart.label = trainData.nombre;
           depart.placeLabel = cercedillaTrainStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaTrainStation.latlon;
@@ -76,12 +87,18 @@ export class DeparturesService {
 
         //Set place station start
         for(let depart of busNextDeparts) {
+          depart.transportType = TransportTypeEnum.Bus;
+          depart.direction = DirectionsEnum.MadridCercedilla;
+          depart.lineType = busLineType;
           depart.label = busData.nombre;
           depart.placeLabel = targetBusStation.direccion;
           depart.placeLink = "http://maps.google.com/?q="+targetBusStation.latlon;
         }
         //Set place station start
         for(let depart of trainNextDeparts) {
+          depart.transportType = TransportTypeEnum.Train;
+          depart.direction = DirectionsEnum.MadridCercedilla;
+          depart.lineType = trainLineType;
           depart.label = trainData.nombre;
           depart.placeLabel = targetTrainStation.direccion;
           depart.placeLink = "http://maps.google.com/?q=" + targetTrainStation.latlon;

@@ -14,8 +14,8 @@
         <th>Desde</th>
         <th></th>
       </tr>
-      <tr *ngFor="let depart of departures">
-        <td [ngClass]="{'tipo-bus': depart.transportType === 1, 'tipo-tren': depart.transportType === 0, 'nocturno': depart.isNightly}">
+      <tr *ngFor="let depart of departures" (click)="goTransportDetail(depart)">
+        <td [ngClass]="{'tipo-bus': depart.transportType === 0, 'tipo-tren': depart.transportType === 1, 'nocturno': depart.isNightly}">
           <span class="line-name">{{depart.label}}</span>
           <span class="nocturnal" title="Servicio nocturno" *ngIf="depart.isNightly">(*Servicio Nocturno)</span>
           <!-- <pre style="text-align:left; font-size:0.7em;">{{depart |json}}</pre> -->
