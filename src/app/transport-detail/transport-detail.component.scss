@@ -1,0 +1,23 @@
+@import '../../assets/styles/variables.scss';
+
+.header {
+  h1 {
+    display:inline-block;
+    margin: 1em;
+    color: $light-grey;
+    @include handset {
+      display: block;
+      margin: 0.5em auto;
+      text-align: center;
+    }
+  }
+  h2 {
+    display:inline-block;
+    color: $dark-blue;
+    @include handset {
+      margin: 0.5em auto;
+      display: block;
+      text-align: center;
+    }
+  }
+}

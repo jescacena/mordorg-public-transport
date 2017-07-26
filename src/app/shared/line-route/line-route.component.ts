@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Station} from '../model/station.class';
+import { DataService } from '../services/data.service';
+
 
 @Component({
   selector: 'app-line-route',
@@ -9,11 +11,17 @@ import {Station} from '../model/station.class';
 export class LineRouteComponent implements OnInit {
 
   @Input() stations: Array<Station>;
-  @Input() stationSelected: string;
+  @Input() stationSelected: Station;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+  }
+
+  selectStation(station) {
+    console.log('JES selectStation' , station);
+    this.stationSelected = station;
+    this.dataService.selectedStation.next(station);
   }
 
 }

@@ -3,6 +3,7 @@ import { Departure } from '../model/departure.class';
 import { DateUtilsService } from './date-utils.service';
 import { DirectionsEnum } from '../model/directions.enum';
 import { TransportTypeEnum } from '../model/transport-type.enum';
+import { Station } from '../model/station.class';
 
 
 
@@ -63,6 +64,7 @@ export class DeparturesService {
           depart.lineType = busLineType;
           depart.label = busData.nombre;
           depart.placeLabel = cercedillaBusStation.direccion;
+          depart.station = cercedillaBusStation;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaBusStation.latlon;
         }
         for(let depart of trainNextDeparts) {
@@ -71,6 +73,7 @@ export class DeparturesService {
           depart.lineType = trainLineType;
           depart.label = trainData.nombre;
           depart.placeLabel = cercedillaTrainStation.direccion;
+          depart.station = cercedillaTrainStation;
           depart.placeLink = "http://maps.google.com/?q=" + cercedillaTrainStation.latlon;
         }
 
@@ -92,6 +95,7 @@ export class DeparturesService {
           depart.lineType = busLineType;
           depart.label = busData.nombre;
           depart.placeLabel = targetBusStation.direccion;
+          depart.station = targetBusStation;
           depart.placeLink = "http://maps.google.com/?q="+targetBusStation.latlon;
         }
         //Set place station start
@@ -101,6 +105,7 @@ export class DeparturesService {
           depart.lineType = trainLineType;
           depart.label = trainData.nombre;
           depart.placeLabel = targetTrainStation.direccion;
+          depart.station = targetTrainStation;
           depart.placeLink = "http://maps.google.com/?q=" + targetTrainStation.latlon;
         }
 
@@ -127,6 +132,5 @@ export class DeparturesService {
 
 
   }
-
 
 }

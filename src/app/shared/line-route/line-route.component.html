@@ -1,7 +1,9 @@
 <ul class="line-route">
-  <li *ngFor="let station of stations; let i = index">
+  <li *ngFor="let station of stations; let i = index"
+  (click)="selectStation(station)"
+  [ngClass]="{selected: station.id === stationSelected.id}">
     <div *ngIf="i===0 || i=== stations.length-1" class="bullet limit"></div>
     <div *ngIf="i!==0 && i!== stations.length-1" class="bullet"></div>
-    <a href="#">{{station.address}}</a>
+    <span class="text">{{station.address}}</span>
   </li>
 </ul>

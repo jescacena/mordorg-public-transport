@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap';
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+
 
 
 import { DepartureListBoxComponent } from './departure-list-box/departure-list-box.component';
@@ -34,6 +36,7 @@ import { ActionsButtonGroupComponent } from './actions-button-group/actions-butt
     CommonModule,
     FormsModule,
     MyDatePickerModule,
+    LeafletModule,
     TooltipModule.forRoot()
   ],
   exports: [

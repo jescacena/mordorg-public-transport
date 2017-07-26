@@ -9,12 +9,14 @@ import { Departure } from '../shared/model/departure.class';
 import { DirectionsEnum } from '../shared/model/directions.enum';
 import { Line } from '../shared/model/line.class';
 import { Station } from '../shared/model/station.class';
+import { DirectionLabels } from '../shared/model/direction-labels.constant';
+
 
 
 @Component({
   selector: 'app-transport-detail',
   templateUrl: './transport-detail.component.html',
-  styleUrls: ['./transport-detail.component.css']
+  styleUrls: ['./transport-detail.component.scss']
 })
 export class TransportDetailComponent implements OnInit {
   line:Line;
@@ -22,6 +24,11 @@ export class TransportDetailComponent implements OnInit {
   direction:number;
   stations:Array<Station>;
   lineReponse: Response;
+  lineResponseObj;
+  lineName:string;
+  directionLabel:string;
+  stationSelectedId:string;
+  stationSelected:Station;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
@@ -37,15 +44,18 @@ export class TransportDetailComponent implements OnInit {
     //Fetch data from cache service
     this.lineId = this.route.snapshot.params['lineid'];
     this.direction = parseInt(this.route.snapshot.params['direction']);
+    this.stationSelectedId = this.route.snapshot.params['stationid'];
 
-    //Resolve bank holidays and init dateUtilsService
+    //TODO get station selected
+
+    //Resolve line data
     this.route.data.subscribe(
        (data: Data) => {
         // console.log(data['lineReponse']);
          if(data['lineReponse'].headers) {
-           this.lineReponse = data['lineReponse'].json()[0];
+           this.lineResponseObj = data['lineReponse'].json()[0];
          } else {
-           this.lineReponse = data['lineReponse'];
+           this.lineResponseObj = data['lineReponse'];
          }
        }
     );
@@ -54,10 +64,15 @@ export class TransportDetailComponent implements OnInit {
     //Get cached data
     // const cachedData = this.cacheService.lineCacheList[this.lineId];
 
-    console.log('JES TransportDetailComponent lineReponse',this.lineReponse);
+    console.log('JES TransportDetailComponent lineResponseObj',this.lineResponseObj);
+
+    //Build title label
+    this.lineName = this.lineResponseObj.nombre;
+    this.directionLabel = DirectionLabels[this.direction];
+
 
     //Build stations list
-    const stationsData = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineReponse['stations-cercedilla-madrid'][0]:this.lineReponse['stations-madrid-cercedilla'][0];
+    const stationsData = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0]:this.lineResponseObj['stations-madrid-cercedilla'][0];
 
     console.log('JES TransportDetailComponent stationsData',stationsData);
 
@@ -65,10 +80,13 @@ export class TransportDetailComponent implements OnInit {
 
     //Station start
     let stationStartData;
+    let auxKey;
     for (let key of Object.keys(stationsData.station_start)) {
       stationStartData = stationsData.station_start[key];
+      auxKey = key+'';
     }
-    stationList.push(new Station(stationStartData.nombre,
+    stationList.push(new Station(auxKey,
+                                  stationStartData.nombre,
                                   stationStartData.direccion,
                                   stationStartData.latlon,
                                   stationStartData.image_front.guid,
@@ -79,16 +97,22 @@ export class TransportDetailComponent implements OnInit {
     //Rest of stations
     for (let i = 1; i <= 3; i++) {
       let stationIndexData;
+
       for (let key of Object.keys(stationsData['station_'+i])) {
         stationIndexData = stationsData['station_'+i][key];
+        auxKey = key+'';
+
       }
-      stationList.push(new Station(stationIndexData.nombre,
-                                    stationIndexData.direccion,
-                                    stationIndexData.latlon,
-                                    stationIndexData.image_front.guid,
-                                    stationIndexData.google_streetview_link,
-                                    stationIndexData.sentido
-                                  ));
+      if(stationIndexData) {
+        stationList.push(new Station(auxKey,
+                                      stationIndexData.nombre,
+                                      stationIndexData.direccion,
+                                      stationIndexData.latlon,
+                                      stationIndexData.image_front.guid,
+                                      stationIndexData.google_streetview_link,
+                                      stationIndexData.sentido
+                                    ));
+      }
 
     }
 
@@ -96,9 +120,12 @@ export class TransportDetailComponent implements OnInit {
     let stationEndData;
     for (let key of Object.keys(stationsData.station_end)) {
       stationEndData = stationsData.station_end[key];
+      auxKey = key+'';
+
     }
 
-    stationList.push(new Station(stationEndData.nombre,
+    stationList.push(new Station(auxKey,
+                                  stationEndData.nombre,
                                   stationEndData.direccion,
                                   stationEndData.latlon,
                                   stationEndData.image_front.guid,
@@ -108,6 +135,13 @@ export class TransportDetailComponent implements OnInit {
 
 
     this.stations = stationList;
+
+    //Hack remove
+    this.stationSelected = this.stations[0];
+    this.stationSelected = this.stations.filter((item:Station)=> {
+        return item.id ===  this.stationSelectedId;
+    })[0];
+
 
     console.log('JES TransportDetailComponent stationList',stationList);
 

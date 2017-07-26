@@ -12,6 +12,9 @@ export class DataService {
   mixDeparturesMadridCerce = new Subject();
   mixDepartures = new Subject();
 
+  //When user click on a station on a line route
+  selectedStation = new Subject();
+
   //When user change direction on home direction selector
   newDirectionSelected = new Subject();
 

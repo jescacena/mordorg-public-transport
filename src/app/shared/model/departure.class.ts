@@ -1,5 +1,7 @@
 
 import {TransportTypeEnum} from './transport-type.enum';
+import { Station } from './station.class';
+
 /**
 */
 export class Departure {
@@ -18,6 +20,7 @@ export class Departure {
   label: string;  //
   lineType: string;  //line-pubtra-c86
   direction: number;  //DirectionsEnum : CercedillaMadrid / Madrid-Cercedilla
+  station: Station;
 
   constructor(momentDate,
               placeLink: string ,

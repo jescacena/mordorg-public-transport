@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   // { path: '', component: HomeComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   { path: 'contact', component: ContactComponent},
   { path: 'one-direction/:direction/:date', component: OneDirectionComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
-  { path: 'line-detail/:transporttype/:lineid/:direction', component: TransportDetailComponent,resolve: {lineReponse: LineResolver}},
+  { path: 'line-detail/:transporttype/:lineid/:direction/:stationid', component: TransportDetailComponent,resolve: {lineReponse: LineResolver}},
   // { path: 'one-direction', loadChildren: './one-direction/one-direction.module#OneDirectionModule'},
   // { path: 'transport-detail', loadChildren: './transport-detail/transport-detail.module#TransportDetailModule'}
 ];

@@ -75,7 +75,7 @@ export class DepartureListBoxComponent implements OnInit {
 
   goTransportDetail(departureData) {
     console.log('JES departureData',departureData);
-    this.router.navigate(['line-detail',departureData.transportType,departureData.lineType, departureData.direction]);
+    this.router.navigate(['line-detail',departureData.transportType,departureData.lineType, departureData.direction, departureData.station.id]);
   }
 
 }

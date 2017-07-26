@@ -22,7 +22,8 @@
         </td>
         <!-- <td>{{depart.momentDate.format('DD-MM-YYYY')}}</td> -->
         <td [innerHTML]="depart.momentDate | formatWhen">{{depart.momentDate.format('DD-MM-YYYY')}}</td>
-        <td><a href="{{depart.placeLink}}" target="_blank">{{depart.placeLabel}}</a></td>
+        <td><a>{{depart.placeLabel}}</a></td>
+        <!-- <td><a href="{{depart.placeLink}}" target="_blank">{{depart.placeLabel}}</a></td> -->
         <td><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></td>
       </tr>
     </table>

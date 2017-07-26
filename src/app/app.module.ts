@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { MyDatePickerModule } from 'mydatepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +38,8 @@ import { ContactComponent } from './contact/contact.component';
     TransportDetailModule,
     SharedModule,
     MyDatePickerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    LeafletModule
   ],
   providers: [DateUtilsService,DataService,CacheService, DeparturesService],
   bootstrap: [AppComponent]
