@@ -1,10 +1,10 @@
 @import '../../../assets/styles/variables.scss';
 
 ul.line-route {
-  margin:2em auto 0 auto;
+  // margin:2em auto 0 auto;
   li {
-    padding-left:2em;
-    height:5em;
+    padding-left:0em;
+    height:3em;
     position:relative;
     cursor:pointer;
     span.text {
@@ -12,13 +12,14 @@ ul.line-route {
       float:left;
       // margin-left:1em;
       line-height: 2em;
-      max-width: 21em;
+      max-width: 33em;
       padding: 0 1em;
     }
     &.selected {
       span.text {
         // background-color: $dark-blue;
-        color:$orange;
+        color:$light-orange;
+        font-weight: bold;
       }
     }
     div.bullet {
@@ -39,7 +40,7 @@ ul.line-route {
             height: 1.3em;
             width: 1.3em;
             top: 5px;
-            left: 33px;
+            left: 0.35em;
             border-radius: 50%;
             border:5px solid $light-blue;
           }
@@ -53,7 +54,7 @@ ul.line-route {
       height:3em;
       width: 0.3em;
       top: 2em;
-      left: 2.86em;
+      left: 0.86em;
     }
   }
 }

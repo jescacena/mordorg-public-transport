@@ -29,6 +29,7 @@ export class TransportDetailComponent implements OnInit {
   directionLabel:string;
   stationSelectedId:string;
   stationSelected:Station;
+  durationEstimated:string;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
@@ -73,6 +74,7 @@ export class TransportDetailComponent implements OnInit {
 
     //Build stations list
     const stationsData = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0]:this.lineResponseObj['stations-madrid-cercedilla'][0];
+    this.durationEstimated = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0].duration_estimated:this.lineResponseObj['stations-madrid-cercedilla'][0].duration_estimated;
 
     console.log('JES TransportDetailComponent stationsData',stationsData);
 

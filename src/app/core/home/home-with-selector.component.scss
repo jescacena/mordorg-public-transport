@@ -7,8 +7,19 @@
 
   .next-departures-head {
     font-size: 1.1em;
+    display: inline-block;
+    float:left;
     color:$light-blue;
     margin:1em auto;
+    span {
+      font-size: 0.8em;
+    }
+  }
+  .next-departures-now-time {
+    margin:1em auto;
+    display: inline-block;
+    float:right;
+    color:$light-blue;
   }
 
 }

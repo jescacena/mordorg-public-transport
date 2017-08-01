@@ -1,9 +1,10 @@
 @import '../../assets/styles/variables.scss';
 
 .header {
+  margin-bottom: 2em;
   h1 {
     display:inline-block;
-    margin: 1em;
+    margin: 0em;
     color: $light-grey;
     @include handset {
       display: block;
@@ -13,11 +14,30 @@
   }
   h2 {
     display:inline-block;
-    color: $dark-blue;
+    color: $light-blue;
+    margin-left: 0.3em;
     @include handset {
       margin: 0.5em auto;
       display: block;
       text-align: center;
+    }
+  }
+}
+
+.notes {
+  ul {
+    margin: 1em 0 0 0.5em;
+    li {
+      color: $light-blue;
+      padding-left:1em;
+      &:before {
+        position:absolute;
+        content:'*';
+        left: 1.8em;
+      }
+      span {
+        font-weight: bold;
+      }
     }
   }
 }

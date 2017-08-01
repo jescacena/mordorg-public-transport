@@ -11,8 +11,17 @@
 
   .left {
     float:left;
+    @include handset {
+      float: none;
+      position: relative;
+      top: 1.5em;
+    }
     h3 {
       margin:0.2em 0 0 0;
+      @include handset {
+        float: none;
+      }
+
     }
     .change-direction {
       @include regular-text;
@@ -21,7 +30,8 @@
       padding:0.3em;
       cursor:pointer;
       @include handset {
-        font-size: 0.8em;
+        font-size: 1em;
+        padding:0;
       }
 
       .glyphicon {
@@ -34,12 +44,20 @@
   }
   .right {
     float:right;
+    @include handset {
+      position: relative;
+      top: -3.3em;
+    }
     h4 {
       display:inline-block;
       font-size: 1em;
       margin: 0.5em 0.4em 0 0;
       color: $light-blue;
-
+      @include handset {
+        display:block;
+        font-size: 0.9em;
+        margin: 1.5em 0.4em 0 0;
+      }
     }
   }
 

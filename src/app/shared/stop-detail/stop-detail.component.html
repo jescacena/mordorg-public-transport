@@ -1,8 +1,8 @@
 <div class="container">
   <h4>Estación en {{stationSelected.address}}</h4>
-  <img src="{{stationSelected.imageUrl}}" alt="">
   <div class="map" leaflet style="height: 300px;"
-       [leafletOptions]="options"
-       (leafletMapReady)="onMapReady($event)">
+    [leafletOptions]="options"
+    (leafletMapReady)="onMapReady($event)">
   </div>
+  <img src="{{stationSelected.imageUrl}}" alt="">
 </div>

@@ -7,21 +7,21 @@
   }
 }
 
-.tipo-bus {
-  @include bus-icon-bg;
-  background-position: 0.5em 0.3em;
-  @include handset {
-    background-position: 0.3em 0.1em;
-  }
-}
-
-.tipo-tren {
-  @include tren-icon-bg;
-  background-position: 0.5em 0.3em;
-  @include handset {
-    background-position: 0.3em 0.1em;
-  }
-}
+// .tipo-bus {
+//   @include bus-icon-bg;
+//   background-position: 0.5em 0.3em;
+//   @include handset {
+//     background-position: 0.3em 0.1em;
+//   }
+// }
+//
+// .tipo-tren {
+//   @include tren-icon-bg;
+//   background-position: 0.5em 0.3em;
+//   @include handset {
+//     background-position: 0.3em 0.1em;
+//   }
+// }
 
 .departure-list-box {
   position:relative;
@@ -55,43 +55,100 @@
         }
 
         th {
+          font-weight: 400;
+          font-size: 0.8em;
+          color:$grey;
           &:first-child {
             text-align: center;
           }
         }
         td {
-          vertical-align: middle;
+          position:relative;
+
           &:first-child {
+            min-height:3.5em;
+            display: inline-block;
             width:5em;
             text-align: center;
             background-position: 2em 0.5em;
+            @include handset {
+              background-position: 2em 1em;
+            }
             span {
               font-size:0.6em;
               display: block;
-              margin-top: 2em;
+              margin-top: 3em;
+              @include handset {
+                margin-top: 0em;
+                position:relative;
+              }
               &.nocturnal {
                 font-size:0.4em;
                 margin:0;
               }
-
             }
+
+            &.tipo-bus {
+              span.line-name {
+                &:before {
+                  position:absolute;
+                  content:'';
+                  top:1.5em;
+                  left:3em;
+                  @include handset {
+                    left:2.5em;
+                  }
+                  width:2em;
+                  height:2em;
+                  @include bus-icon-bg;
+                }
+              }
+            }
+            &.tipo-tren {
+              span.line-name {
+                &:before {
+                  position:absolute;
+                  content:'';
+                  top:1.5em;
+                  left:3em;
+                  @include handset {
+                    left:2.5em;
+                  }
+                  width:2em;
+                  height:2em;
+                  @include tren-icon-bg;
+                }
+              }
+            }
+
 
           }
           &:nth-child(2) {
+            vertical-align: middle;
+            font-weight: bold;
+            span.en {
+              display: block;
+            }
+
             @include handset {
-              font-size: 0.9em;
+              vertical-align:top;
+              font-size: 0.8em;
               span.en {
                 font-size: 0.7em;
-                display: block;
               }
             }
           }
           &:nth-child(3) {
+            vertical-align: middle;
+            @include handset {
+              vertical-align:top;
+            }
             font-size: 0.8em;
           }
 
           span.glyphicon {
             color: $grey;
+            top:1em;
           }
         }
 

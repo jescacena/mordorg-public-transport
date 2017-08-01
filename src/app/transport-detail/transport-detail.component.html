@@ -2,16 +2,23 @@
   <div class="col-md-10 col-xs-12 col-md-offset-1">
     <div class="header">
       <h1>{{lineName}}</h1>
-      <h2>{{directionLabel}}</h2>
+      <h2><span></span>{{directionLabel}}</h2>
       <!-- <h4>Parada Seleccionada: Avda Gonzalez Benjumea</h4> -->
     </div>
 
     <div class="row">
-      <div class="col-md-5 col-xs-12 col-md-offset-1">
+      <div class="col-md-6 col-xs-12">
         <app-line-route
           [stations]="line.stations"
           [stationSelected]="stationSelected">
         </app-line-route>
+
+        <div class="notes">
+          <ul>
+            <li>Tiempo estimado de recorrido <span>{{durationEstimated}}</span></li>
+            <li *ngIf="hasPossibleTimetableChanges">Por motivos de festivos municipales los puntos de paradas de Cercedilla pueden verse modificados. Consulte a la empresa de autobuses.</li>
+          </ul>
+        </div>
       </div>
       <div class="col-md-6 col-xs-12">
         <app-stop-detail
@@ -19,6 +26,8 @@
         </app-stop-detail>
       </div>
     </div>
+
+
 
   </div>
 </div>

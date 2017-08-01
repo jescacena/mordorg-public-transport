@@ -50,6 +50,7 @@ export class HomeWithSelectorComponent implements OnInit {
   dateSelectedLabel:string = "de Hoy";
 
   nowDateLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+  nowTimeLabel = this.dateSelected.locale('es').format('HH:mm A');
 
 
   showNoDataAvailable:boolean = false;
