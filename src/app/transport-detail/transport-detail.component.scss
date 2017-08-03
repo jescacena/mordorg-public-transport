@@ -10,6 +10,7 @@
       display: block;
       margin: 0.5em auto;
       text-align: center;
+      font-size: 1.8em;
     }
   }
   h2 {
@@ -20,6 +21,7 @@
       margin: 0.5em auto;
       display: block;
       text-align: center;
+      font-size: 1.2em;
     }
   }
 }
@@ -27,13 +29,25 @@
 .notes {
   ul {
     margin: 1em 0 0 0.5em;
+    @include handset {
+      margin-bottom: 1em;
+    }
+
     li {
       color: $light-blue;
       padding-left:1em;
+      @include handset {
+        font-size:0.8em;
+        padding-left: 0.3em;
+        text-align:center;
+      }
       &:before {
         position:absolute;
         content:'*';
         left: 1.8em;
+        @include handset {
+          display:none;
+        }
       }
       span {
         font-weight: bold;

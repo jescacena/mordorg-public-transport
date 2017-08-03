@@ -30,6 +30,7 @@ export class TransportDetailComponent implements OnInit {
   stationSelectedId:string;
   stationSelected:Station;
   durationEstimated:string;
+  hasPossibleTimetableChanges:boolean = false;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,

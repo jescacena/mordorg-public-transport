@@ -2,11 +2,19 @@
 
 ul.line-route {
   // margin:2em auto 0 auto;
+  @include handset {
+    margin:0 auto;
+    width:90%;
+  }
   li {
     padding-left:0em;
     height:3em;
     position:relative;
     cursor:pointer;
+    @include handset {
+      height:3em;
+      // display:inline-grid;
+    }
     span.text {
       color:$light-grey;
       float:left;
@@ -14,6 +22,19 @@ ul.line-route {
       line-height: 2em;
       max-width: 33em;
       padding: 0 1em;
+      @include handset {
+        font-size: 0.8em;
+        float:none;
+        text-align: left;
+        margin:  0 0.5em;
+        display: block;
+        padding:0;
+        line-height: 1;
+        position: relative;
+        top: -1.6em;
+        left: 1em;
+      }
+
     }
     &.selected {
       span.text {
@@ -31,6 +52,12 @@ ul.line-route {
       width: 2em;
       border-radius: 50%;
       border:4px solid $dark-blue;
+      @include handset {
+        float:none;
+        height: 1em;
+        width: 1em;
+        border:2px solid $dark-blue;
+      }
       &.limit {
           background-color: $dark-blue;
           &:before {
@@ -43,6 +70,13 @@ ul.line-route {
             left: 0.35em;
             border-radius: 50%;
             border:5px solid $light-blue;
+            @include handset {
+              height: 0.7em;
+              width: 0.7em;
+              top: 0.2em;
+              left: 0.15em;
+              border:2px solid $light-blue;
+            }
           }
 
       }
@@ -55,6 +89,12 @@ ul.line-route {
       width: 0.3em;
       top: 2em;
       left: 0.86em;
+      @include handset {
+        // height:2em;
+        width: 0.2em;
+        top: 1em;
+        left: 0.4em;
+      }
     }
   }
 }
