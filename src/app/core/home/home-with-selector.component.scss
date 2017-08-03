@@ -10,16 +10,21 @@
     display: inline-block;
     float:left;
     color:$light-blue;
-    margin:1em auto;
-    span {
+    line-height: 1;
+    margin:1em auto 0.5em auto;
+    @include handset {
       font-size: 0.8em;
     }
   }
   .next-departures-now-time {
-    margin:1em auto;
+    margin:1em auto 0.5em auto;
     display: inline-block;
     float:right;
     color:$light-blue;
+    line-height: 1;
+    @include handset {
+      font-size: 0.8em;
+    }
   }
 
 }
