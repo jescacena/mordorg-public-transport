@@ -25,7 +25,7 @@ os: darwin x64
 
 ## Local development
 
-> ng serve
+> npm start
 
 * Hit `localhost:4200`
 
@@ -34,15 +34,9 @@ os: darwin x64
 > ng test
 
 
-## Build bundle with webpack in DEVELOPMENT
-
-> npm run build
-
-* Hit `localhost:8080`
-
 ## Build bundle with webpack + AoT in PRODUCTION
 
-> npm run build:prod
+> npm run build
 
 
 ## Test PRODUCTION bundle in local
