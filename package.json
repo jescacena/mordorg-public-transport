@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "startip": "ng serve --host 192.168.1.36 --port 4200",
     "build": "webpack-dev-server --inline --progress --port 8080 --config webpack.config.dev.js",
     "build:prod": "del-cli dist && ngc -p tsconfig.aot.json && ngc -p tsconfig.aot.json && webpack --config webpack.config.prod.js --progress --profile --bail && del-cli 'src/*.js' 'src/app/**/*.js' 'src/**/*.ngfactory.ts' 'src/**/*.ngstyle.ts' 'src/**/*.js.map' 'src/**/*.shim.ts' 'src/**/*.ngsummary.json'",
     "test": "ng test",
