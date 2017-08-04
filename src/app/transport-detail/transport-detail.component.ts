@@ -10,6 +10,8 @@ import { DirectionsEnum } from '../shared/model/directions.enum';
 import { Line } from '../shared/model/line.class';
 import { Station } from '../shared/model/station.class';
 import { DirectionLabels } from '../shared/model/direction-labels.constant';
+import * as moment from 'moment';
+
 
 
 
@@ -31,6 +33,10 @@ export class TransportDetailComponent implements OnInit {
   stationSelected:Station;
   durationEstimated:string;
   folletoDownloadLink:string;
+  timetableStartDate;
+  timetableStartDateLabel:string;
+  timetableEndDate;
+  timetableEndDateLabel:string;
   hasPossibleTimetableChanges:boolean = false;
 
   constructor(private route:ActivatedRoute,
@@ -76,6 +82,25 @@ export class TransportDetailComponent implements OnInit {
     //GEt folleto download link
     this.folletoDownloadLink = (this.lineResponseObj.timetable[0].folleto_link)? this.lineResponseObj.timetable[0].folleto_link.guid : null;
 
+    //Build horario fechas desde y hasta
+    var fechaDesde = this.lineResponseObj.timetable[0].fecha_desde;
+    var tokens;
+    if(fechaDesde && fechaDesde !== '0000-00-00') {
+      tokens = fechaDesde.split('-');
+      this.timetableStartDate = moment().set('year',parseInt(tokens[0]))
+                                        .set('month',parseInt(tokens[1])-1)
+                                        .set('date',parseInt(tokens[2]));
+      this.timetableStartDateLabel = this.timetableStartDate.locale('es').format('D [de] MMMM [de] YYYY');
+    }
+
+    var fechaHasta = this.lineResponseObj.timetable[0].fecha_hasta;
+    if(fechaHasta && fechaHasta !== '0000-00-00') {
+      tokens = fechaHasta.split('-');
+      this.timetableEndDate = moment().set('year',parseInt(tokens[0]))
+                                        .set('month',parseInt(tokens[1])-1)
+                                        .set('date',parseInt(tokens[2]));
+      this.timetableEndDateLabel = this.timetableEndDate.locale('es').format('D [de] MMMM [de] YYYY');
+    }
 
     //Build stations list
     const stationsData = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0]:this.lineResponseObj['stations-madrid-cercedilla'][0];

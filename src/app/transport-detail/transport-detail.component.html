@@ -16,12 +16,13 @@
         <div class="notes">
           <ul>
             <li>Tiempo estimado de recorrido <span>{{durationEstimated}}</span></li>
+            <li *ngIf="timetableStartDateLabel && timetableEndDateLabel">Horarios válidos del <span>{{timetableStartDateLabel}}</span> al <span>{{timetableEndDateLabel}}</span></li>
             <li *ngIf="hasPossibleTimetableChanges">Por motivos de festivos municipales los puntos de paradas de Cercedilla pueden verse modificados. Consulte a la empresa de autobuses.</li>
           </ul>
         </div>
 
         <div class="folleto">
-          <a href="{{folletoDownloadLink}}" download>Descargar horario oficial</a>          
+          <a href="{{folletoDownloadLink}}" download>Descargar horario oficial</a>
         </div>
       </div>
       <div class="col-md-6 col-xs-12">

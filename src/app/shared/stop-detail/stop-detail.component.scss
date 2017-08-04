@@ -21,7 +21,8 @@
 
     @include handset {
       width: 90%;
-      margin: 1.5em;
+      margin: 1em auto;
+      display:block;
     }
   }
 
@@ -31,7 +32,7 @@
     border: 1px solid $dark-blue;
     @include handset {
       width: 90%;
-      margin: 1.7em;
+      margin: 1em auto;
     }
   }
 

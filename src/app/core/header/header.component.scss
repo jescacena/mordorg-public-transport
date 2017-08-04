@@ -4,7 +4,7 @@
   margin:0.5em 0 2em 0;
   position:relative;
   @include handset {
-    margin:1em 0 2em 0;
+    margin:1.5em 0 0em 0;
     .col-xs-11 {
       padding: 0;
     }
@@ -56,7 +56,7 @@
 
     top: 0.5em;
     @include handset {
-      top: -1.5em;
+      top: -2em;
       right:0em;
     }
 
