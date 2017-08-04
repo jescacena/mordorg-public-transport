@@ -13,6 +13,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 
 
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -28,7 +29,8 @@ import { DataService } from '../shared/services/data.service';
     HomeComponent,
     HomeWithSelectorComponent,
     HeaderComponent,
-    DirectionSelectorComponent
+    DirectionSelectorComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { DataService } from '../shared/services/data.service';
   ],
   exports: [
     HeaderComponent,
+    FooterComponent,
     AppRoutingModule
   ],
   // providers: [DateUtilsService, DataService],
