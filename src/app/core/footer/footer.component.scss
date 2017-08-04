@@ -1,0 +1,22 @@
+@import '../../../assets/styles/variables.scss';
+
+.footer {
+  text-align: center;
+  margin:3em 0 1em 0;
+  .copyright {
+    a {
+      font-size: 0.8em;
+      color:$light-grey;
+      font-weight: 200;
+    }
+    img {
+      width:2em;
+    }
+  }
+
+  .version {
+      font-weight: 200;
+      font-size: 0.8em;
+      color:$light-grey;
+  }
+}

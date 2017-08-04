@@ -19,6 +19,10 @@
             <li *ngIf="hasPossibleTimetableChanges">Por motivos de festivos municipales los puntos de paradas de Cercedilla pueden verse modificados. Consulte a la empresa de autobuses.</li>
           </ul>
         </div>
+
+        <div class="folleto">
+          <a href="{{folletoDownloadLink}}" download>Descargar horario oficial</a>          
+        </div>
       </div>
       <div class="col-md-6 col-xs-12">
         <app-stop-detail

@@ -55,3 +55,38 @@
     }
   }
 }
+
+.folleto {
+  width: 16em;
+  margin: 3em auto;
+  background-color: black;
+  padding: 0.5em 1em;
+  border-radius: 28px;
+  text-align: center;
+
+  @include handset {
+    margin-bottom: 1em;
+    width: 55%;
+    margin: 1em auto;
+  }
+
+  a {
+    display:block;
+    padding-left: 1em;
+    width: 14em;
+    margin: 0 auto;
+    text-align: left;
+    color:$light-grey;
+    line-height: 2;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzcuNzk0IDUzNy43OTU7IiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUzNy43OTRweCIgaGVpZ2h0PSI1MzcuNzk1cHgiIHZpZXdCb3g9IjAgMCA1MzcuNzk0IDUzNy43OTUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGc+CiAgICA8Zz4KICAgICAgPHBhdGggZD0iTTQ2My4wOTEsNDY2LjExNEg3NC44NTRjLTExLjg1NywwLTIxLjQ5Nyw5LjcxNi0yMS40OTcsMjEuNDk3djI4LjY4OGMwLDExLjg1Nyw5LjcxNiwyMS40OTYsMjEuNDk3LDIxLjQ5NmgzODguMDg0JiMxMDsmIzk7JiM5OyYjOTtjMTEuODU3LDAsMjEuNDk2LTkuNzE2LDIxLjQ5Ni0yMS40OTZ2LTI4LjY4OEM0ODQuNjY1LDQ3NS42NzcsNDc0Ljk0OSw0NjYuMTE0LDQ2My4wOTEsNDY2LjExNHoiIHN0eWxlPSJmaWxsOiByZ2IoMjQ2LCAyMDMsIDkyKTsiLz4KICAgICAgPHBhdGggZD0iTTI1My45NCw0MjcuNjM1YzQuMjA4LDQuMjA4LDkuNzE2LDYuMzUsMTUuMTQ3LDYuMzVjNS41MDgsMCwxMS4wMTYtMi4xNDIsMTUuMTQ3LTYuMzVsMTQ3LjAzMy0xNDcuMDMzJiMxMDsmIzk7JiM5OyYjOTtjOC4zMzktOC4zMzgsOC4zMzktMjEuOTU1LDAtMzAuNDQ3bC0yMC4zNDktMjAuMzQ5Yy04LjMzOS04LjMzOS0yMS45NTYtOC4zMzktMzAuNDQ3LDBsLTc1LjU4Miw3NS42NTlWMjEuNDk3JiMxMDsmIzk7JiM5OyYjOTtDMzA0Ljg4OSw5LjYzOSwyOTUuMTczLDAsMjgzLjM5MywwaC0yOC42ODhjLTExLjg1NywwLTIxLjQ5Nyw5LjU2Mi0yMS40OTcsMjEuNDk3djI4NC4wNDRsLTc1LjY1OC03NS42NTkmIzEwOyYjOTsmIzk7JiM5O2MtOC4zMzktOC4zMzgtMjIuMDMyLTguMzM4LTMwLjQ0NywwbC0yMC4zNDksMjAuMzQ5Yy04LjMzOCw4LjMzOC04LjMzOCwyMi4wMzIsMCwzMC40NDdMMjUzLjk0LDQyNy42MzV6IiBzdHlsZT0iZmlsbDogcmdiKDI0NiwgMjAzLCA5Mik7Ii8+CiAgICA8L2c+CiAgPC9nPgogIDxnLz4KICA8Zy8+CiAgPGcvPgogIDxnLz4KICA8Zy8+CiAgPGcvPgogIDxnLz4KICA8Zy8+CiAgPGcvPgogIDxnLz4KICA8Zy8+CiAgPGcvPgogIDxnLz4KICA8Zy8+CiAgPGcvPgo8L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 1em 1em;
+    background-position-x: 12.5em;
+    background-position-y: 0.5em;
+    @include handset {
+      padding-left: 0.5em;
+      font-size:0.8em;
+      background-position-x: 12em;
+    }
+  }
+}

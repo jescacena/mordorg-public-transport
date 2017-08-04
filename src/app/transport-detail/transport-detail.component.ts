@@ -30,6 +30,7 @@ export class TransportDetailComponent implements OnInit {
   stationSelectedId:string;
   stationSelected:Station;
   durationEstimated:string;
+  folletoDownloadLink:string;
   hasPossibleTimetableChanges:boolean = false;
 
   constructor(private route:ActivatedRoute,
@@ -71,6 +72,9 @@ export class TransportDetailComponent implements OnInit {
     //Build title label
     this.lineName = this.lineResponseObj.nombre;
     this.directionLabel = DirectionLabels[this.direction];
+
+    //GEt folleto download link
+    this.folletoDownloadLink = (this.lineResponseObj.timetable[0].folleto_link)? this.lineResponseObj.timetable[0].folleto_link.guid : null;
 
 
     //Build stations list
