@@ -29,30 +29,30 @@ export class DirectionSelectorComponent implements OnInit {
       label:'Madrid-Cercedilla',
       code: DirectionsEnum.MadridCercedilla
     },
-    {
-      label:'Cercedilla-Segovia',
-      code: DirectionsEnum.CercedillaSegovia
-    },
-    {
-      label:'Segovia-Cercedilla',
-      code: DirectionsEnum.SegoviaCercedilla
-    },
-    {
-      label:'Instituto-Hospital Fuenfría',
-      code: DirectionsEnum.InstitutoHospitalFuenfria
-    },
-    {
-      label:'Hospital Fuenfría-Instituto',
-      code: DirectionsEnum.HospitalFuenfriaInstituto
-    },
-    {
-      label:'Cercedilla-Hospital Collado Vilalba',
-      code: DirectionsEnum.CercedillaHospitalVilalba
-    },
-    {
-      label:'Hospital Collado Vilalba-Cercedilla',
-      code: DirectionsEnum.HospitalVillalbaCercedila
-    }
+    // {
+    //   label:'Cercedilla-Segovia',
+    //   code: DirectionsEnum.CercedillaSegovia
+    // },
+    // {
+    //   label:'Segovia-Cercedilla',
+    //   code: DirectionsEnum.SegoviaCercedilla
+    // },
+    // {
+    //   label:'Instituto-Hospital Fuenfría',
+    //   code: DirectionsEnum.InstitutoHospitalFuenfria
+    // },
+    // {
+    //   label:'Hospital Fuenfría-Instituto',
+    //   code: DirectionsEnum.HospitalFuenfriaInstituto
+    // },
+    // {
+    //   label:'Cercedilla-Hospital Collado Vilalba',
+    //   code: DirectionsEnum.CercedillaHospitalVilalba
+    // },
+    // {
+    //   label:'Hospital Collado Vilalba-Cercedilla',
+    //   code: DirectionsEnum.HospitalVillalbaCercedila
+    // }
   ];
 
   constructor(private dataService: DataService) { }
