@@ -274,6 +274,7 @@ export class DateUtilsService {
     const momentAux = momentDate || moment();
     const momentNew =_.cloneDeep(momentAux);
     const momentNewTomorrow =_.cloneDeep(momentAux).add(1,'days');
+    const momentNewYesterday =_.cloneDeep(momentAux).subtract(1,'days');
 
     // console.log('JES parseCCPOI_BusTimetableResponseToArray -->momentNew', momentNew.format('DD-MM-YYYY'));
     // console.log('JES parseCCPOI_BusTimetableResponseToArray -->momentNewTomorrow', momentNewTomorrow.format('DD-MM-YYYY'));
@@ -310,11 +311,11 @@ export class DateUtilsService {
 
           case 'NVSG': {
             //set day flags
-            console.log('Nocturno!!!!!');
+            // console.log('Nocturno!!!!!');
             dayOfTheWeek = this.getDayOfTheWeek(momentNew);
             isDayBeforeBankHoliday = this.isDayBeforeBankHoliday(momentNew);
 
-            if(dayOfTheWeek === 5 || dayOfTheWeek === 6 || isDayBeforeBankHoliday) {   //Viernes , Sábado o Víspera de festivo
+            if(dayOfTheWeek === 5 || dayOfTheWeek === 6 || dayOfTheWeek === 0 ||isDayBeforeBankHoliday) {   //Viernes , Sábado, Domingo(madrugada) o Víspera de festivo
               includeTTEntry = true;
             }
             break;
@@ -337,10 +338,39 @@ export class DateUtilsService {
             let minute = (entry2.indexOf('D') !== -1)? entry2.slice(0, -1) : entry2;
             // console.log('JES jander minute-->', parseInt(minute));
 
-            //Para los nocturnos ponemos el dia de mañana
-            let momentToAdd = (departureType === 'NVSG')? _.cloneDeep(momentNewTomorrow) : _.cloneDeep(momentNew);
+            //Para los nocturnos ponemos el dia de mañana si hora actual < 23.59
+            let momentNew2359 = _.cloneDeep(momentNew);
+            momentNew2359.set('hour',23);
+            momentNew2359.set('minute',59);
+            let momentNew0000 = _.cloneDeep(momentNew);
+            momentNew0000.set('hour',0);
+            momentNew0000.set('minute',0);
+            let momentNew0630 = _.cloneDeep(momentNew);
+            momentNew0630.set('hour',6);
+            momentNew0630.set('minute',30);
+
+            let momentToAdd;
+            //
+            // if(departureType === 'NVSG') {
+            //   console.log('JES momentNew-->', momentNew.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            //   console.log('JES momentNew2359-->', momentNew2359.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            //   console.log('JES momentNew0000-->', momentNew0000.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            //   console.log('JES momentNew0630-->', momentNew0630.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            // }
+
+             if(departureType === 'NVSG' && momentNew.isBetween(momentNew0630,momentNew2359)) {
+               momentToAdd = _.cloneDeep(momentNewTomorrow);
+             } else if(departureType === 'NVSG' && momentNew.isBetween(momentNew0000,momentNew0630)) {
+               //ponemos el día de hoy si la hora actual esta entre 00:00 y 06:30
+               momentToAdd = _.cloneDeep(momentNew);
+             } else {
+               momentToAdd = _.cloneDeep(momentNew);
+             }
+
             momentToAdd.set('hour', hour);
             momentToAdd.set('minute', parseInt(minute));
+            // console.log('JES momentToAdd-->', momentToAdd.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+
 
             //TODO set place and placeLink
             let departure = new Departure(momentToAdd,'','',departureType,isDirect,isNightly,transportType);
@@ -350,14 +380,22 @@ export class DateUtilsService {
         }
     }
 
+    if(result) {
+      //Sort ascending
+      result.sort(function(a, b) {
+        return (a.momentDate.isAfter(b.momentDate))? 1 : -1;
+      });
+      // console.log('JES buildMixDepaturesFromMoment result',result);
+    }
+
     return result;
   }
 
   _getTransportTypeLabel(transportType: number) {
     switch(transportType) {
-        case TransportTypeEnum.Bus:
-      return 'Bus';
-        case TransportTypeEnum.Train:
+      case TransportTypeEnum.Bus:
+        return 'Bus';
+      case TransportTypeEnum.Train:
         return 'Tren';
       default:
         return null;

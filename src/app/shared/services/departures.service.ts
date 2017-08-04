@@ -30,7 +30,7 @@ export class DeparturesService {
     let trainNextDeparts: Array<Departure>;
     let busNextDeparts: Array<Departure>;
 
-    const countLocalByType = (!count || count%2 !== 0)? null : count/2;
+    const countLocalByType = (!count || count%2 !== 0)? null : count;
 
     //Get types
     let trainLineType = trainData.type;
@@ -127,9 +127,12 @@ export class DeparturesService {
       // console.log('JES buildMixDepaturesFromMoment result',result);
     }
 
-    return result;
-
-
+    //Trunc to count
+    if(countLocalByType) {
+      return result.slice(0, countLocalByType);
+    } else {
+      return result;
+    }
 
   }
 

@@ -85,6 +85,9 @@
               &.nocturnal {
                 font-size:0.4em;
                 margin:0;
+                @include handset {
+                  top: 3.5em;
+                }
               }
             }
 
