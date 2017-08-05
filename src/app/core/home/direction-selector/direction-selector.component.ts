@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from "lodash";
 import * as moment from 'moment';
 import {IMyDpOptions,IMyDate,IMyDateModel} from 'mydatepicker';
+import {ActivatedRoute, Router,Data} from '@angular/router';
+
 
 import { DataService } from '../../../shared/services/data.service';
 import { DirectionsEnum } from '../../../shared/model/directions.enum';
@@ -63,10 +65,18 @@ export class DirectionSelectorComponent implements OnInit {
     // }
   ];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,private route:ActivatedRoute) { }
 
   ngOnInit() {
-    this.labelSelected = this.choiceList[0].label;
+    // this.labelSelected = this.choiceList[0].label;
+
+    let directionCode = (this.route.snapshot.params['direction'])? parseInt(this.route.snapshot.params['direction']) : DirectionsEnum.CercedillaMadrid;
+
+    this.choiceSelected = _.find(this.choiceList , (item)=> {
+      return item.code === directionCode;
+    });
+    this.labelSelected = this.choiceSelected.label;
+
   }
 
   onChoiceSelect(choiceCode) {

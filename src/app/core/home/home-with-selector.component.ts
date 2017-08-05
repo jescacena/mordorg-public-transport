@@ -42,7 +42,7 @@ export class HomeWithSelectorComponent implements OnInit {
   trainDepartures:Array<Departure>;
   mixDepartures: Array<Departure>;
 
-  directionSelected:number = DirectionsEnum.CercedillaMadrid;
+  directionSelected:number;
   dateSelected = moment();
 
   private dateSelectedDP: Object = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
@@ -65,6 +65,12 @@ export class HomeWithSelectorComponent implements OnInit {
               private homeService: HomeService) { }
 
   ngOnInit() {
+
+    this.directionSelected = (this.route.snapshot.params['direction'])? parseInt(this.route.snapshot.params['direction']) : DirectionsEnum.CercedillaMadrid;
+    this.dataService.newDirectionSelected.next(this.directionSelected);
+
+    console.log('JES this.directionSelected',this.directionSelected);
+
 
     //Resolve bank holidays and init dateUtilsService
     this.route.data.subscribe(
@@ -136,6 +142,9 @@ export class HomeWithSelectorComponent implements OnInit {
         },50);
       }
     );
+
+
+
 
   }
 

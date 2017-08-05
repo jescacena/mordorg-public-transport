@@ -14,6 +14,7 @@ import { LineResolver } from './shared/services/line-resolver.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeWithSelectorComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
+  { path: 'home-direction/:direction', component: HomeWithSelectorComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   // { path: '', component: HomeComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
   { path: 'contact', component: ContactComponent},
   { path: 'one-direction/:direction/:date', component: OneDirectionComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
