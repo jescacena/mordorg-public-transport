@@ -27,90 +27,24 @@ export class DeparturesService {
                               busData,
                               count:number = null) {
     let result: Array<Departure>;
-    let trainNextDeparts: Array<Departure>;
-    let busNextDeparts: Array<Departure>;
 
     const countLocalByType = (!count || count%2 !== 0)? null : count;
 
-    //Get types
-    let trainLineType = trainData.type;
-    let busLineType = busData.type;
-
-    //Get timetables
-    let trainTT = trainData.timetable[0];
-    let busTT = busData.timetable[0];
-
-    //Get limit Stations
-    let cercedillaBusStation = busData.station_start[0];
-    let targetBusStation = busData.station_end[0];
-    let cercedillaTrainStation = trainData.station_start[0];
-    let targetTrainStation = trainData.station_end[0];
-
     switch(directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
-        //Train
-        const trainTodayDeparturesC2A = this.dateUtilsService.parseTrainTimeTableByDate(trainTT,'C2A',momentDate);
-        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate,
-                                                                  trainTodayDeparturesC2A,
-                                                                  countLocalByType);
-        //Bus 684
-        const busTodayDeparturesC2M = this.dateUtilsService.parseBusTimeTableByDate(busTT,'C2M',momentDate);
-        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesC2M, countLocalByType);
-
-        //Set label & place station start
-        for(let depart of busNextDeparts) {
-          depart.transportType = TransportTypeEnum.Bus;
-          depart.direction = DirectionsEnum.CercedillaMadrid;
-          depart.lineType = busLineType;
-          depart.label = busData.nombre;
-          depart.placeLabel = cercedillaBusStation.direccion;
-          depart.station = cercedillaBusStation;
-          depart.placeLink = "http://maps.google.com/?q=" + cercedillaBusStation.latlon;
-        }
-        for(let depart of trainNextDeparts) {
-          depart.transportType = TransportTypeEnum.Train;
-          depart.direction = DirectionsEnum.CercedillaMadrid;
-          depart.lineType = trainLineType;
-          depart.label = trainData.nombre;
-          depart.placeLabel = cercedillaTrainStation.direccion;
-          depart.station = cercedillaTrainStation;
-          depart.placeLink = "http://maps.google.com/?q=" + cercedillaTrainStation.latlon;
-        }
-
-        //Concat train and bus in mixed
-        result = busNextDeparts.concat(trainNextDeparts);
+        result = this.fillMixDeparturesByDirection(busData,trainData,'C2M' ,'C2A', momentDate, directionSelected,countLocalByType);
         break;
 
       case DirectionsEnum.MadridCercedilla:
-        const trainTodayDeparturesA2C = this.dateUtilsService.parseTrainTimeTableByDate(trainTT,'A2C',momentDate);
-        trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, trainTodayDeparturesA2C, countLocalByType);
+        result = this.fillMixDeparturesByDirection(busData,trainData,'M2C' ,'A2C', momentDate, directionSelected,countLocalByType);
+        break;
 
-        const busTodayDeparturesM2C = this.dateUtilsService.parseBusTimeTableByDate(busTT,'M2C',momentDate);
-        busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDeparturesM2C, countLocalByType);
+      case DirectionsEnum.CercedillaPiscinasBerceas:
+        result = this.fillMixDeparturesByDirection(busData,null,'C2P' ,null, momentDate, directionSelected,count);
+        break;
 
-        //Set place station start
-        for(let depart of busNextDeparts) {
-          depart.transportType = TransportTypeEnum.Bus;
-          depart.direction = DirectionsEnum.MadridCercedilla;
-          depart.lineType = busLineType;
-          depart.label = busData.nombre;
-          depart.placeLabel = targetBusStation.direccion;
-          depart.station = targetBusStation;
-          depart.placeLink = "http://maps.google.com/?q="+targetBusStation.latlon;
-        }
-        //Set place station start
-        for(let depart of trainNextDeparts) {
-          depart.transportType = TransportTypeEnum.Train;
-          depart.direction = DirectionsEnum.MadridCercedilla;
-          depart.lineType = trainLineType;
-          depart.label = trainData.nombre;
-          depart.placeLabel = targetTrainStation.direccion;
-          depart.station = targetTrainStation;
-          depart.placeLink = "http://maps.google.com/?q=" + targetTrainStation.latlon;
-        }
-
-        //Concat train and bus in mixed
-        result = busNextDeparts.concat(trainNextDeparts);
+      case DirectionsEnum.PiscinasBerceasCercedilla:
+        result = this.fillMixDeparturesByDirection(busData,null,'P2C' ,null, momentDate, directionSelected,count);
         break;
 
       default:
@@ -133,6 +67,102 @@ export class DeparturesService {
     } else {
       return result;
     }
+
+  }
+
+
+  /**
+  fillMixDeparturesByDirection
+  * Fill an array of departures for both types: train and busses
+  * @param {object} busData bus line data
+  * @param {object} trainData train line data
+  * @param {string} directionBusCode directionBusCode 'C2M','M2C','C2P','P2C'
+  * @param {string} directionTrainCode directionTrainCode 'C2A','A2C'
+  * @param {object} momentDate
+  * @param {string} directionSelected directionSelected
+  * @param {number} count number of departures to be retrieved (dividible by 2)  ---> null for ALL
+  * @return {object} Array of Departure
+  */
+
+  fillMixDeparturesByDirection(busData,trainData,directionBusCode ,directionTrainCode, momentDate, directionSelected,count) {
+    let result: Array<Departure>;
+    let trainNextDeparts: Array<Departure>;
+    let busNextDeparts: Array<Departure>;
+
+    //Get types
+    let trainLineType = (trainData)? trainData.type : null;
+    let busLineType = busData.type;
+
+    //Get timetables
+    let trainTT = (trainData)? trainData.timetable[0] : null;
+    let busTT = busData.timetable[0];
+
+    //Get limit Stations
+    let busStation;
+    switch(directionBusCode) {
+      case 'C2M':
+        busStation = busData.station_start[0];
+        break;
+      case 'C2P':
+        busStation = busData.station_start[0];
+        break;
+      case 'M2C':
+        busStation = busData.station_end[0];
+        break;
+      case 'P2C':
+        busStation = busData.station_end[0];
+        break;
+      default:
+        break;
+    }
+    let trainStation;
+    switch(directionTrainCode) {
+      case 'C2A':
+        trainStation = trainData.station_start[0];
+        break;
+      case 'A2C':
+        trainStation = trainData.station_end[0];
+        break;
+      default:
+        break;
+    }
+
+    //Train
+    if(trainData) {
+      const trainTodayDepartures= this.dateUtilsService.parseTrainTimeTableByDate(trainTT,directionTrainCode,momentDate);
+      trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate,
+                                                                trainTodayDepartures,
+                                                                count);
+    }
+    //Bus 684
+    const busTodayDepartures = this.dateUtilsService.parseBusTimeTableByDate(busTT,directionBusCode,momentDate);
+    busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDepartures, count);
+
+    //Set label & place station start
+    for(let depart of busNextDeparts) {
+      depart.transportType = TransportTypeEnum.Bus;
+      depart.direction = directionSelected;
+      depart.lineType = busLineType;
+      depart.label = busData.nombre;
+      depart.placeLabel = busStation.direccion;
+      depart.station = busStation;
+      depart.placeLink = "http://maps.google.com/?q=" + busStation.latlon;
+    }
+
+    if(trainData) {
+      for(let depart of trainNextDeparts) {
+        depart.transportType = TransportTypeEnum.Train;
+        depart.direction = directionSelected;
+        depart.lineType = trainLineType;
+        depart.label = trainData.nombre;
+        depart.placeLabel = trainStation.direccion;
+        depart.station = trainStation;
+        depart.placeLink = "http://maps.google.com/?q=" + trainStation.latlon;
+      }
+    }
+
+    //Concat train and bus in mixed
+    return (trainNextDeparts)? busNextDeparts.concat(trainNextDeparts) : busNextDeparts;
 
   }
 

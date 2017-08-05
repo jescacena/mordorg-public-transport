@@ -8,5 +8,7 @@ export const enum DirectionsEnum {
     CercedillaHospitalVilalba,
     HospitalVillalbaCercedila,
     CercedillaCotos,
-    CotosCercedilla
+    CotosCercedilla,
+    CercedillaPiscinasBerceas,
+    PiscinasBerceasCercedilla
 }

@@ -68,7 +68,8 @@ export class DataService {
   getAllLinesData() {
     return Observable.forkJoin(
       this.getCCPOIS_TrainLinePubtra('c2'),
-      this.getCCPOIS_BusLinePubtra('684')
+      this.getCCPOIS_BusLinePubtra('684'),
+      this.getCCPOIS_BusLinePubtra('piscinas')
       // this.dataService.getCCPOIS_TrainTimetable('c2'),
       // this.dataService.getCCPOIS_BusTimetable('684')
     );

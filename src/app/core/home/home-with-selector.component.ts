@@ -35,6 +35,7 @@ export class HomeWithSelectorComponent implements OnInit {
   //Line data
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
+  busPiscinasLinePubtraResponse;
 
   //Next departures arrays
   busDepartures:Array<Departure>;
@@ -79,10 +80,12 @@ export class HomeWithSelectorComponent implements OnInit {
       (dataArray: Array<Response>) => {
         this.trainC2LinePubtraResponse = dataArray[0].json()[0];
         this.bus684LinePubtraResponse = dataArray[1].json()[0];
+        this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
 
         //Save to cache line data
         this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
         this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
+        this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
         console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
 
         this.dataService.directionSelected = this.directionSelected;
@@ -143,10 +146,27 @@ export class HomeWithSelectorComponent implements OnInit {
   */
   _updateMixDepartures() {
     this.showNoDataAvailable = false;
+    let busResponse;
+    switch(this.directionSelected) {
+      case DirectionsEnum.CercedillaMadrid:
+        busResponse = this.bus684LinePubtraResponse;
+        break;
+      case DirectionsEnum.CercedillaPiscinasBerceas:
+        busResponse = this.busPiscinasLinePubtraResponse;
+        break;
+      case DirectionsEnum.MadridCercedilla:
+        busResponse = this.bus684LinePubtraResponse;
+        break;
+      case DirectionsEnum.PiscinasBerceasCercedilla:
+        busResponse = this.busPiscinasLinePubtraResponse;
+        break;
+      default:
+        break;
+    }
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
                                                                             this.trainC2LinePubtraResponse,
-                                                                            this.bus684LinePubtraResponse,
+                                                                            busResponse,
                                                                             6);
     if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{

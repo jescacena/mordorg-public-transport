@@ -13,8 +13,6 @@ import { DirectionLabels } from '../shared/model/direction-labels.constant';
 import * as moment from 'moment';
 
 
-
-
 @Component({
   selector: 'app-transport-detail',
   templateUrl: './transport-detail.component.html',
@@ -103,8 +101,26 @@ export class TransportDetailComponent implements OnInit {
     }
 
     //Build stations list
-    const stationsData = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0]:this.lineResponseObj['stations-madrid-cercedilla'][0];
-    this.durationEstimated = (this.direction === DirectionsEnum.CercedillaMadrid)? this.lineResponseObj['stations-cercedilla-madrid'][0].duration_estimated:this.lineResponseObj['stations-madrid-cercedilla'][0].duration_estimated;
+    let stationsData;
+    switch(this.direction) {
+      case DirectionsEnum.CercedillaMadrid:
+        stationsData = this.lineResponseObj['stations-cercedilla-madrid'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cercedilla-madrid'][0].duration_estimated;
+        break;
+      case DirectionsEnum.CercedillaPiscinasBerceas:
+        stationsData = this.lineResponseObj['stations-cercedilla-berceas'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cercedilla-berceas'][0].duration_estimated;
+        break;
+      case DirectionsEnum.MadridCercedilla:
+        stationsData = this.lineResponseObj['stations-madrid-cercedilla'][0];
+        this.durationEstimated = this.lineResponseObj['stations-madrid-cercedilla'][0].duration_estimated;
+        break;
+      case DirectionsEnum.PiscinasBerceasCercedilla:
+        stationsData = this.lineResponseObj['stations-berceas-cercedilla'][0];
+        this.durationEstimated = this.lineResponseObj['stations-berceas-cercedilla'][0].duration_estimated;
+        break;
+    }
+
 
     console.log('JES TransportDetailComponent stationsData',stationsData);
 

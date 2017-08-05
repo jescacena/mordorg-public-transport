@@ -29,6 +29,14 @@ export class DirectionSelectorComponent implements OnInit {
       label:'Madrid-Cercedilla',
       code: DirectionsEnum.MadridCercedilla
     },
+    {
+      label:'Cercedilla-Piscinas Berceas',
+      code: DirectionsEnum.CercedillaPiscinasBerceas
+    },
+    {
+      label:'Piscinas Berceas-Cercedilla',
+      code: DirectionsEnum.PiscinasBerceasCercedilla
+    },
     // {
     //   label:'Cercedilla-Segovia',
     //   code: DirectionsEnum.CercedillaSegovia

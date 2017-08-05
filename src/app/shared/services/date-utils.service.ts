@@ -162,7 +162,7 @@ export class DateUtilsService {
   *   "LV-5-30,45",
   *   "LV-6-00,15,30,45D",
   *   "LV-7-00,15D,30,45D",
-  * @param direction {string} 'C2M' / 'M2C'
+  * @param direction {string} 'C2A' / 'A2C'
   * @param momentDate {object} moment data
   * @return {object} Array of departures
   */
@@ -181,7 +181,7 @@ export class DateUtilsService {
   *   "LV-5-30,45",
   *   "LV-6-00,15,30,45D",
   *   "LV-7-00,15D,30,45D",
-  * @param direction {string} 'C2M' / 'M2C'
+  * @param direction {string} 'C2M' / 'M2C' / 'C2P' / 'P2C'
   * @param momentDate {object} moment data
   * @return {object} Array of departures
   */
@@ -212,8 +212,14 @@ export class DateUtilsService {
       case 'C2M':
           ttData = data.horario_salidas_cercedilla_madrid;
           break;
+      case 'C2P':
+          ttData = data.horario_salidas_cercedilla_berceas;
+          break;
       case 'M2C':
           ttData = data.horario_salidas_madrid_cercedilla;
+          break;
+      case 'P2C':
+          ttData = data.horario_salidas_berceas_cercedilla;
           break;
       default:
           console.log('parseCCPOI_BusTimetableResponseToArray ERROR');

@@ -27,6 +27,7 @@ export class OneDirectionComponent implements OnInit {
   //Line data
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
+  busPiscinasLinePubtraResponse;
 
   //Next departures arrays
   busDepartures:Array<Departure>;
@@ -70,6 +71,7 @@ export class OneDirectionComponent implements OnInit {
         console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
         this.trainC2LinePubtraResponse = dataArray[0].json()[0];
         this.bus684LinePubtraResponse = dataArray[1].json()[0];
+        this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
 
         this._updateMixDepartures();
 
@@ -107,10 +109,28 @@ export class OneDirectionComponent implements OnInit {
   */
 
   _updateMixDepartures() {
+    let busResponse;
+    switch(this.directionSelected) {
+      case DirectionsEnum.CercedillaMadrid:
+        busResponse = this.bus684LinePubtraResponse;
+        break;
+      case DirectionsEnum.CercedillaPiscinasBerceas:
+        busResponse = this.busPiscinasLinePubtraResponse;
+        break;
+      case DirectionsEnum.MadridCercedilla:
+        busResponse = this.bus684LinePubtraResponse;
+        break;
+      case DirectionsEnum.PiscinasBerceasCercedilla:
+        busResponse = this.busPiscinasLinePubtraResponse;
+        break;
+      default:
+        break;
+    }
+
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
                                                                             this.trainC2LinePubtraResponse,
-                                                                            this.bus684LinePubtraResponse);
+                                                                            busResponse);
     if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{
         //Notify view by observable subject

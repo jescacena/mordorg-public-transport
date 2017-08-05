@@ -28,4 +28,11 @@ export const DirectionLabels = {
 
   // DirectionsEnum.CotosCercedilla : 'Cotos - Cercedilla',
   9 : 'Cotos - Cercedilla',
+
+  // DirectionsEnum.CercedillaPiscinasBerceas : 'Cercedilla - Piscinas Berceas',
+  10 : 'Cercedilla - Piscinas Berceas',
+
+  // DirectionsEnum.PiscinasBerceasCercedilla : 'Piscinas Berceas - Cercedilla',
+  11 : 'Piscinas Berceas - Cercedilla',
+
 };
