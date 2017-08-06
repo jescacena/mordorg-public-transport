@@ -3,9 +3,13 @@ import * as _ from "lodash";
 import * as moment from 'moment';
 import {IMyDpOptions,IMyDate,IMyDateModel} from 'mydatepicker';
 import {ActivatedRoute, Router,Data} from '@angular/router';
+import { Response } from '@angular/http';
+
 
 
 import { DataService } from '../../../shared/services/data.service';
+import {CacheService} from '../../../shared/services/cache.service';
+
 import { DirectionsEnum } from '../../../shared/model/directions.enum';
 
 
@@ -47,14 +51,14 @@ export class DirectionSelectorComponent implements OnInit {
     //   label:'Segovia-Cercedilla',
     //   code: DirectionsEnum.SegoviaCercedilla
     // },
-    // {
-    //   label:'Instituto-Hospital Fuenfría',
-    //   code: DirectionsEnum.InstitutoHospitalFuenfria
-    // },
-    // {
-    //   label:'Hospital Fuenfría-Instituto',
-    //   code: DirectionsEnum.HospitalFuenfriaInstituto
-    // },
+    {
+      label:'Instituto-Hospital Fuenfría',
+      code: DirectionsEnum.InstitutoHospitalFuenfria
+    },
+    {
+      label:'Hospital Fuenfría-Instituto',
+      code: DirectionsEnum.HospitalFuenfriaInstituto
+    },
     // {
     //   label:'Cercedilla-Hospital Collado Vilalba',
     //   code: DirectionsEnum.CercedillaHospitalVilalba
@@ -65,7 +69,9 @@ export class DirectionSelectorComponent implements OnInit {
     // }
   ];
 
-  constructor(private dataService: DataService,private route:ActivatedRoute) { }
+  constructor(private dataService: DataService,
+    private route:ActivatedRoute,
+    private cacheService: CacheService) { }
 
   ngOnInit() {
     // this.labelSelected = this.choiceList[0].label;
@@ -87,9 +93,35 @@ export class DirectionSelectorComponent implements OnInit {
     this.labelSelected = this.choiceSelected.label;
     this.showChoiceList = false;
 
-    //Notify listeners
-    this.dataService.newDirectionSelected.next(this.choiceSelected);
+    //Get uncached lines (L1)
+    if(choiceCode === DirectionsEnum.HospitalFuenfriaInstituto ||
+        choiceCode === DirectionsEnum.InstitutoHospitalFuenfria) {
+          this.dataService.mixDepartures.next([]);
 
+          if(!this.cacheService.lineCacheList['line-pubtra-l1']) {
+            this.dataService.getBusLineData('l1').subscribe(
+              (data: Response) => {
+                //Save to cache line data
+                const jsonData = data.json()[0];
+                console.log('JES onChoiceSelect jsonData',jsonData);
+                this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                console.log('JES onChoiceSelect cached data for lines-->', this.cacheService.lineCacheList);
+                //
+                this.dataService.directionSelected = this.choiceSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.choiceSelected);
+              },
+              (error) => console.log(error)
+            );
+          } else {
+            this.dataService.directionSelected = this.choiceSelected;
+            //Notify listeners
+            this.dataService.newDirectionSelected.next(this.choiceSelected);
+          }
+    } else {
+      //Notify listeners
+      this.dataService.newDirectionSelected.next(this.choiceSelected);
+    }
   }
 
   toggleChoiceList() {

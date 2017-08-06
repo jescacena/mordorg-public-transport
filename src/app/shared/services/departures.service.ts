@@ -47,6 +47,14 @@ export class DeparturesService {
         result = this.fillMixDeparturesByDirection(busData,null,'P2C' ,null, momentDate, directionSelected,count);
         break;
 
+      case DirectionsEnum.HospitalFuenfriaInstituto:
+        result = this.fillMixDeparturesByDirection(busData,null,'H2I' ,null, momentDate, directionSelected,count);
+        break;
+
+      case DirectionsEnum.InstitutoHospitalFuenfria:
+        result = this.fillMixDeparturesByDirection(busData,null,'I2H' ,null, momentDate, directionSelected,count);
+        break;
+
       default:
         console.log('Direction ' + directionSelected + 'not available!');
         result = null;
@@ -62,7 +70,7 @@ export class DeparturesService {
     }
 
     //Trunc to count
-    if(countLocalByType) {
+    if(result && countLocalByType) {
       return result.slice(0, countLocalByType);
     } else {
       return result;
@@ -106,10 +114,16 @@ export class DeparturesService {
       case 'C2P':
         busStation = busData.station_start[0];
         break;
+      case 'I2H':
+        busStation = busData.station_start[0];
+        break;
       case 'M2C':
         busStation = busData.station_end[0];
         break;
       case 'P2C':
+        busStation = busData.station_end[0];
+        break;
+      case 'H2I':
         busStation = busData.station_end[0];
         break;
       default:

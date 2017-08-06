@@ -9,6 +9,7 @@ import { DirectionLabels } from '../shared/model/direction-labels.constant';
 
 import { DateUtilsService } from '../shared/services/date-utils.service';
 import { DataService } from '../shared/services/data.service';
+import { CacheService } from '../shared/services/cache.service';
 import { DeparturesService } from '../shared/services/departures.service';
 import { fadeInAnimation } from '../shared/fade-in.animation';
 
@@ -28,6 +29,7 @@ export class OneDirectionComponent implements OnInit {
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
   busPiscinasLinePubtraResponse;
+  busUrbanLinePubtraResponse;
 
   //Next departures arrays
   busDepartures:Array<Departure>;
@@ -44,6 +46,7 @@ export class OneDirectionComponent implements OnInit {
               private dateUtilsService: DateUtilsService,
               private departuresService: DeparturesService,
               private dataService: DataService,
+              private cacheService: CacheService,
             ) { }
 
   ngOnInit() {
@@ -64,27 +67,78 @@ export class OneDirectionComponent implements OnInit {
     );
     console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
-    //Fetch initial next departures
-    this.dataService.getAllLinesData().subscribe(
-      (dataArray: Array<Response>) => {
-        console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
-        console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
-        this.trainC2LinePubtraResponse = dataArray[0].json()[0];
-        this.bus684LinePubtraResponse = dataArray[1].json()[0];
-        this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
 
-        this._updateMixDepartures();
+    //Get lines data depending on selected direction
+    if(this.directionSelected === DirectionsEnum.HospitalFuenfriaInstituto ||
+            this.directionSelected === DirectionsEnum.InstitutoHospitalFuenfria) {
+              this.dataService.mixDepartures.next([]);
 
-        this.route.params.subscribe(
-         (params: Params) => {
-           this._parseParamDate();
-           this._updateMixDepartures();
-         });
+              if(!this.cacheService.lineCacheList['line-pubtra-l1']) {
+                this.dataService.getBusLineData('l1').subscribe(
+                  (data: Response) => {
+                    //Save to cache line data
+                    const jsonData = data.json()[0];
+                    this.busUrbanLinePubtraResponse = jsonData;
+                    console.log('JES onChoiceSelect jsonData',jsonData);
+                    this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                    console.log('JES onChoiceSelect cached data for lines-->', this.cacheService.lineCacheList);
+                    //
+                    this.dataService.directionSelected = this.directionSelected;
+                    //Notify listeners
+                    this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                    this._updateMixDepartures();
+
+                    this.route.params.subscribe(
+                     (params: Params) => {
+                       this._parseParamDate();
+                       this._updateMixDepartures();
+                     });
 
 
-      },
-      (error) => console.log(error)
-    );
+                  },
+                  (error) => console.log(error)
+                );
+              } else {
+                this.dataService.directionSelected = this.directionSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                this._updateMixDepartures();
+                this.route.params.subscribe(
+                 (params: Params) => {
+                   this._parseParamDate();
+                   this._updateMixDepartures();
+                 });
+
+              }
+
+    // } else if(this.directionSelected === DirectionsEnum.CercedillaPiscinasBerceas ||
+    //         this.directionSelected === DirectionsEnum.PiscinasBerceasCercedilla) {
+    } else {
+      this.dataService.getAllLinesData().subscribe(
+        (dataArray: Array<Response>) => {
+          console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
+          console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
+          this.trainC2LinePubtraResponse = dataArray[0].json()[0];
+          this.bus684LinePubtraResponse = dataArray[1].json()[0];
+          this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+
+          this._updateMixDepartures();
+
+          this.route.params.subscribe(
+           (params: Params) => {
+             this._parseParamDate();
+             this._updateMixDepartures();
+           });
+
+
+        },
+        (error) => console.log(error)
+      );
+    }
+
+
 
 
   }
@@ -123,6 +177,14 @@ export class OneDirectionComponent implements OnInit {
       case DirectionsEnum.PiscinasBerceasCercedilla:
         busResponse = this.busPiscinasLinePubtraResponse;
         break;
+
+      case DirectionsEnum.HospitalFuenfriaInstituto:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
+        break;
+      case DirectionsEnum.InstitutoHospitalFuenfria:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
+        break;
+
       default:
         break;
     }

@@ -62,6 +62,14 @@ export class DataService {
   }
 
   /**
+  * Get bus line data
+  * @param {string} busId
+  */
+  getBusLineData(busId:string) {
+    return this.getCCPOIS_BusLinePubtra(busId);
+  }
+
+  /**
   * Get all lines data from CCPOIS in wordpress
   * @return {object} Array: 0-tren c2 , 1-bus684
   */

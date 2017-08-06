@@ -221,6 +221,12 @@ export class DateUtilsService {
       case 'P2C':
           ttData = data.horario_salidas_berceas_cercedilla;
           break;
+      case 'I2H':
+          ttData = data.horario_salidas_instituto_hospital;
+          break;
+      case 'H2I':
+          ttData = data.horario_salidas_hospital_instituto;
+          break;
       default:
           console.log('parseCCPOI_BusTimetableResponseToArray ERROR');
     }
@@ -336,12 +342,14 @@ export class DateUtilsService {
         if(includeTTEntry) {
           const hour = parseInt(tokens[1]);
           // console.log('JES jander hour-->', hour);
+          // console.log('JES jander tokens-->', tokens);
           const tokens2 = tokens[2].split(',');
           //00,15D,30,45D
           for (let entry2 of tokens2) {
             const isDirect = entry2.indexOf('D') !== -1;
+            const isCabezuela = entry2.indexOf('C') !== -1;
             const isNightly = (departureType === 'NVSG');
-            let minute = (entry2.indexOf('D') !== -1)? entry2.slice(0, -1) : entry2;
+            let minute = (isDirect || isCabezuela)? entry2.slice(0, -1) : entry2;
             // console.log('JES jander minute-->', parseInt(minute));
 
             //Para los nocturnos ponemos el dia de mañana si hora actual < 23.59
@@ -356,13 +364,6 @@ export class DateUtilsService {
             momentNew0630.set('minute',30);
 
             let momentToAdd;
-            //
-            // if(departureType === 'NVSG') {
-            //   console.log('JES momentNew-->', momentNew.format("dddd, MMMM Do YYYY, h:mm:ss a"));
-            //   console.log('JES momentNew2359-->', momentNew2359.format("dddd, MMMM Do YYYY, h:mm:ss a"));
-            //   console.log('JES momentNew0000-->', momentNew0000.format("dddd, MMMM Do YYYY, h:mm:ss a"));
-            //   console.log('JES momentNew0630-->', momentNew0630.format("dddd, MMMM Do YYYY, h:mm:ss a"));
-            // }
 
              if(departureType === 'NVSG' && momentNew.isBetween(momentNew0630,momentNew2359)) {
                momentToAdd = _.cloneDeep(momentNewTomorrow);
@@ -380,6 +381,7 @@ export class DateUtilsService {
 
             //TODO set place and placeLink
             let departure = new Departure(momentToAdd,'','',departureType,isDirect,isNightly,transportType);
+            departure.isCabezuela = isCabezuela;
             departure.transportTypeLabel = this._getTransportTypeLabel(transportType);
             result.push(departure);
           }

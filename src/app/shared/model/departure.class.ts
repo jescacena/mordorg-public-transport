@@ -15,6 +15,7 @@ export class Departure {
   departureType: string;     //'LV' / 'SDF' / 'NVSG'
   isDirect: Boolean;
   isNightly: Boolean;
+  isCabezuela: Boolean;  //L1 - llega hasta la Urb. Cabezuela
   transportType: number;  //
   transportTypeLabel: string;  //
   label: string;  //

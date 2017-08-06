@@ -36,6 +36,7 @@ export class HomeWithSelectorComponent implements OnInit {
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
   busPiscinasLinePubtraResponse;
+  busUrbanLinePubtraResponse;
 
   //Next departures arrays
   busDepartures:Array<Departure>;
@@ -66,7 +67,11 @@ export class HomeWithSelectorComponent implements OnInit {
 
   ngOnInit() {
 
-    this.directionSelected = (this.route.snapshot.params['direction'])? parseInt(this.route.snapshot.params['direction']) : DirectionsEnum.CercedillaMadrid;
+    this.directionSelected = (this.route.snapshot.params['direction'])?
+                              parseInt(this.route.snapshot.params['direction'])
+                              :
+                              DirectionsEnum.CercedillaMadrid;
+
     this.dataService.newDirectionSelected.next(this.directionSelected);
 
     console.log('JES this.directionSelected',this.directionSelected);
@@ -81,27 +86,64 @@ export class HomeWithSelectorComponent implements OnInit {
     );
     console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
-    //TODO Fetch initial next departures
-    this.dataService.getAllLinesData().subscribe(
-      (dataArray: Array<Response>) => {
-        this.trainC2LinePubtraResponse = dataArray[0].json()[0];
-        this.bus684LinePubtraResponse = dataArray[1].json()[0];
-        this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+    if(!this.route.snapshot.params['direction']) {
+      //Fetch  departures from common routes
+      this.dataService.getAllLinesData().subscribe(
+        (dataArray: Array<Response>) => {
+          this.trainC2LinePubtraResponse = dataArray[0].json()[0];
+          this.bus684LinePubtraResponse = dataArray[1].json()[0];
+          this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
 
-        //Save to cache line data
-        this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
-        this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
-        this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
-        console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
+          //Save to cache line data
+          this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
+          this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
+          this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
+          console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
 
-        this.dataService.directionSelected = this.directionSelected;
+          this.dataService.directionSelected = this.directionSelected;
 
-        this._updateMixDepartures();
+          this._updateMixDepartures();
 
+        },
+        (error) => console.log(error)
+      );
+    } else {   //direction on path
 
-      },
-      (error) => console.log(error)
-    );
+      //Get uncached lines (L1)
+      if(this.directionSelected === DirectionsEnum.HospitalFuenfriaInstituto ||
+          this.directionSelected === DirectionsEnum.InstitutoHospitalFuenfria) {
+            this.dataService.mixDepartures.next([]);
+
+            if(!this.cacheService.lineCacheList['line-pubtra-l1']) {
+              this.dataService.getBusLineData('l1').subscribe(
+                (data: Response) => {
+                  //Save to cache line data
+                  const jsonData = data.json()[0];
+                  this.busUrbanLinePubtraResponse = jsonData;
+                  console.log('JES onChoiceSelect jsonData',jsonData);
+                  this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                  console.log('JES onChoiceSelect cached data for lines-->', this.cacheService.lineCacheList);
+                  //
+                  this.dataService.directionSelected = this.directionSelected;
+                  //Notify listeners
+                  this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                  this._updateMixDepartures();
+
+                },
+                (error) => console.log(error)
+              );
+            } else {
+              this.dataService.directionSelected = this.directionSelected;
+              //Notify listeners
+              this.dataService.newDirectionSelected.next(this.directionSelected);
+
+              this._updateMixDepartures();
+
+            }
+      }
+
+    }
 
     //Init refresh loop
     // const refreshLoop = Observable.interval(1*60*1000);   //Every minute
@@ -168,6 +210,12 @@ export class HomeWithSelectorComponent implements OnInit {
         break;
       case DirectionsEnum.PiscinasBerceasCercedilla:
         busResponse = this.busPiscinasLinePubtraResponse;
+        break;
+      case DirectionsEnum.HospitalFuenfriaInstituto:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
+        break;
+      case DirectionsEnum.InstitutoHospitalFuenfria:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
         break;
       default:
         break;
