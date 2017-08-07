@@ -21,6 +21,9 @@ export class DataService {
   //When user change date selected on home date picker
   newDateSelected = new Subject();
 
+  //Toggle nav menu
+  toggleNavMenu = new Subject();
+
   directionSelected:number;
   dateSelected:Object;
 

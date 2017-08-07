@@ -141,6 +141,28 @@ export class HomeWithSelectorComponent implements OnInit {
               this._updateMixDepartures();
 
             }
+      } else {
+        //Fetch  departures from common routes
+        this.dataService.getAllLinesData().subscribe(
+          (dataArray: Array<Response>) => {
+            this.trainC2LinePubtraResponse = dataArray[0].json()[0];
+            this.bus684LinePubtraResponse = dataArray[1].json()[0];
+            this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+
+            //Save to cache line data
+            this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
+            this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
+            this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
+            console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
+
+            this.dataService.directionSelected = this.directionSelected;
+
+            this._updateMixDepartures();
+
+          },
+          (error) => console.log(error)
+        );
+
       }
 
     }

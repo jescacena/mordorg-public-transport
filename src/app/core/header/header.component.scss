@@ -1,5 +1,110 @@
 @import '../../../assets/styles/variables.scss';
 
+div.menu {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  // right: 1.8em;
+  font-size: 2em;
+  line-height: 40px;
+  border: none;
+  font-weight: 300;
+  border-radius: 0;
+  z-index: 4;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  background-color: transparent;
+  border-right: none;
+  border-top: none;
+  border-bottom: 40px solid $dark-grey;
+  border-left: 40px solid transparent;
+  // border-style: none none solid dotted;
+  transform: rotate(270deg);
+  // @include tablet {
+  //   width: 80px;
+  //   height: 80px;
+  //   line-height: 80px;
+  //   border-bottom: 80px solid $dark-grey;
+  //   border-left: 80px solid transparent;
+  // }
+  // @include handset {
+  //   width: 40px;
+  //   height: 40px;
+  //   line-height: 40px;
+  //   border-bottom: 40px solid $dark-grey;
+  //   border-left: 40px solid transparent;
+  // }
+}
+
+.menu-hamburger{
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBpZD0iaWNvbnMiIHZpZXdCb3g9IjAgMCAzOCAyNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUvPgogIDxnIGlkPSJJY29uIj4KICAgIDxwYXRoIGQ9Ik0zNiw0SDJBMiwyLDAsMCwxLDIsMEgzNkEyLDIsMCwwLDEsMzYsNFoiIHN0eWxlPSJmaWxsOiByZ2IoMjMyLCAyMzEsIDIzMik7Ii8+CiAgICA8cGF0aCBkPSJNMzYsMTVIMmEyLDIsMCwwLDEsMC00SDM2QTIsMiwwLDAsMSwzNiwxNVoiIHN0eWxlPSJmaWxsOiByZ2IoMjMyLCAyMzEsIDIzMik7Ii8+CiAgICA8cGF0aCBkPSJNMzYsMjZIMmEyLDIsMCwwLDEsMC00SDM2QTIsMiwwLDAsMSwzNiwyNloiIHN0eWxlPSJmaWxsOiByZ2IoMjMyLCAyMzEsIDIzMik7Ii8+CiAgPC9nPgo8L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 0.5em 0.5em;
+    width: 1em;
+    height: 1em;
+    position: relative;
+    top: 22px;
+    right: 33px;
+    display: block;
+    transform: rotate(90deg);
+    // @include handset {
+    //   background-size: 0.35em 0.35em;
+    //   width: 0.5em;
+    //   height: 0.5em;
+    //   position: relative;
+    //   top: 13px;
+    //   right: 17px;
+    // }
+}
+
+
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    right: 0;
+    background-color: $dark-grey;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 3em; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    @include regular-text;
+    padding: 8px 8px 8px 1.5em;
+    text-decoration: none;
+    color: $light-grey;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+// @media screen and (max-height: 450px) {
+//     .sidenav {padding-top: 15px;}
+//     .sidenav a {font-size: 18px;}
+// }
+
 .page-header {
   margin:0.5em 0 2em 0;
   position:relative;
@@ -50,51 +155,5 @@
     }
   }
 
-  .menu-hamburger{
-    float:right;
-    position: absolute;
 
-    top: 0.5em;
-    @include handset {
-      top: -2em;
-      right:0em;
-    }
-
-    .btn-group {
-      top: 1.8em;
-    }
-    @include tablet {
-      .btn-group {
-        top: -0.7em;
-      }
-    }
-
-    .btn-primary {
-      color:$light-grey;
-      background-color: $dark-blue;
-    }
-
-    .dropdown-menu {
-      min-width: 98px;
-      li {
-        a {
-          color:$light-grey;
-          &:hover {
-            background-color: $light-blue;
-          }
-        }
-        background-color: $dark-blue;
-      }
-    }
-    .dropdown-menu .divider {
-      margin:0;
-    }
-
-    @include tablet {
-      display: none;
-    }
-    @include desktop {
-      display: none;
-    }
-  }
 }

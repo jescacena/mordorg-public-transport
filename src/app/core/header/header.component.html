@@ -1,19 +1,14 @@
+<div class="menu">
+  <span class="menu-hamburger" (click)="toggleNav()"></span>
+</div>
+
+<div id="mySidenav" class="sidenav">
+  <!-- <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a> -->
+  <a href="home-direction/0">Inicio</a>
+  <a routerLink="contact">Contacto</a>
+</div>
+
 <div class="page-header">
-  <div class="row menu-hamburger dropdown">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-        <span
-          class="arrow glyphicon glyphicon-menu-hamburger"
-          aria-hidden="true">
-        </span>
-      </button>
-      <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-        <li><a routerLink="/">Inicio</a></li>
-        <li class="divider dropdown-divider"></li>
-        <li><a routerLink="contact">Contacto</a></li>
-      </ul>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col-xs-11 col-md-9">
@@ -29,10 +24,11 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <!-- <li><a href="#">Quienes somos</a></li> -->
-            <li><a routerLink="contact">Contacto</a></li>
+            <!-- <li><a routerLink="contact">Contacto</a></li> -->
          </ul>
         </div>
     </div>
   </div>
+
 
 </div>

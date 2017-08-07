@@ -20,9 +20,26 @@
       font-size: 1em;
 
     }
-    &.email {
+    span.email {
       margin-top: 2em;
-      color:$yellow;
+      color:$light-orange;
+      font-size: 1em;
+      font-weight: bolder;
+    }
+  }
+  ul {
+    margin:0 auto;
+    padding:0;
+    width: 13%;
+    @include handset {
+      width: 50%;
+    }
+
+    li {
+      a {
+        color:$light-orange;
+        font-weight: bold;
+      }
     }
   }
 }
