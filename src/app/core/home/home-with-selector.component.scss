@@ -31,4 +31,12 @@
     margin-top: 3em;
   }
 
+  .note {
+    @include regular-text;
+    float:left;
+    color:$light-grey;
+    padding:0.5em 0;
+    font-size: 0.7em;
+  }
+
 }

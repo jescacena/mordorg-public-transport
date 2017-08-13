@@ -170,16 +170,18 @@ export class HomeWithSelectorComponent implements OnInit {
 
     }
 
-    //Init refresh loop
-    // const refreshLoop = Observable.interval(1*60*1000);   //Every minute
-    // refreshLoop.subscribe(
-    //   (number: number) => {
-    //     console.log('Fetching updated next departures...');
-    //
-    //     //TODO get next departures from now
-    //     this._buildMixDepaturesFromMoment(moment());
-    //   }
-    // );
+    //Init refresh loop (every minute)
+    const myNumbers = Observable.interval(60000);
+    myNumbers.subscribe(
+      (number: number) => {
+        this.dateSelected = moment();
+        this.dateSelectedDP = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
+        this.nowDateLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
+        this.nowTimeLabel = this.dateSelected.locale('es').format('HH:mm A');
+        this._updateMixDepartures();
+      }
+    );
+
 
     this.dataService.newDirectionSelected.subscribe(
       (choiceSelected:any)=> {
