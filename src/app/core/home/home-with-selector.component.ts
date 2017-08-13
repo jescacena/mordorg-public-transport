@@ -43,7 +43,7 @@ export class HomeWithSelectorComponent implements OnInit {
   trainDepartures:Array<Departure>;
   mixDepartures: Array<Departure>;
 
-  directionSelected:number;
+  directionSelected:number = DirectionsEnum.CercedillaMadrid;
   dateSelected = moment();
 
   private dateSelectedDP: Object = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
@@ -248,7 +248,7 @@ export class HomeWithSelectorComponent implements OnInit {
         return;
     }
 
-    if(this.directionSelected) {
+    if(this.directionSelected || this.directionSelected === 0) {
       this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                               this.directionSelected,
                                                                               this.trainC2LinePubtraResponse,
