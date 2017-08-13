@@ -245,20 +245,23 @@ export class HomeWithSelectorComponent implements OnInit {
         busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
         break;
       default:
-        break;
+        return;
     }
-    this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
-                                                                            this.directionSelected,
-                                                                            this.trainC2LinePubtraResponse,
-                                                                            busResponse,
-                                                                            6);
-    if(this.mixDepartures && this.mixDepartures.length > 0) {
-      setTimeout(()=>{
-        //Notify view by observable subject
-        this.dataService.mixDepartures.next(this.mixDepartures);
-      },50);
-    } else {
-      this.showNoDataAvailable = true;
+
+    if(this.directionSelected) {
+      this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
+                                                                              this.directionSelected,
+                                                                              this.trainC2LinePubtraResponse,
+                                                                              busResponse,
+                                                                              6);
+      if(this.mixDepartures && this.mixDepartures.length > 0) {
+        setTimeout(()=>{
+          //Notify view by observable subject
+          this.dataService.mixDepartures.next(this.mixDepartures);
+        },50);
+      } else {
+        this.showNoDataAvailable = true;
+      }
     }
   }
 
