@@ -66,8 +66,10 @@
           position:relative;
 
           &:first-child {
-            min-height:3.5em;
-            display: inline-block;
+            padding:0;
+            // padding:0.5em 0;
+            min-height:4.5em;
+            // display: inline-block;
             width:5em;
             text-align: center;
             background-position: 2em 0.5em;
@@ -77,9 +79,10 @@
             span {
               font-size:0.6em;
               display: block;
-              margin-top: 3em;
+              margin-top: 4em;
+              margin-bottom: 0.5em;
               @include handset {
-                margin-top: 0em;
+                margin-top: 0.5em;
                 position:relative;
               }
               &.nocturnal {
@@ -99,7 +102,8 @@
                   top:1.5em;
                   left:3em;
                   @include handset {
-                    left:2.5em;
+                    top:2em;
+                    left:3em;
                   }
                   width:2em;
                   height:2em;
@@ -115,7 +119,8 @@
                   top:1.5em;
                   left:3em;
                   @include handset {
-                    left:2.5em;
+                    top:2em;
+                    left:3em;
                   }
                   width:2em;
                   height:2em;

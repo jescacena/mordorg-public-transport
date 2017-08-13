@@ -98,7 +98,8 @@ export class HomeWithSelectorComponent implements OnInit {
           this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
           this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
           this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
-          console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
+          console.log('JES onChoiceSelect cached data for lines-->');
+          console.table(this.cacheService.lineCacheList)
 
           this.dataService.directionSelected = this.directionSelected;
 
@@ -122,7 +123,8 @@ export class HomeWithSelectorComponent implements OnInit {
                   this.busUrbanLinePubtraResponse = jsonData;
                   console.log('JES onChoiceSelect jsonData',jsonData);
                   this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                  console.log('JES onChoiceSelect cached data for lines-->', this.cacheService.lineCacheList);
+                  console.log('JES onChoiceSelect cached data for lines-->');
+                  console.table(this.cacheService.lineCacheList)
                   //
                   this.dataService.directionSelected = this.directionSelected;
                   //Notify listeners
@@ -153,7 +155,8 @@ export class HomeWithSelectorComponent implements OnInit {
             this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
             this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
             this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
-            console.log('JES cached data for lines-->', this.cacheService.lineCacheList);
+            console.log('JES onChoiceSelect cached data for lines-->');
+            console.table(this.cacheService.lineCacheList)
 
             this.dataService.directionSelected = this.directionSelected;
 

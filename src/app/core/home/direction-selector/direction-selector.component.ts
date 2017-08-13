@@ -105,7 +105,8 @@ export class DirectionSelectorComponent implements OnInit {
                 const jsonData = data.json()[0];
                 console.log('JES onChoiceSelect jsonData',jsonData);
                 this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                console.log('JES onChoiceSelect cached data for lines-->', this.cacheService.lineCacheList);
+                console.log('JES onChoiceSelect cached data for lines-->');
+                console.table(this.cacheService.lineCacheList);
                 //
                 this.dataService.directionSelected = this.choiceSelected;
                 //Notify listeners
