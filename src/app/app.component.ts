@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Angulartics2GoogleAnalytics } from 'angulartics2';
+
 import { DataService } from './shared/services/data.service';
 import { DateUtilsService } from './shared/services/date-utils.service';
 import { Response } from '@angular/http';
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit{
   departsTrainC2CerceMadrid:Array<Departure>;
   departsTrainC2MadridCerce:Array<Departure>;
 
-  constructor(private dataService: DataService, private dateUtilsService:DateUtilsService) {}
+  constructor(private dataService: DataService, private dateUtilsService:DateUtilsService, angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics) {}
 
   ngOnInit() {
     // this.dataService.getCCPOIS_BankHolidays(406).subscribe(

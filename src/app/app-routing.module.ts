@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 
 import { HomeComponent } from './core/home/home.component';
 import { HomeWithSelectorComponent } from './core/home/home-with-selector.component';
@@ -26,7 +27,9 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     // RouterModule.forRoot(appRoutes)
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules}),
+    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ])
+
   ],
   exports: [RouterModule],
   providers: [BankHolidayListResolver, LineResolver]

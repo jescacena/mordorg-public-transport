@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import * as moment from 'moment';
 import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydatepicker';
 import {ActivatedRoute, Router,Data,Params} from '@angular/router';
+import { Angulartics2 } from 'angulartics2';
+
 
 
 import { DateUtilsService } from '../../shared/services/date-utils.service';
@@ -40,7 +42,8 @@ export class ActionsButtonGroupComponent implements OnInit {
               private router: Router,
               private dateUtilsService: DateUtilsService,
               private departuresService: DeparturesService,
-              private dataService: DataService) { }
+              private dataService: DataService,
+              private angulartics2: Angulartics2) { }
 
   ngOnInit() {
     this.dateSelected = this.dataService.dateSelected || moment();
@@ -75,6 +78,9 @@ export class ActionsButtonGroupComponent implements OnInit {
       // this.nowDateLabel = this.daySelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
       //Notify listeners
       // this.dataService.newDateSelected.next(this.dateSelected);
+
+      this.angulartics2.eventTrack.next({ action: 'onDateChanged', properties: { category: 'button action', label: new Date(event.jsdate).toLocaleDateString() }});
+
       this.gotoMixDirectionSelected();
   }
 
