@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6 col-xs-12">
+      <div class="line-route col-xs-12">
         <app-line-route
           [stations]="line.stations"
           [stationSelected]="stationSelected">
@@ -17,7 +17,7 @@
           <ul>
             <li>Tiempo estimado de recorrido <span>{{durationEstimated}}</span></li>
             <li *ngIf="timetableStartDateLabel && timetableEndDateLabel">Horarios válidos del <span>{{timetableStartDateLabel}}</span> al <span>{{timetableEndDateLabel}}</span></li>
-            <li *ngIf="hasPossibleTimetableChanges">Por motivos de festivos municipales los puntos de paradas de Cercedilla pueden verse modificados. Consulte a la empresa de autobuses.</li>
+            <li *ngIf="lineId === 'line-pubtra-684'">Cuando haya celebraciónes de eventos en el centro del pueblo, la salida y llegada de la línea 684  de autobuses, con destino Madrid , se traslada a la puerta del <span>Parque municipal Pradoluengo</span>.</li>
           </ul>
         </div>
 
@@ -25,7 +25,7 @@
           <a href="{{folletoDownloadLink}}" download>Descargar horario oficial</a>
         </div>
       </div>
-      <div class="col-md-6 col-xs-12">
+      <div class="stop-detail col-xs-12">
         <app-stop-detail
           [stationSelected]="stationSelected">
         </app-stop-detail>
