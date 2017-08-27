@@ -69,7 +69,13 @@
             padding:0;
             // padding:0.5em 0;
             min-height:3.2em;
-            display: inline-block;
+            @include handset {
+              display: table-cell;
+              padding-bottom: 2em;
+            }
+            // @include tablet {
+            //   display: block;
+            // }
             width:5em;
             text-align: center;
             background-position: 2em 0.5em;
@@ -134,6 +140,7 @@
           &:nth-child(2) {
             vertical-align: middle;
             font-weight: bold;
+            padding-left:1em;
             span.en {
               display: block;
             }
