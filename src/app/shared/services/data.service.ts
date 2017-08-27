@@ -73,12 +73,21 @@ export class DataService {
   }
 
   /**
+  * Get train line data
+  * @param {string} busId
+  */
+  getTrainLineData(trainId:string) {
+    return this.getCCPOIS_TrainLinePubtra(trainId);
+  }
+
+  /**
   * Get all lines data from CCPOIS in wordpress
   * @return {object} Array: 0-tren c2 , 1-bus684
   */
   getAllLinesData() {
     return Observable.forkJoin(
       this.getCCPOIS_TrainLinePubtra('c2'),
+      this.getCCPOIS_TrainLinePubtra('c9'),
       this.getCCPOIS_BusLinePubtra('684'),
       this.getCCPOIS_BusLinePubtra('piscinas')
       // this.dataService.getCCPOIS_TrainTimetable('c2'),

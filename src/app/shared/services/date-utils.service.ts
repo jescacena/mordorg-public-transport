@@ -252,8 +252,14 @@ export class DateUtilsService {
       case 'C2A':
           ttData = data.horario_salidas_cercedilla_atocha;
           break;
+      case 'C2T':
+          ttData = data.horario_salidas_cercedilla_cotos;
+          break;
       case 'A2C':
           ttData = data.horario_salidas_atocha_cercedilla;
+          break;
+      case 'T2C':
+          ttData = data.horario_salidas_cotos_cercedilla;
           break;
       default:
           console.log('parseCCPOI_TrainTimetableResponseToArray ERROR');

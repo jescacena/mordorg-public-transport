@@ -35,6 +35,7 @@ export class HomeWithSelectorComponent implements OnInit {
   //Line data
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
+  trainC9LinePubtraResponse;
   busPiscinasLinePubtraResponse;
   busUrbanLinePubtraResponse;
 
@@ -74,7 +75,7 @@ export class HomeWithSelectorComponent implements OnInit {
 
     this.dataService.newDirectionSelected.next(this.directionSelected);
 
-    console.log('JES this.directionSelected',this.directionSelected);
+    console.log('Home - directionSelected',this.directionSelected);
 
 
     //Resolve bank holidays and init dateUtilsService
@@ -84,21 +85,23 @@ export class HomeWithSelectorComponent implements OnInit {
          this.dateUtilsService.setBankHolydays(this.bankHolidayListResponse.json().day_list);
        }
     );
-    console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
+    console.log('Home - bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
     if(!this.route.snapshot.params['direction']) {
       //Fetch  departures from common routes
       this.dataService.getAllLinesData().subscribe(
         (dataArray: Array<Response>) => {
           this.trainC2LinePubtraResponse = dataArray[0].json()[0];
-          this.bus684LinePubtraResponse = dataArray[1].json()[0];
-          this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+          this.trainC9LinePubtraResponse = dataArray[1].json()[0];
+          this.bus684LinePubtraResponse = dataArray[2].json()[0];
+          this.busPiscinasLinePubtraResponse = dataArray[3].json()[0];
 
           //Save to cache line data
           this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
+          this.cacheService.addLineDataToCache(this.trainC9LinePubtraResponse,this.trainC9LinePubtraResponse.type);
           this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
           this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
-          console.log('JES onChoiceSelect cached data for lines-->');
+          console.log('Home onChoiceSelect cached data for lines-->');
           console.table(this.cacheService.lineCacheList)
 
           this.dataService.directionSelected = this.directionSelected;
@@ -121,9 +124,7 @@ export class HomeWithSelectorComponent implements OnInit {
                   //Save to cache line data
                   const jsonData = data.json()[0];
                   this.busUrbanLinePubtraResponse = jsonData;
-                  console.log('JES onChoiceSelect jsonData',jsonData);
                   this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                  console.log('JES onChoiceSelect cached data for lines-->');
                   console.table(this.cacheService.lineCacheList)
                   //
                   this.dataService.directionSelected = this.directionSelected;
@@ -143,6 +144,38 @@ export class HomeWithSelectorComponent implements OnInit {
               this._updateMixDepartures();
 
             }
+      } else if(this.directionSelected === DirectionsEnum.CercedillaCotos ||
+                this.directionSelected === DirectionsEnum.CotosCercedilla) {
+
+          this.dataService.mixDepartures.next([]);
+
+          if(!this.cacheService.lineCacheList['line-pubtra-c9']) {
+            this.dataService.getTrainLineData('c9').subscribe(
+              (data: Response) => {
+                //Save to cache line data
+                const jsonData = data.json()[0];
+                this.trainC9LinePubtraResponse = jsonData;
+                this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                console.table(this.cacheService.lineCacheList)
+                //
+                this.dataService.directionSelected = this.directionSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                this._updateMixDepartures();
+
+              },
+              (error) => console.log(error)
+            );
+          } else {
+            this.dataService.directionSelected = this.directionSelected;
+            //Notify listeners
+            this.dataService.newDirectionSelected.next(this.directionSelected);
+
+            this._updateMixDepartures();
+
+          }
+
       } else {
         //Fetch  departures from common routes
         this.dataService.getAllLinesData().subscribe(
@@ -155,7 +188,7 @@ export class HomeWithSelectorComponent implements OnInit {
             this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
             this.cacheService.addLineDataToCache(this.bus684LinePubtraResponse,this.bus684LinePubtraResponse.type);
             this.cacheService.addLineDataToCache(this.busPiscinasLinePubtraResponse,this.busPiscinasLinePubtraResponse.type);
-            console.log('JES onChoiceSelect cached data for lines-->');
+            console.log('Home - onChoiceSelect cached data for lines-->');
             console.table(this.cacheService.lineCacheList)
 
             this.dataService.directionSelected = this.directionSelected;
@@ -225,15 +258,25 @@ export class HomeWithSelectorComponent implements OnInit {
   _updateMixDepartures() {
     this.showNoDataAvailable = false;
     let busResponse;
+    let trainResponse;
+
     switch(this.directionSelected) {
+      case DirectionsEnum.CercedillaCotos:
+        trainResponse = this.trainC9LinePubtraResponse;
+        break;
       case DirectionsEnum.CercedillaMadrid:
         busResponse = this.bus684LinePubtraResponse;
+        trainResponse = this.trainC2LinePubtraResponse;
         break;
       case DirectionsEnum.CercedillaPiscinasBerceas:
         busResponse = this.busPiscinasLinePubtraResponse;
         break;
       case DirectionsEnum.MadridCercedilla:
         busResponse = this.bus684LinePubtraResponse;
+        trainResponse = this.trainC2LinePubtraResponse;
+        break;
+      case DirectionsEnum.CotosCercedilla:
+        trainResponse = this.trainC9LinePubtraResponse;
         break;
       case DirectionsEnum.PiscinasBerceasCercedilla:
         busResponse = this.busPiscinasLinePubtraResponse;
@@ -248,10 +291,12 @@ export class HomeWithSelectorComponent implements OnInit {
         return;
     }
 
+
+
     if(this.directionSelected || this.directionSelected === 0) {
       this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                               this.directionSelected,
-                                                                              this.trainC2LinePubtraResponse,
+                                                                              trainResponse,
                                                                               busResponse,
                                                                               6);
       if(this.mixDepartures && this.mixDepartures.length > 0) {

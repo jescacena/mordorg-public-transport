@@ -36,6 +36,14 @@ export class DirectionSelectorComponent implements OnInit {
       code: DirectionsEnum.MadridCercedilla
     },
     {
+      label:'Cercedilla-Cotos',
+      code: DirectionsEnum.CercedillaCotos
+    },
+    {
+      label:'Cotos-Cercedilla',
+      code: DirectionsEnum.CotosCercedilla
+    },
+    {
       label:'Cercedilla-Piscinas Berceas',
       code: DirectionsEnum.CercedillaPiscinasBerceas
     },
@@ -86,7 +94,7 @@ export class DirectionSelectorComponent implements OnInit {
   }
 
   onChoiceSelect(choiceCode) {
-    console.log('JES onChoiceSelect choiceCode',choiceCode);
+    console.log('onChoiceSelect choiceCode',choiceCode);
     this.choiceSelected = _.find(this.choiceList , (item)=> {
       return item.code === choiceCode;
     });
@@ -119,6 +127,31 @@ export class DirectionSelectorComponent implements OnInit {
             //Notify listeners
             this.dataService.newDirectionSelected.next(this.choiceSelected);
           }
+    } else if(choiceCode === DirectionsEnum.CotosCercedilla ||
+            choiceCode === DirectionsEnum.CercedillaCotos) {
+        this.dataService.mixDepartures.next([]);
+
+        if(!this.cacheService.lineCacheList['line-pubtra-c9']) {
+          this.dataService.getTrainLineData('c9').subscribe(
+            (data: Response) => {
+              //Save to cache line data
+              const jsonData = data.json()[0];
+              console.log('onChoiceSelect jsonData',jsonData);
+              this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+              console.log('onChoiceSelect cached data for lines-->');
+              console.table(this.cacheService.lineCacheList);
+              //
+              this.dataService.directionSelected = this.choiceSelected;
+              //Notify listeners
+              this.dataService.newDirectionSelected.next(this.choiceSelected);
+            },
+            (error) => console.log(error)
+          );
+        } else {
+          this.dataService.directionSelected = this.choiceSelected;
+          //Notify listeners
+          this.dataService.newDirectionSelected.next(this.choiceSelected);
+        }
     } else {
       //Notify listeners
       this.dataService.newDirectionSelected.next(this.choiceSelected);

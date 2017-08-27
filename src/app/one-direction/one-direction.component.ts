@@ -28,6 +28,7 @@ export class OneDirectionComponent implements OnInit {
   //Line data
   bus684LinePubtraResponse;
   trainC2LinePubtraResponse;
+  trainC9LinePubtraResponse;
   busPiscinasLinePubtraResponse;
   busUrbanLinePubtraResponse;
 
@@ -65,7 +66,7 @@ export class OneDirectionComponent implements OnInit {
          this.dateUtilsService.setBankHolydays(this.bankHolidayListResponse.json().day_list);
        }
     );
-    console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
+    console.log('OneDirection - bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
 
     //Get lines data depending on selected direction
@@ -79,9 +80,9 @@ export class OneDirectionComponent implements OnInit {
                     //Save to cache line data
                     const jsonData = data.json()[0];
                     this.busUrbanLinePubtraResponse = jsonData;
-                    console.log('JES onChoiceSelect jsonData',jsonData);
+                    console.log('OneDirection - onChoiceSelect jsonData',jsonData);
                     this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                    console.log('JES onChoiceSelect cached data for lines-->');
+                    console.log('OneDirection - onChoiceSelect cached data for lines-->');
                     console.table(this.cacheService.lineCacheList)
                     //
                     this.dataService.directionSelected = this.directionSelected;
@@ -114,13 +115,54 @@ export class OneDirectionComponent implements OnInit {
 
               }
 
-    // } else if(this.directionSelected === DirectionsEnum.CercedillaPiscinasBerceas ||
-    //         this.directionSelected === DirectionsEnum.PiscinasBerceasCercedilla) {
+    } else if(this.directionSelected === DirectionsEnum.CercedillaCotos ||
+            this.directionSelected === DirectionsEnum.CotosCercedilla) {
+              this.dataService.mixDepartures.next([]);
+
+              if(!this.cacheService.lineCacheList['line-pubtra-c9']) {
+                this.dataService.getTrainLineData('c9').subscribe(
+                  (data: Response) => {
+                    //Save to cache line data
+                    const jsonData = data.json()[0];
+                    this.trainC9LinePubtraResponse = jsonData;
+                    console.log('OneDirection - onChoiceSelect jsonData',jsonData);
+                    this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                    console.log('OneDirection - onChoiceSelect cached data for lines-->');
+                    console.table(this.cacheService.lineCacheList)
+                    //
+                    this.dataService.directionSelected = this.directionSelected;
+                    //Notify listeners
+                    this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                    this._updateMixDepartures();
+
+                    this.route.params.subscribe(
+                     (params: Params) => {
+                       this._parseParamDate();
+                       this._updateMixDepartures();
+                     });
+
+
+                  },
+                  (error) => console.log(error)
+                );
+              } else {
+                this.dataService.directionSelected = this.directionSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                this._updateMixDepartures();
+                this.route.params.subscribe(
+                 (params: Params) => {
+                   this._parseParamDate();
+                   this._updateMixDepartures();
+                 });
+
+              }
     } else {
       this.dataService.getAllLinesData().subscribe(
         (dataArray: Array<Response>) => {
-          console.log('JES getAllTimetables respondataArrays 0-->', dataArray[0].json()[0]);
-          console.log('JES getAllTimetables respondataArrays 1-->', dataArray[1].json()[0]);
+          console.log('OneDirection getAllTimetables respondataArrays -->', dataArray);
           this.trainC2LinePubtraResponse = dataArray[0].json()[0];
           this.bus684LinePubtraResponse = dataArray[1].json()[0];
           this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
@@ -190,9 +232,30 @@ export class OneDirectionComponent implements OnInit {
         break;
     }
 
+    let trainResponse;
+    switch(this.directionSelected) {
+      case DirectionsEnum.CercedillaMadrid:
+        trainResponse = this.trainC2LinePubtraResponse;
+        break;
+      case DirectionsEnum.MadridCercedilla:
+        trainResponse = this.trainC2LinePubtraResponse;
+        break;
+      case DirectionsEnum.CercedillaCotos:
+        trainResponse = this.cacheService.lineCacheList['line-pubtra-c9'];
+        break;
+      case DirectionsEnum.CotosCercedilla:
+        trainResponse = this.cacheService.lineCacheList['line-pubtra-c9'];
+        break;
+
+      default:
+        break;
+    }
+
+
+
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
                                                                             this.directionSelected,
-                                                                            this.trainC2LinePubtraResponse,
+                                                                            trainResponse,
                                                                             busResponse);
     if(this.mixDepartures && this.mixDepartures.length > 0) {
       setTimeout(()=>{

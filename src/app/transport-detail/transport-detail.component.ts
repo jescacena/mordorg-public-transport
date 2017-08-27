@@ -107,6 +107,10 @@ export class TransportDetailComponent implements OnInit {
         stationsData = this.lineResponseObj['stations-cercedilla-madrid'][0];
         this.durationEstimated = this.lineResponseObj['stations-cercedilla-madrid'][0].duration_estimated;
         break;
+      case DirectionsEnum.CercedillaCotos:
+        stationsData = this.lineResponseObj['stations-cercedilla-cotos'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cercedilla-cotos'][0].duration_estimated;
+        break;
       case DirectionsEnum.CercedillaPiscinasBerceas:
         stationsData = this.lineResponseObj['stations-cercedilla-berceas'][0];
         this.durationEstimated = this.lineResponseObj['stations-cercedilla-berceas'][0].duration_estimated;
@@ -114,6 +118,10 @@ export class TransportDetailComponent implements OnInit {
       case DirectionsEnum.MadridCercedilla:
         stationsData = this.lineResponseObj['stations-madrid-cercedilla'][0];
         this.durationEstimated = this.lineResponseObj['stations-madrid-cercedilla'][0].duration_estimated;
+        break;
+      case DirectionsEnum.CotosCercedilla:
+        stationsData = this.lineResponseObj['stations-cotos-cercedilla'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cotos-cercedilla'][0].duration_estimated;
         break;
       case DirectionsEnum.PiscinasBerceasCercedilla:
         stationsData = this.lineResponseObj['stations-berceas-cercedilla'][0];
@@ -130,7 +138,7 @@ export class TransportDetailComponent implements OnInit {
     }
 
 
-    console.log('JES TransportDetailComponent stationsData',stationsData);
+    console.log('TransportDetailComponent - stationsData',stationsData);
 
     let stationList: Array<Station> = [];
 
@@ -199,7 +207,7 @@ export class TransportDetailComponent implements OnInit {
     })[0];
 
 
-    console.log('JES TransportDetailComponent stationList',stationList);
+    console.log('TransportDetailComponent - stationList',stationList);
 
 
     this.line = new Line(this.lineId,stationList);

@@ -43,8 +43,16 @@ export class DeparturesService {
         result = this.fillMixDeparturesByDirection(busData,null,'C2P' ,null, momentDate, directionSelected,count);
         break;
 
+      case DirectionsEnum.CercedillaCotos:
+        result = this.fillMixDeparturesByDirection(null,trainData,null ,'C2T', momentDate, directionSelected,count);
+        break;
+
       case DirectionsEnum.PiscinasBerceasCercedilla:
         result = this.fillMixDeparturesByDirection(busData,null,'P2C' ,null, momentDate, directionSelected,count);
+        break;
+
+      case DirectionsEnum.CotosCercedilla:
+        result = this.fillMixDeparturesByDirection(null,trainData,null,'T2C', momentDate, directionSelected,count);
         break;
 
       case DirectionsEnum.HospitalFuenfriaInstituto:
@@ -99,11 +107,11 @@ export class DeparturesService {
 
     //Get types
     let trainLineType = (trainData)? trainData.type : null;
-    let busLineType = busData.type;
+    let busLineType = (busData)? busData.type : null;
 
     //Get timetables
     let trainTT = (trainData)? trainData.timetable[0] : null;
-    let busTT = busData.timetable[0];
+    let busTT = (busData)? busData.timetable[0] : null;
 
     //Get limit Stations
     let busStation;
@@ -134,7 +142,13 @@ export class DeparturesService {
       case 'C2A':
         trainStation = trainData.station_start[0];
         break;
+      case 'C2T':
+        trainStation = trainData.station_start[0];
+        break;
       case 'A2C':
+        trainStation = trainData.station_end[0];
+        break;
+      case 'T2C':
         trainStation = trainData.station_end[0];
         break;
       default:
@@ -147,23 +161,6 @@ export class DeparturesService {
       trainNextDeparts = this.dateUtilsService.getNextDepartures(momentDate,
                                                                 trainTodayDepartures,
                                                                 count);
-    }
-    //Bus 684
-    const busTodayDepartures = this.dateUtilsService.parseBusTimeTableByDate(busTT,directionBusCode,momentDate);
-    busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDepartures, count);
-
-    //Set label & place station start
-    for(let depart of busNextDeparts) {
-      depart.transportType = TransportTypeEnum.Bus;
-      depart.direction = directionSelected;
-      depart.lineType = busLineType;
-      depart.label = busData.nombre;
-      depart.placeLabel = busStation.direccion;
-      depart.station = busStation;
-      depart.placeLink = "http://maps.google.com/?q=" + busStation.latlon;
-    }
-
-    if(trainData) {
       for(let depart of trainNextDeparts) {
         depart.transportType = TransportTypeEnum.Train;
         depart.direction = directionSelected;
@@ -173,10 +170,33 @@ export class DeparturesService {
         depart.station = trainStation;
         depart.placeLink = "http://maps.google.com/?q=" + trainStation.latlon;
       }
+
+    }
+    //Bus
+    if(busData) {
+      const busTodayDepartures = this.dateUtilsService.parseBusTimeTableByDate(busTT,directionBusCode,momentDate);
+      busNextDeparts = this.dateUtilsService.getNextDepartures(momentDate, busTodayDepartures, count);
+      //Set label & place station start
+      for(let depart of busNextDeparts) {
+        depart.transportType = TransportTypeEnum.Bus;
+        depart.direction = directionSelected;
+        depart.lineType = busLineType;
+        depart.label = busData.nombre;
+        depart.placeLabel = busStation.direccion;
+        depart.station = busStation;
+        depart.placeLink = "http://maps.google.com/?q=" + busStation.latlon;
+      }
     }
 
     //Concat train and bus in mixed
-    return (trainNextDeparts)? busNextDeparts.concat(trainNextDeparts) : busNextDeparts;
+    if(trainNextDeparts && busNextDeparts) {
+      result = busNextDeparts.concat(trainNextDeparts);
+    } else if(trainNextDeparts && !busNextDeparts) {
+      result = trainNextDeparts;
+    } else {
+      result = busNextDeparts;
+    }
+    return result;
 
   }
 
