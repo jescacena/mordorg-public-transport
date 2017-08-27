@@ -181,8 +181,9 @@ export class HomeWithSelectorComponent implements OnInit {
         this.dataService.getAllLinesData().subscribe(
           (dataArray: Array<Response>) => {
             this.trainC2LinePubtraResponse = dataArray[0].json()[0];
-            this.bus684LinePubtraResponse = dataArray[1].json()[0];
-            this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+            this.trainC9LinePubtraResponse = dataArray[1].json()[0];
+            this.bus684LinePubtraResponse = dataArray[2].json()[0];
+            this.busPiscinasLinePubtraResponse = dataArray[3].json()[0];
 
             //Save to cache line data
             this.cacheService.addLineDataToCache(this.trainC2LinePubtraResponse,this.trainC2LinePubtraResponse.type);
