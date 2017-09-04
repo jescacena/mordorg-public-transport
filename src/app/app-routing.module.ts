@@ -22,7 +22,30 @@ const appRoutes: Routes = [
   { path: 'line-detail/:transporttype/:lineid/:direction/:stationid', component: TransportDetailComponent,resolve: {lineReponse: LineResolver}},
   // { path: 'one-direction', loadChildren: './one-direction/one-direction.module#OneDirectionModule'},
   // { path: 'transport-detail', loadChildren: './transport-detail/transport-detail.module#TransportDetailModule'}
+  { path: 'cercedilla-madrid', redirectTo: '/home-direction/0'},
+  { path: 'madrid-cercedilla', redirectTo: '/home-direction/1'},
+  { path: 'cercedilla-segovia', redirectTo: '/home-direction/2'},
+  { path: 'segovia-cercedilla', redirectTo: '/home-direction/3'},
+  { path: 'instituto-hospital-fuenfria', redirectTo: '/home-direction/4'},
+  { path: 'hospital-fuenfria-instituto', redirectTo: '/home-direction/5'},
+  { path: 'cercedilla-hospital-villalba', redirectTo: '/home-direction/6'},
+  { path: 'hospital-villalba-cercedilla', redirectTo: '/home-direction/7'},
+  { path: 'cercedilla-cotos', redirectTo: '/home-direction/8'},
+  { path: 'cotos-cercedilla', redirectTo: '/home-direction/9'},
+  { path: 'cercedilla-piscinas-berceas', redirectTo: '/home-direction/10'},
+  { path: 'piscinas-berceas-cercedilla', redirectTo: '/home-direction/11'},
 ];
+/*
+CercedillaSegovia,
+SegoviaCercedilla,
+InstitutoHospitalFuenfria,
+HospitalFuenfriaInstituto,
+CercedillaHospitalVilalba,
+HospitalVillalbaCercedila,
+CercedillaCotos,
+CotosCercedilla,
+CercedillaPiscinasBerceas,
+PiscinasBerceasCercedilla*/
 
 @NgModule({
   imports: [
