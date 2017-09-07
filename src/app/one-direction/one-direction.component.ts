@@ -54,9 +54,13 @@ export class OneDirectionComponent implements OnInit {
               private cacheService: CacheService,
             ) { }
 
+
   ngOnInit() {
     //Get direction from route params
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);
+    this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
+
+
     this.directionSelectedLabel = DirectionLabels[this.directionSelected];
 
     //Parse date from route params
@@ -89,9 +93,11 @@ export class OneDirectionComponent implements OnInit {
                     console.log('OneDirection - onChoiceSelect cached data for lines-->');
                     console.table(this.cacheService.lineCacheList)
                     //
-                    this.dataService.directionSelected = this.directionSelected;
+                    this.dataService.directionSelected = (this.directionSelected  || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                     //Notify listeners
-                    this.dataService.newDirectionSelected.next(this.directionSelected);
+                    if(this.directionSelected  || this.directionSelected === 0 ) {
+                      this.dataService.newDirectionSelected.next(this.directionSelected);
+                    }
 
                     this._updateMixDepartures();
 
@@ -106,9 +112,11 @@ export class OneDirectionComponent implements OnInit {
                   (error) => console.log(error)
                 );
               } else {
-                this.dataService.directionSelected = this.directionSelected;
+                this.dataService.directionSelected = (this.directionSelected  || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                 //Notify listeners
-                this.dataService.newDirectionSelected.next(this.directionSelected);
+                if(this.directionSelected  || this.directionSelected === 0 ) {
+                  this.dataService.newDirectionSelected.next(this.directionSelected);
+                }
 
                 this._updateMixDepartures();
                 this.route.params.subscribe(
@@ -134,10 +142,11 @@ export class OneDirectionComponent implements OnInit {
                         console.log('OneDirection - onChoiceSelect cached data for lines-->');
                         console.table(this.cacheService.lineCacheList)
                         //
-                        this.dataService.directionSelected = this.directionSelected;
+                        this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                         //Notify listeners
-                        this.dataService.newDirectionSelected.next(this.directionSelected);
-
+                        if(this.directionSelected   || this.directionSelected === 0 ) {
+                          this.dataService.newDirectionSelected.next(this.directionSelected);
+                        }
                         this._updateMixDepartures();
 
                         this.route.params.subscribe(
@@ -151,10 +160,11 @@ export class OneDirectionComponent implements OnInit {
                       (error) => console.log(error)
                     );
                   } else {
-                    this.dataService.directionSelected = this.directionSelected;
+                    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                     //Notify listeners
-                    this.dataService.newDirectionSelected.next(this.directionSelected);
-
+                    if(this.directionSelected   || this.directionSelected === 0 ) {
+                      this.dataService.newDirectionSelected.next(this.directionSelected);
+                    }
                     this._updateMixDepartures();
                     this.route.params.subscribe(
                      (params: Params) => {
@@ -180,10 +190,11 @@ export class OneDirectionComponent implements OnInit {
                     console.log('OneDirection - onChoiceSelect cached data for lines-->');
                     console.table(this.cacheService.lineCacheList)
                     //
-                    this.dataService.directionSelected = this.directionSelected;
+                    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                     //Notify listeners
-                    this.dataService.newDirectionSelected.next(this.directionSelected);
-
+                    if(this.directionSelected   || this.directionSelected === 0 ) {
+                      this.dataService.newDirectionSelected.next(this.directionSelected);
+                    }
                     this._updateMixDepartures();
 
                     this.route.params.subscribe(
@@ -197,10 +208,11 @@ export class OneDirectionComponent implements OnInit {
                   (error) => console.log(error)
                 );
               } else {
-                this.dataService.directionSelected = this.directionSelected;
+                this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
                 //Notify listeners
-                this.dataService.newDirectionSelected.next(this.directionSelected);
-
+                if(this.directionSelected   || this.directionSelected === 0 ) {
+                  this.dataService.newDirectionSelected.next(this.directionSelected);
+                }
                 this._updateMixDepartures();
                 this.route.params.subscribe(
                  (params: Params) => {
@@ -250,6 +262,7 @@ export class OneDirectionComponent implements OnInit {
     this.dateSelected = moment().set({'year': year, 'month': month-1 , 'date': day , 'hour': 0, 'minute': 0});
     this.dateSelectedLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
     this.dataService.dateSelected = this.dateSelected;
+    console.log('jes _parseParamDate directionSelected',this.dataService.directionSelected);
   }
 
   /**
@@ -261,6 +274,8 @@ export class OneDirectionComponent implements OnInit {
     let busResponse;
 
     this.showNoDataAvailable = false;
+    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
+
 
     switch(this.directionSelected) {
       case DirectionsEnum.CercedillaMadrid:

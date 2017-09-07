@@ -116,16 +116,21 @@ export class DirectionSelectorComponent implements OnInit {
                 console.log('JES onChoiceSelect cached data for lines-->');
                 console.table(this.cacheService.lineCacheList);
                 //
-                this.dataService.directionSelected = this.choiceSelected;
+                this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
+
                 //Notify listeners
-                this.dataService.newDirectionSelected.next(this.choiceSelected);
+                if(this.choiceSelected || this.choiceSelected === 0) {
+                  this.dataService.newDirectionSelected.next(this.choiceSelected);
+                }
               },
               (error) => console.log(error)
             );
           } else {
-            this.dataService.directionSelected = this.choiceSelected;
+            this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
             //Notify listeners
-            this.dataService.newDirectionSelected.next(this.choiceSelected);
+            if(this.choiceSelected || this.choiceSelected === 0) {
+              this.dataService.newDirectionSelected.next(this.choiceSelected);
+            }
           }
     } else if(choiceCode === DirectionsEnum.CercedillaHospitalVillalba ||
             choiceCode === DirectionsEnum.HospitalVillalbaCercedila) {
@@ -141,16 +146,21 @@ export class DirectionSelectorComponent implements OnInit {
                     console.log('JES onChoiceSelect cached data for lines-->');
                     console.table(this.cacheService.lineCacheList);
                     //
-                    this.dataService.directionSelected = this.choiceSelected;
+                    this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
                     //Notify listeners
-                    this.dataService.newDirectionSelected.next(this.choiceSelected);
+                    if(this.choiceSelected || this.choiceSelected === 0) {
+                      this.dataService.newDirectionSelected.next(this.choiceSelected);
+                    }
                   },
                   (error) => console.log(error)
                 );
               } else {
-                this.dataService.directionSelected = this.choiceSelected;
+                this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
                 //Notify listeners
-                this.dataService.newDirectionSelected.next(this.choiceSelected);
+                if(this.choiceSelected || this.choiceSelected === 0) {
+                  this.dataService.newDirectionSelected.next(this.choiceSelected);
+                }
+
               }
 
     } else if(choiceCode === DirectionsEnum.CotosCercedilla ||
@@ -167,20 +177,28 @@ export class DirectionSelectorComponent implements OnInit {
               console.log('onChoiceSelect cached data for lines-->');
               console.table(this.cacheService.lineCacheList);
               //
-              this.dataService.directionSelected = this.choiceSelected;
+              this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
               //Notify listeners
-              this.dataService.newDirectionSelected.next(this.choiceSelected);
+              if(this.choiceSelected || this.choiceSelected === 0) {
+                this.dataService.newDirectionSelected.next(this.choiceSelected);
+              }
             },
             (error) => console.log(error)
           );
         } else {
-          this.dataService.directionSelected = this.choiceSelected;
+          this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
           //Notify listeners
-          this.dataService.newDirectionSelected.next(this.choiceSelected);
+          if(this.choiceSelected || this.choiceSelected === 0) {
+            this.dataService.newDirectionSelected.next(this.choiceSelected);
+          }
+
         }
     } else {
       //Notify listeners
-      this.dataService.newDirectionSelected.next(this.choiceSelected);
+      if(this.choiceSelected || this.choiceSelected === 0) {
+        this.dataService.newDirectionSelected.next(this.choiceSelected);
+      }
+
     }
   }
 

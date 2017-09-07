@@ -23,6 +23,7 @@ export class ActionsButtonGroupComponent implements OnInit {
 
 
   dateSelected: any;
+  directionSelected: any;
 
   dateSelectedDP: Object;
 
@@ -47,6 +48,7 @@ export class ActionsButtonGroupComponent implements OnInit {
 
   ngOnInit() {
     this.dateSelected = this.dataService.dateSelected || moment();
+    this.directionSelected = this.dataService.directionSelected;
 
     this.dateSelectedDP = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
 
@@ -65,6 +67,18 @@ export class ActionsButtonGroupComponent implements OnInit {
 
     };
 
+    this.dataService.newDirectionSelected.subscribe(
+      (choiceSelected:any)=> {
+        const self = this;
+        setTimeout(()=>{
+          if(choiceSelected.code || choiceSelected.code === 0) {
+            this.directionSelected = choiceSelected.code;
+          }
+        },50);
+      }
+
+    );
+
   }
 
   // dateChanged callback function called when the user select the date. This is mandatory callback
@@ -78,6 +92,8 @@ export class ActionsButtonGroupComponent implements OnInit {
       // this.nowDateLabel = this.daySelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
       //Notify listeners
       // this.dataService.newDateSelected.next(this.dateSelected);
+      this.directionSelected = this.dataService.directionSelected;
+
 
       this.angulartics2.eventTrack.next({ action: 'onDateChanged', properties: { category: 'button action', label: new Date(event.jsdate).toLocaleDateString() }});
 
@@ -104,7 +120,7 @@ export class ActionsButtonGroupComponent implements OnInit {
   // }
 
   gotoMixDirectionSelected() {
-   this.router.navigate(['one-direction', this.dataService.directionSelected, this.dateSelected.format('DD-MM-YYYY')]);
+   this.router.navigate(['one-direction', this.directionSelected, this.dateSelected.format('DD-MM-YYYY')]);
   }
 
 }

@@ -58,6 +58,7 @@ export class HomeWithSelectorComponent implements OnInit {
 
 
   showNoDataAvailable:boolean = false;
+  showButtonGroup:boolean = true;
 
   constructor(private route:ActivatedRoute,
               private router: Router,
@@ -254,9 +255,11 @@ export class HomeWithSelectorComponent implements OnInit {
       (choiceSelected:any)=> {
         const self = this;
         setTimeout(()=>{
-          this.directionSelected = choiceSelected.code;
-          this.dataService.directionSelected = choiceSelected.code;
-          this._updateMixDepartures();
+          if(choiceSelected.code || choiceSelected.code === 0) {
+            this.directionSelected = choiceSelected.code;
+            this.dataService.directionSelected = choiceSelected.code;
+            this._updateMixDepartures();
+          }
         },50);
       }
 
@@ -291,6 +294,7 @@ export class HomeWithSelectorComponent implements OnInit {
   */
   _updateMixDepartures() {
     this.showNoDataAvailable = false;
+    this.showButtonGroup = true;
     let busResponse;
     let trainResponse;
 
@@ -345,6 +349,15 @@ export class HomeWithSelectorComponent implements OnInit {
           this.dataService.mixDepartures.next(this.mixDepartures);
         },50);
       } else {
+        if(
+          this.directionSelected !== DirectionsEnum.PiscinasBerceasCercedilla &&
+          this.directionSelected !== DirectionsEnum.CercedillaPiscinasBerceas &&
+          this.directionSelected !== DirectionsEnum.CercedillaHospitalVillalba &&
+          this.directionSelected !== DirectionsEnum.HospitalVillalbaCercedila
+        ){
+          this.showButtonGroup = false;
+
+        }
         this.showNoDataAvailable = true;
       }
     }

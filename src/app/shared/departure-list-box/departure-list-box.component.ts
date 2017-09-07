@@ -37,7 +37,7 @@ export class DepartureListBoxComponent implements OnInit {
 
   ngOnInit() {
 
-    this.directionSelected = this.dataService.directionSelected;
+    this.directionSelected = (this.dataService.directionSelected)? this.dataService.directionSelected : this.directionSelected;
 
     if(this.feedType === 'mixDeparturesCerceMadrid') {
       this.subscription = this.dataService.mixDeparturesCerceMadrid.subscribe(

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Angulartics2GoogleAnalytics } from 'angulartics2';
 
 import { DataService } from './shared/services/data.service';
+import { CacheService } from './shared/services/cache.service';
+import { DeparturesService } from './shared/services/departures.service';
 import { DateUtilsService } from './shared/services/date-utils.service';
 import { Response } from '@angular/http';
 import { Departure } from './shared/model/departure.class';
@@ -12,7 +14,7 @@ import * as moment from 'moment';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [DataService,DateUtilsService]
+  // providers: [DateUtilsService,DataService,CacheService, DeparturesService]
 })
 export class AppComponent implements OnInit{
   title = 'app';

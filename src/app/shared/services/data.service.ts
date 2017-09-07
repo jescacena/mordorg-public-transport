@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Rx';
 import {TransportTypeEnum} from '../model/transport-type.enum';
+import {DirectionsEnum} from '../model/directions.enum';
 
 
 @Injectable()
@@ -24,7 +25,7 @@ export class DataService {
   //Toggle nav menu
   toggleNavMenu = new Subject();
 
-  directionSelected:number;
+  directionSelected:number = DirectionsEnum.CercedillaMadrid;
   dateSelected:Object;
 
   constructor(private http: Http) {}
