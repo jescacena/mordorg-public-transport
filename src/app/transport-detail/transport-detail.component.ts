@@ -131,9 +131,13 @@ export class TransportDetailComponent implements OnInit {
         stationsData = this.lineResponseObj['stations-instituto-hospital'][0];
         this.durationEstimated = this.lineResponseObj['stations-instituto-hospital'][0].duration_estimated;
         break;
-      case DirectionsEnum.HospitalFuenfriaInstituto:
-        stationsData = this.lineResponseObj['stations-hospital-instituto'][0];
-        this.durationEstimated = this.lineResponseObj['stations-hospital-instituto'][0].duration_estimated;
+      case DirectionsEnum.CercedillaHospitalVillalba:
+        stationsData = this.lineResponseObj['stations-cercedilla-hospital-villalba'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cercedilla-hospital-villalba'][0].duration_estimated;
+        break;
+      case DirectionsEnum.HospitalVillalbaCercedila:
+        stationsData = this.lineResponseObj['stations-hospital-villalba-cercedilla'][0];
+        this.durationEstimated = this.lineResponseObj['stations-hospital-villalba-cercedilla'][0].duration_estimated;
         break;
     }
 

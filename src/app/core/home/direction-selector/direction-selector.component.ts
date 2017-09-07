@@ -67,14 +67,14 @@ export class DirectionSelectorComponent implements OnInit {
       label:'Hospital Fuenfría-Instituto',
       code: DirectionsEnum.HospitalFuenfriaInstituto
     },
-    // {
-    //   label:'Cercedilla-Hospital Collado Vilalba',
-    //   code: DirectionsEnum.CercedillaHospitalVilalba
-    // },
-    // {
-    //   label:'Hospital Collado Vilalba-Cercedilla',
-    //   code: DirectionsEnum.HospitalVillalbaCercedila
-    // }
+    {
+      label:'Cercedilla-Hospital Villalba',
+      code: DirectionsEnum.CercedillaHospitalVillalba
+    },
+    {
+      label:'Hospital Villalba-Cercedilla',
+      code: DirectionsEnum.HospitalVillalbaCercedila
+    }
   ];
 
   constructor(private dataService: DataService,
@@ -127,6 +127,32 @@ export class DirectionSelectorComponent implements OnInit {
             //Notify listeners
             this.dataService.newDirectionSelected.next(this.choiceSelected);
           }
+    } else if(choiceCode === DirectionsEnum.CercedillaHospitalVillalba ||
+            choiceCode === DirectionsEnum.HospitalVillalbaCercedila) {
+              this.dataService.mixDepartures.next([]);
+
+              if(!this.cacheService.lineCacheList['line-pubtra-680']) {
+                this.dataService.getBusLineData('680').subscribe(
+                  (data: Response) => {
+                    //Save to cache line data
+                    const jsonData = data.json()[0];
+                    console.log('JES onChoiceSelect jsonData',jsonData);
+                    this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                    console.log('JES onChoiceSelect cached data for lines-->');
+                    console.table(this.cacheService.lineCacheList);
+                    //
+                    this.dataService.directionSelected = this.choiceSelected;
+                    //Notify listeners
+                    this.dataService.newDirectionSelected.next(this.choiceSelected);
+                  },
+                  (error) => console.log(error)
+                );
+              } else {
+                this.dataService.directionSelected = this.choiceSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.choiceSelected);
+              }
+
     } else if(choiceCode === DirectionsEnum.CotosCercedilla ||
             choiceCode === DirectionsEnum.CercedillaCotos) {
         this.dataService.mixDepartures.next([]);

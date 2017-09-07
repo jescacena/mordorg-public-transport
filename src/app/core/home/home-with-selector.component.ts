@@ -34,6 +34,7 @@ export class HomeWithSelectorComponent implements OnInit {
 
   //Line data
   bus684LinePubtraResponse;
+  bus680LinePubtraResponse;
   trainC2LinePubtraResponse;
   trainC9LinePubtraResponse;
   busPiscinasLinePubtraResponse;
@@ -144,6 +145,38 @@ export class HomeWithSelectorComponent implements OnInit {
               this._updateMixDepartures();
 
             }
+      } else if(this.directionSelected === DirectionsEnum.CercedillaHospitalVillalba ||
+                this.directionSelected === DirectionsEnum.HospitalVillalbaCercedila) {
+
+                  this.dataService.mixDepartures.next([]);
+
+                  if(!this.cacheService.lineCacheList['line-pubtra-680']) {
+                    this.dataService.getBusLineData('680').subscribe(
+                      (data: Response) => {
+                        //Save to cache line data
+                        const jsonData = data.json()[0];
+                        this.bus680LinePubtraResponse = jsonData;
+                        this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                        console.table(this.cacheService.lineCacheList)
+                        //
+                        this.dataService.directionSelected = this.directionSelected;
+                        //Notify listeners
+                        this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                        this._updateMixDepartures();
+
+                      },
+                      (error) => console.log(error)
+                    );
+                  } else {
+                    this.dataService.directionSelected = this.directionSelected;
+                    //Notify listeners
+                    this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                    this._updateMixDepartures();
+
+                  }
+
       } else if(this.directionSelected === DirectionsEnum.CercedillaCotos ||
                 this.directionSelected === DirectionsEnum.CotosCercedilla) {
 
@@ -268,6 +301,12 @@ export class HomeWithSelectorComponent implements OnInit {
       case DirectionsEnum.CercedillaMadrid:
         busResponse = this.bus684LinePubtraResponse;
         trainResponse = this.trainC2LinePubtraResponse;
+        break;
+      case DirectionsEnum.CercedillaHospitalVillalba:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-680'];
+        break;
+      case DirectionsEnum.HospitalVillalbaCercedila:
+        busResponse = this.cacheService.lineCacheList['line-pubtra-680'];
         break;
       case DirectionsEnum.CercedillaPiscinasBerceas:
         busResponse = this.busPiscinasLinePubtraResponse;

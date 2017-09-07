@@ -227,9 +227,16 @@ export class DateUtilsService {
       case 'H2I':
           ttData = data.horario_salidas_hospital_instituto;
           break;
+      case 'C2H':
+          ttData = data.horario_salidas_cercedilla_hospital_villalba;
+          break;
+      case 'H2C':
+          ttData = data.horario_salidas_hospital_villalba_cercedilla;
+          break;
       default:
           console.log('parseCCPOI_BusTimetableResponseToArray ERROR');
     }
+
 
     return this.parseTimetableEntryArrayToDepartures(ttData , momentDate, TransportTypeEnum.Train);
   }

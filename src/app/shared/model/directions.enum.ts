@@ -5,7 +5,7 @@ export const enum DirectionsEnum {
     SegoviaCercedilla,
     InstitutoHospitalFuenfria,
     HospitalFuenfriaInstituto,
-    CercedillaHospitalVilalba,
+    CercedillaHospitalVillalba,
     HospitalVillalbaCercedila,
     CercedillaCotos,
     CotosCercedilla,

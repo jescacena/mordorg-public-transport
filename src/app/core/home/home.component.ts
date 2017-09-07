@@ -54,28 +54,6 @@ export class HomeComponent implements OnInit {
     );
     console.log('JES this.bankHolidayList',this.bankHolidayListResponse.json().day_list);
 
-    //TODO Fetch initial next departures
-    // this.homeService.getAllTimetables().subscribe(
-    //   (dataArray: Array<Response>) => {
-    //     console.log('JES getAllTimetables respondataArrays-->', dataArray);
-    //     this.trainC2TimetableResponse = dataArray[0].json()[0];
-    //     this.bus684TimetableResponse = dataArray[1].json()[0];
-    //     this._buildMixDepaturesFromMoment(moment());
-    //   },
-    //   (error) => console.log(error)
-    // );
-
-    //Init refresh loop
-    // const refreshLoop = Observable.interval(1*60*1000);   //Every minute
-    // refreshLoop.subscribe(
-    //   (number: number) => {
-    //     console.log('Fetching updated next departures...');
-    //
-    //     //TODO get next departures from now
-    //     this._buildMixDepaturesFromMoment(moment());
-    //   }
-    // );
-
   }
 
   _buildMixDepaturesFromMoment(momentDate) {

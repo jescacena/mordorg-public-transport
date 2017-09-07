@@ -63,6 +63,14 @@ export class DeparturesService {
         result = this.fillMixDeparturesByDirection(busData,null,'I2H' ,null, momentDate, directionSelected,count);
         break;
 
+      case DirectionsEnum.CercedillaHospitalVillalba:
+        result = this.fillMixDeparturesByDirection(busData,null,'C2H' ,null, momentDate, directionSelected,count);
+        break;
+
+      case DirectionsEnum.HospitalVillalbaCercedila:
+        result = this.fillMixDeparturesByDirection(busData,null,'H2C' ,null, momentDate, directionSelected,count);
+        break;
+
       default:
         console.log('Direction ' + directionSelected + 'not available!');
         result = null;
@@ -125,6 +133,9 @@ export class DeparturesService {
       case 'I2H':
         busStation = busData.station_start[0];
         break;
+      case 'C2H':
+        busStation = busData.station_start[0];
+        break;
       case 'M2C':
         busStation = busData.station_end[0];
         break;
@@ -132,6 +143,9 @@ export class DeparturesService {
         busStation = busData.station_end[0];
         break;
       case 'H2I':
+        busStation = busData.station_end[0];
+        break;
+      case 'H2C':
         busStation = busData.station_end[0];
         break;
       default:
