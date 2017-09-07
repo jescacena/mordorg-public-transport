@@ -1,5 +1,7 @@
 @import '../../../assets/styles/variables.scss';
-
+.actions-button-group {
+  display:list-item;
+}
 .button-group {
   margin-top:2em;
   li {
