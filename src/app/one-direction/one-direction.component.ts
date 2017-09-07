@@ -44,6 +44,9 @@ export class OneDirectionComponent implements OnInit {
   dateSelected;
   dateSelectedLabel:string;
 
+  showNoDataAvailable:boolean = false;
+
+
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
               private departuresService: DeparturesService,
@@ -211,8 +214,10 @@ export class OneDirectionComponent implements OnInit {
         (dataArray: Array<Response>) => {
           console.log('OneDirection getAllTimetables respondataArrays -->', dataArray);
           this.trainC2LinePubtraResponse = dataArray[0].json()[0];
-          this.bus684LinePubtraResponse = dataArray[1].json()[0];
-          this.busPiscinasLinePubtraResponse = dataArray[2].json()[0];
+          this.trainC9LinePubtraResponse = dataArray[1].json()[0];
+          this.bus684LinePubtraResponse = dataArray[2].json()[0];
+          this.busPiscinasLinePubtraResponse = dataArray[3].json()[0];
+
 
           this._updateMixDepartures();
 
@@ -254,6 +259,9 @@ export class OneDirectionComponent implements OnInit {
 
   _updateMixDepartures() {
     let busResponse;
+
+    this.showNoDataAvailable = false;
+
     switch(this.directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
         busResponse = this.bus684LinePubtraResponse;
@@ -315,7 +323,10 @@ export class OneDirectionComponent implements OnInit {
         //Notify view by observable subject
         this.dataService.mixDepartures.next(this.mixDepartures);
       },50);
+    } else {
+      this.showNoDataAvailable = true;
     }
+
   }
 
 }

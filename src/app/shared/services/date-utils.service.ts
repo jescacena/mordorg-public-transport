@@ -3,6 +3,8 @@ import * as moment from 'moment';
 import { Departure } from '../model/departure.class';
 import { DataService } from './data.service';
 import { BankHoliday } from '../model/bankHoliday.class';
+import { DirectionsEnum } from '../model/directions.enum';
+
 import { Response } from '@angular/http';
 import * as _ from "lodash";
 import { TransportTypeEnum } from '../model/transport-type.enum';
@@ -69,7 +71,15 @@ export class DateUtilsService {
     const nowDay = momentDate.day();
     // console.log('nowDay-->',nowDay);
 
-    return (nowDay === 6 || nowDay === 0)? 'SD':'LV';
+    if(nowDay === 6) {
+      return 'S';
+    } else if(nowDay === 0) {
+      return 'D';
+    } else {
+      return 'LV';
+    }
+    //
+    // return (nowDay === 6 || nowDay === 0)? 'SD':'LV';
   }
 
 
@@ -187,11 +197,22 @@ export class DateUtilsService {
   */
   parseBusTimeTableByDate(jsonData , direction, momentDate): Array<Departure> {
     const departures = this.parseCCPOI_BusTimetableResponseToArray(jsonData,direction,momentDate);
-    const momentDateAfter = _.cloneDeep(momentDate).add(1,'days');
-    const departuresDayAfter = this.parseCCPOI_BusTimetableResponseToArray(jsonData,direction,momentDateAfter);
+    let momentDateAfter;
+    let departuresDayAfter;
 
-    return departures.concat(departuresDayAfter);
-
+    //Retrieve departures for tomorrow only in specific directions
+    if(
+      direction !== 'P2C' &&
+      direction !== 'C2P' &&
+      direction !== 'H2C' &&
+      direction !== 'C2H'
+    ) {
+      momentDateAfter = _.cloneDeep(momentDate).add(1,'days');
+      departuresDayAfter = this.parseCCPOI_BusTimetableResponseToArray(jsonData,direction,momentDateAfter);
+      return departures.concat(departuresDayAfter);
+    } else {
+      return departures;
+    }
   }
 
   /**
@@ -306,6 +327,13 @@ export class DateUtilsService {
 
     //Loop over items and push Departures to result array
     //LV-7-00,15D,30,45D
+    dayTypeOfTheWeek = this.getDayTypeOfTheWeek(momentNew);
+    isBankHoliday = this.isBankHoliday(momentNew);
+    dayOfTheWeek = this.getDayOfTheWeek(momentNew);
+
+    console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayOfTheWeek', dayOfTheWeek);
+    console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayTypeOfTheWeek', dayTypeOfTheWeek);
+
     for (let TTEntry of ttEntryArray) {
         // console.log(TTEntry); // 1, "string", false
         const tokens = TTEntry.split('-');
@@ -315,8 +343,6 @@ export class DateUtilsService {
         switch(departureType) {
           case 'LV': {
             //set day flags
-            dayTypeOfTheWeek = this.getDayTypeOfTheWeek(momentNew);
-            isBankHoliday = this.isBankHoliday(momentNew);
 
             if(dayTypeOfTheWeek === 'LV' && !isBankHoliday) {
               includeTTEntry = true;
@@ -324,11 +350,13 @@ export class DateUtilsService {
             break;
           }
           case 'SDF': {
-            //set day flags
-            dayTypeOfTheWeek = this.getDayTypeOfTheWeek(momentNew);
-            isBankHoliday = this.isBankHoliday(momentNew);
-
-            if(dayTypeOfTheWeek === 'SD' || isBankHoliday) {
+            if(dayTypeOfTheWeek === 'S' || dayTypeOfTheWeek === 'D' || isBankHoliday) {
+              includeTTEntry = true;
+            }
+            break;
+          }
+          case 'S': {
+            if(dayOfTheWeek === 6) {
               includeTTEntry = true;
             }
             break;
@@ -337,9 +365,6 @@ export class DateUtilsService {
           case 'NVSG': {
             //set day flags
             // console.log('Nocturno!!!!!');
-            dayOfTheWeek = this.getDayOfTheWeek(momentNew);
-            isDayBeforeBankHoliday = this.isDayBeforeBankHoliday(momentNew);
-
             if(dayOfTheWeek === 5 || dayOfTheWeek === 6 || dayOfTheWeek === 0 ||isDayBeforeBankHoliday) {   //Viernes , Sábado, Domingo(madrugada) o Víspera de festivo
               includeTTEntry = true;
             }

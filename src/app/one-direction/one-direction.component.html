@@ -6,10 +6,15 @@
     </div>
     <app-departure-list-box
       [feedType]="'mixDepartures'"
-      [customClass]="'one-direction'">
+      [customClass]="'one-direction'"
+      *ngIf="!showNoDataAvailable">
     </app-departure-list-box>
 
+    <div class="alert alert-warning" role="alert" *ngIf="showNoDataAvailable">No hay salidas encontradas</div>
+
+
     <app-actions-button-group
+      *ngIf="!showNoDataAvailable"
       [customClass]="'one-direction'">
     </app-actions-button-group>
 
