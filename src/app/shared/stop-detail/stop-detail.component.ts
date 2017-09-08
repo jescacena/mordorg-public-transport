@@ -22,7 +22,7 @@ export class StopDetailComponent implements OnInit {
     let tokens = this.stationSelected.latlon.split(',');
     const lat = parseFloat(tokens[0]);
     const lon = parseFloat(tokens[1]);
-    console.log('JES StopDetailComponent lat,lng',lat,lon);
+    console.log('StopDetailComponent stationSelected',this.stationSelected);
 
     //Marker
     let marker= L.marker([ lat, lon ], {
@@ -64,6 +64,11 @@ export class StopDetailComponent implements OnInit {
       }
 
     );
+  }
+
+  openStreetView() {
+    console.log('openStreetView ',this.stationSelected.gsvLink);
+    var newWindow = window.open(this.stationSelected.gsvLink);
   }
 
   onMapReady(map: L.Map) {

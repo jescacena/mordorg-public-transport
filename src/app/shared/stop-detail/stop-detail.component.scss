@@ -14,17 +14,49 @@
     }
   }
 
-  img {
-    width: 100%;
+  .image-container {
+    cursor: pointer;
+    position: relative;
     margin: 1em auto;
-    border: 1px solid $dark-blue;
-
     @include handset {
       width: 90%;
       margin: 1em auto;
       display:block;
     }
+    img {
+      width: 100%;
+      border: 1px solid $dark-blue;
+    }
+
+    .after {
+      position: absolute;
+      // margin: 1em auto;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // display: none;
+      display: block;
+      background-color: rgba(0, 0, 0, .3);
+      background-position: center;
+      // @include handset {
+      //   background-position: 7em 3em;
+      // }
+      background-size: 5em 5em;
+      background-repeat: no-repeat;
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Ik0xNTM2IDE1MzZxMCA2My02MS41IDExMy41dC0xNjQgODEtMjI1IDQ2LTI1My41IDE1LjUtMjUzLjUtMTUuNS0yMjUtNDYtMTY0LTgxLTYxLjUtMTEzLjVxMC00OSAzMy04OC41dDkxLTY2LjUgMTE4LTQ0LjUgMTMxLTI5LjVxMjYtNSA0OCAxMC41dDI2IDQxLjVxNSAyNi0xMC41IDQ4dC00MS41IDI2cS01OCAxMC0xMDYgMjMuNXQtNzYuNSAyNS41LTQ4LjUgMjMuNS0yNy41IDE5LjUtOC41IDEycTMgMTEgMjcgMjYuNXQ3MyAzMyAxMTQgMzIuNSAxNjAuNSAyNSAyMDEuNSAxMCAyMDEuNS0xMCAxNjAuNS0yNSAxMTQtMzMgNzMtMzMuNSAyNy0yNy41cS0xLTQtOC41LTExdC0yNy41LTE5LTQ4LjUtMjMuNS03Ni41LTI1LTEwNi0yMy41cS0yNi00LTQxLjUtMjZ0LTEwLjUtNDhxNC0yNiAyNi00MS41dDQ4LTEwLjVxNzEgMTIgMTMxIDI5LjV0MTE4IDQ0LjUgOTEgNjYuNSAzMyA4OC41em0tMzg0LTg5NnYzODRxMCAyNi0xOSA0NXQtNDUgMTloLTY0djM4NHEwIDI2LTE5IDQ1dC00NSAxOWgtMjU2cS0yNiAwLTQ1LTE5dC0xOS00NXYtMzg0aC02NHEtMjYgMC00NS0xOXQtMTktNDV2LTM4NHEwLTUzIDM3LjUtOTAuNXQ5MC41LTM3LjVoMzg0cTUzIDAgOTAuNSAzNy41dDM3LjUgOTAuNXptLTk2LTM4NHEwIDkzLTY1LjUgMTU4LjV0LTE1OC41IDY1LjUtMTU4LjUtNjUuNS02NS41LTE1OC41IDY1LjUtMTU4LjUgMTU4LjUtNjUuNSAxNTguNSA2NS41IDY1LjUgMTU4LjV6IiBzdHlsZT0iZmlsbDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3MDU4OCk7IGZpbGwtb3BhY2l0eTogMC42OyIvPgo8L3N2Zz4=);
+
+      color: #FFF;
+    }
+
+    &:hover {
+      .after {
+        display: block;
+        background-color: rgba(0, 0, 0, .6);
+      }
+    }
   }
+
 
   .map {
     width: 100%;

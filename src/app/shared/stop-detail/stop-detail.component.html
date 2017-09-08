@@ -4,5 +4,8 @@
     [leafletOptions]="options"
     (leafletMapReady)="onMapReady($event)">
   </div>
-  <img src="{{stationSelected.imageUrl}}" alt="">
+  <div class="image-container" (click)="openStreetView()">
+    <img src="{{stationSelected.imageUrl}}" alt="">
+    <div class="after"></div>
+  </div>
 </div>
