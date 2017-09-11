@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
@@ -28,7 +28,7 @@ import { HomeService } from './home.service';
   host: { '[@fadeInAnimation]': ''},
   providers: [HomeService]
 })
-export class HomeWithSelectorComponent implements OnInit {
+export class HomeWithSelectorComponent implements OnInit, OnDestroy {
 
   bankHolidayListResponse: Response;
 
@@ -59,6 +59,9 @@ export class HomeWithSelectorComponent implements OnInit {
 
   showNoDataAvailable:boolean = false;
   showButtonGroup:boolean = true;
+
+  refreshListInterval = Observable.interval(60000);
+  refreshSubscription;
 
   constructor(private route:ActivatedRoute,
               private router: Router,
@@ -239,8 +242,7 @@ export class HomeWithSelectorComponent implements OnInit {
     }
 
     //Init refresh loop (every minute)
-    const myNumbers = Observable.interval(60000);
-    myNumbers.subscribe(
+    this.refreshSubscription = this.refreshListInterval.subscribe(
       (number: number) => {
         this.dateSelected = moment();
         this.dateSelectedDP = { date: { year: this.dateSelected.get('year'), month: this.dateSelected.get('month')+1, day: this.dateSelected.get('date') } };
@@ -285,6 +287,10 @@ export class HomeWithSelectorComponent implements OnInit {
 
 
 
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription.unsubscribe();
   }
 
 
