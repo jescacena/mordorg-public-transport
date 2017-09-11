@@ -12,7 +12,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.toggleNavMenu.next('toggle');
+    this.dataService.closeNavMenu.next('toggle');
 
   }
 

@@ -73,6 +73,9 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.dataService.closeNavMenu.next();
+
+
     this.directionSelected = (this.route.snapshot.params['direction'])?
                               parseInt(this.route.snapshot.params['direction'])
                               :

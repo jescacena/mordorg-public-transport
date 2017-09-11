@@ -56,6 +56,8 @@ export class OneDirectionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.dataService.closeNavMenu.next();
+
     //Get direction from route params
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);
     this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;

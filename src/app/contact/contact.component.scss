@@ -1,10 +1,11 @@
 @import '../../assets/styles/variables.scss';
 
 .contact {
+  margin:0;
   p {
     @include regular-text;
     color: $light-grey;
-    font-weight: 600;
+    font-weight: lighter;
     font-size: 1.2em;
     letter-spacing: 1px;
     margin: 0em auto;
@@ -16,9 +17,9 @@
       max-width: 80%;
     }
     @include handset {
-      max-width: 80%;
+      max-width: 100%;
       font-size: 1em;
-
+      padding:0.5em 1em;
     }
     span.email {
       margin-top: 2em;

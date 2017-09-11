@@ -18,6 +18,11 @@ export class HeaderComponent implements OnInit {
         this.toggleNav();
       }
     );
+    this.dataService.closeNavMenu.subscribe(
+      (data:string)=> {
+        this.closeNav();
+      }
+    );
   }
 
   /* Set the width of the side navigation to 250px */
@@ -28,6 +33,11 @@ export class HeaderComponent implements OnInit {
       document.getElementById("mySidenav").style.width = "0";
     }
     this.navOpened = !this.navOpened;
+  }
+
+  /* Close nav menu*/
+  closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
   }
 
 }

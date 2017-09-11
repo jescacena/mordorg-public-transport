@@ -25,6 +25,9 @@ export class DataService {
   //Toggle nav menu
   toggleNavMenu = new Subject();
 
+  //Close nav menu
+  closeNavMenu = new Subject();
+
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
   dateSelected:Object;
 
