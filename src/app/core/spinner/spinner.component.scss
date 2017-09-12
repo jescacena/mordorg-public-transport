@@ -1,0 +1,17 @@
+@import '../../../assets/styles/variables.scss';
+
+.spinner {
+  position:fixed;
+  background-color: $dark-blue-transparent;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  text-align: center;
+
+  i {
+    position:relative;
+    top: calc(50% - 10px);
+    color:$light-blue;
+  }
+}

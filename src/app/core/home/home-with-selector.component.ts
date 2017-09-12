@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
-import {ActivatedRoute, Router,Data} from '@angular/router';
+import {ActivatedRoute, Router,Data,NavigationStart,NavigationEnd} from '@angular/router';
 import * as moment from 'moment';
 import * as _ from "lodash";
 import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydatepicker';
@@ -74,6 +74,8 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.dataService.closeNavMenu.next();
+    this.dataService.hidePageTransitionSpinner.next();
+
 
 
     this.directionSelected = (this.route.snapshot.params['direction'])?
@@ -85,6 +87,21 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
 
     console.log('Home - directionSelected',this.directionSelected);
 
+
+    this.router.events.subscribe(
+      (event) => {
+        if(event instanceof NavigationStart) {
+          this.dataService.closeNavMenu.next();
+          this.dataService.showPageTransitionSpinner.next();
+        }
+        if(event instanceof NavigationEnd) {
+          this.dataService.hidePageTransitionSpinner.next();
+        }
+        // NavigationEnd
+        // NavigationCancel
+        // NavigationError
+        // RoutesRecognized
+    });
 
     //Resolve bank holidays and init dateUtilsService
     this.route.data.subscribe(

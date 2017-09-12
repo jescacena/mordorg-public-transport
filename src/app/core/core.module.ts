@@ -21,6 +21,7 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { DateUtilsService } from '../shared/services/date-utils.service';
 import { DataService } from '../shared/services/data.service';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -30,7 +31,8 @@ import { DataService } from '../shared/services/data.service';
     HomeWithSelectorComponent,
     HeaderComponent,
     DirectionSelectorComponent,
-    FooterComponent
+    FooterComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +45,7 @@ import { DataService } from '../shared/services/data.service';
   exports: [
     HeaderComponent,
     FooterComponent,
+    SpinnerComponent,
     AppRoutingModule
   ],
   // providers: [DateUtilsService, DataService],

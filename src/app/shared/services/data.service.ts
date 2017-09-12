@@ -28,6 +28,12 @@ export class DataService {
   //Close nav menu
   closeNavMenu = new Subject();
 
+  //Show fullscreen spinner
+  showPageTransitionSpinner = new Subject();
+
+  //Hide fullscreen spinner
+  hidePageTransitionSpinner = new Subject();
+
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
   dateSelected:Object;
 
