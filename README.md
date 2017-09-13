@@ -84,6 +84,13 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
 
+## Creating videos and gifs for presentations
+* Creation of video with **Quicktime** --> Archivo --> Nueva grabación de pantalla
+* **Convert mov video to gif**: open terminal:
+```
+ffmpeg -i directio-selector.mov -s 350x650 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
+```
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

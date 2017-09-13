@@ -10,6 +10,7 @@ import { DataService } from '../services/data.service';
 export class StopDetailComponent implements OnInit {
 
   @Input() stationSelected: Station;
+  addressLabel:string;
 
   options: any;
   map: L.Map;
@@ -23,6 +24,11 @@ export class StopDetailComponent implements OnInit {
     const lat = parseFloat(tokens[0]);
     const lon = parseFloat(tokens[1]);
     console.log('StopDetailComponent stationSelected',this.stationSelected);
+
+    //Address label
+    this.addressLabel = (this.stationSelected.address.indexOf('Parada')!==-1)? this.stationSelected.address
+    :
+    'Parada en ' + this.stationSelected.address;
 
     //Marker
     let marker= L.marker([ lat, lon ], {
