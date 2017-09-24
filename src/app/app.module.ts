@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { MyDatePickerModule } from 'mydatepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -39,7 +40,8 @@ import { ContactComponent } from './contact/contact.component';
     SharedModule,
     MyDatePickerModule,
     BrowserAnimationsModule,
-    LeafletModule
+    LeafletModule,
+    Ng2DeviceDetectorModule.forRoot()
   ],
   providers: [DateUtilsService,DataService,CacheService, DeparturesService],
   bootstrap: [AppComponent]

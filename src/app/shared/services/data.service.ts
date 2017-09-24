@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Rx';
+import { Ng2DeviceService } from 'ng2-device-detector';
+
 import {TransportTypeEnum} from '../model/transport-type.enum';
 import {DirectionsEnum} from '../model/directions.enum';
+import { DeviceTypeEnum } from '../../shared/model/device-type.enum';
+
 
 
 @Injectable()
@@ -37,7 +41,7 @@ export class DataService {
   directionSelected:number = DirectionsEnum.CercedillaMadrid;
   dateSelected:Object;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private deviceService: Ng2DeviceService) {}
 
   getDetails() {
     const resultPromise = new Promise((resolve,reject)=>{
@@ -130,6 +134,17 @@ export class DataService {
   //http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-c2
   getCCPOIS_BusLinePubtra(busId) {
     return this.http.get('http://jesidea.com/cercepois/wp-json/wp/v2/line-pubtra-'+busId);
+  }
+
+  getDeviceType() {
+
+    const userAgent = this.deviceService.getDeviceInfo().userAgent;
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ) {
+      return DeviceTypeEnum.MobileHandset;
+    } else {
+      return DeviceTypeEnum.Desktop;
+    }
+
   }
 
 }

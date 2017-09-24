@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/Rx';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Ng2DeviceService } from 'ng2-device-detector';
+
 
 import { DataService } from '../services/data.service';
 import { Departure } from '../model/departure.class';
@@ -30,9 +32,13 @@ export class DepartureListBoxComponent implements OnInit {
   scrollAtBottom: boolean = false;
   scrollAtTop: boolean = true;
 
+  deviceInfo = null;
+
+
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private deviceService: Ng2DeviceService) { }
 
 
   ngOnInit() {
@@ -63,6 +69,9 @@ export class DepartureListBoxComponent implements OnInit {
           }
       });
     }
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    console.log('JES device info-->',this.deviceInfo);
   }
 
   onScroll(event) {

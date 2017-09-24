@@ -8,12 +8,14 @@ import * as _ from "lodash";
 import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydatepicker';
 
 
+
 import { DateUtilsService } from '../../shared/services/date-utils.service';
 import { DeparturesService } from '../../shared/services/departures.service';
 import { DataService } from '../../shared/services/data.service';
 import { CacheService } from '../../shared/services/cache.service';
 import { Departure } from '../../shared/model/departure.class';
 import { DirectionsEnum } from '../../shared/model/directions.enum';
+import { DeviceTypeEnum } from '../../shared/model/device-type.enum';
 import { fadeInAnimation } from '../../shared/fade-in.animation';
 
 
@@ -63,6 +65,11 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
   refreshListInterval = Observable.interval(60000);
   refreshSubscription;
 
+  deviceType = DeviceTypeEnum.Desktop;
+
+  numOfDeparturesToShow = 6;
+
+
   constructor(private route:ActivatedRoute,
               private router: Router,
               private dateUtilsService: DateUtilsService,
@@ -71,12 +78,16 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
               private cacheService: CacheService,
               private homeService: HomeService) { }
 
+
   ngOnInit() {
 
     this.dataService.closeNavMenu.next();
     this.dataService.hidePageTransitionSpinner.next();
 
+    this.deviceType = this.dataService.getDeviceType();
 
+    // this.numOfDeparturesToShow = 4;
+    this.numOfDeparturesToShow = (this.deviceType === DeviceTypeEnum.MobileHandset)? this.numOfDeparturesToShow/2 : this.numOfDeparturesToShow ;
 
     this.directionSelected = (this.route.snapshot.params['direction'])?
                               parseInt(this.route.snapshot.params['direction'])
@@ -368,7 +379,7 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
                                                                               this.directionSelected,
                                                                               trainResponse,
                                                                               busResponse,
-                                                                              6);
+                                                                              this.numOfDeparturesToShow);
       if(this.mixDepartures && this.mixDepartures.length > 0) {
         setTimeout(()=>{
           //Notify view by observable subject
