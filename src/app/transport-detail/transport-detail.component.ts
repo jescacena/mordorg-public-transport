@@ -71,7 +71,7 @@ export class TransportDetailComponent implements OnInit {
     //Get cached data
     // const cachedData = this.cacheService.lineCacheList[this.lineId];
 
-    console.log('JES TransportDetailComponent lineResponseObj',this.lineResponseObj);
+    // console.log('JES TransportDetailComponent lineResponseObj',this.lineResponseObj);
 
     //Build title label
     this.lineName = this.lineResponseObj.nombre;

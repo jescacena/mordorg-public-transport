@@ -331,8 +331,8 @@ export class DateUtilsService {
     isBankHoliday = this.isBankHoliday(momentNew);
     dayOfTheWeek = this.getDayOfTheWeek(momentNew);
 
-    console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayOfTheWeek', dayOfTheWeek);
-    console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayTypeOfTheWeek', dayTypeOfTheWeek);
+    // console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayOfTheWeek', dayOfTheWeek);
+    // console.log('JES parseCCPOI_BusTimetableResponseToArray -->dayTypeOfTheWeek', dayTypeOfTheWeek);
 
     for (let TTEntry of ttEntryArray) {
         // console.log(TTEntry); // 1, "string", false

@@ -12,6 +12,8 @@ import { DataService } from '../shared/services/data.service';
 import { CacheService } from '../shared/services/cache.service';
 import { DeparturesService } from '../shared/services/departures.service';
 import { fadeInAnimation } from '../shared/fade-in.animation';
+import { DeviceTypeEnum } from '../shared/model/device-type.enum';
+
 
 
 @Component({
@@ -46,6 +48,7 @@ export class OneDirectionComponent implements OnInit {
 
   showNoDataAvailable:boolean = false;
 
+  deviceType = DeviceTypeEnum.Desktop;
 
   constructor(private route:ActivatedRoute,
               private dateUtilsService: DateUtilsService,
@@ -57,6 +60,11 @@ export class OneDirectionComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.closeNavMenu.next();
+
+    this.deviceType = this.dataService.getDeviceType();
+
+    // this.numOfDeparturesToShow = 4;
+    // this.numOfDeparturesToShow = (this.deviceType === DeviceTypeEnum.MobileHandset)? this.numOfDeparturesToShow-2 : this.numOfDeparturesToShow ;
 
     //Get direction from route params
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);

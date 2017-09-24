@@ -54,7 +54,7 @@ export class StopDetailComponent implements OnInit {
           let tokens = this.stationSelected.latlon.split(',');
           const lat = parseFloat(tokens[0]);
           const lon = parseFloat(tokens[1]);
-          console.log('JES StopDetailComponent selectedStation lat,lng',lat,lon);
+          // console.log('JES StopDetailComponent selectedStation lat,lng',lat,lon);
 
           this.options.center = L.latLng({ lat: lat, lng: lon });
 

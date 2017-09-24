@@ -4,8 +4,6 @@ import {IMyDpOptions,IMyDate,IMyDateModel,IMySelector,MyDatePicker} from 'mydate
 import {ActivatedRoute, Router,Data,Params} from '@angular/router';
 import { Angulartics2 } from 'angulartics2';
 
-
-
 import { DateUtilsService } from '../../shared/services/date-utils.service';
 import { DeparturesService } from '../../shared/services/departures.service';
 import { DataService } from '../../shared/services/data.service';

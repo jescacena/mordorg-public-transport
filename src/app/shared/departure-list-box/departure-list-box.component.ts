@@ -70,8 +70,6 @@ export class DepartureListBoxComponent implements OnInit {
       });
     }
 
-    this.deviceInfo = this.deviceService.getDeviceInfo();
-    console.log('JES device info-->',this.deviceInfo);
   }
 
   onScroll(event) {

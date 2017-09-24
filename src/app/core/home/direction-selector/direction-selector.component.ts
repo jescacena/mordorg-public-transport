@@ -4,8 +4,7 @@ import * as moment from 'moment';
 import {IMyDpOptions,IMyDate,IMyDateModel} from 'mydatepicker';
 import {ActivatedRoute, Router,Data} from '@angular/router';
 import { Response } from '@angular/http';
-
-
+import { Angulartics2 } from 'angulartics2';
 
 import { DataService } from '../../../shared/services/data.service';
 import {CacheService} from '../../../shared/services/cache.service';
@@ -79,7 +78,9 @@ export class DirectionSelectorComponent implements OnInit {
 
   constructor(private dataService: DataService,
     private route:ActivatedRoute,
-    private cacheService: CacheService) { }
+    private cacheService: CacheService,
+    private angulartics2: Angulartics2) { }
+
 
   ngOnInit() {
     // this.labelSelected = this.choiceList[0].label;
@@ -111,9 +112,9 @@ export class DirectionSelectorComponent implements OnInit {
               (data: Response) => {
                 //Save to cache line data
                 const jsonData = data.json()[0];
-                console.log('JES onChoiceSelect jsonData',jsonData);
+                // console.log('JES onChoiceSelect jsonData',jsonData);
                 this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                console.log('JES onChoiceSelect cached data for lines-->');
+                // console.log('JES onChoiceSelect cached data for lines-->');
                 console.table(this.cacheService.lineCacheList);
                 //
                 this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
@@ -141,9 +142,9 @@ export class DirectionSelectorComponent implements OnInit {
                   (data: Response) => {
                     //Save to cache line data
                     const jsonData = data.json()[0];
-                    console.log('JES onChoiceSelect jsonData',jsonData);
+                    // console.log('JES onChoiceSelect jsonData',jsonData);
                     this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                    console.log('JES onChoiceSelect cached data for lines-->');
+                    // console.log('JES onChoiceSelect cached data for lines-->');
                     console.table(this.cacheService.lineCacheList);
                     //
                     this.dataService.directionSelected = (this.choiceSelected || this.choiceSelected === 0) ? this.choiceSelected : this.dataService.directionSelected;
@@ -200,6 +201,9 @@ export class DirectionSelectorComponent implements OnInit {
       }
 
     }
+
+    this.angulartics2.eventTrack.next({ action: 'onDirectionChanged', properties: { category: 'button action', label: new Date().toLocaleDateString() }});
+
   }
 
   toggleChoiceList() {

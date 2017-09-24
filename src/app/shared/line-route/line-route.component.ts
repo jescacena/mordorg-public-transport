@@ -19,7 +19,7 @@ export class LineRouteComponent implements OnInit {
   }
 
   selectStation(station) {
-    console.log('JES selectStation' , station);
+    // console.log('JES selectStation' , station);
     this.stationSelected = station;
     this.dataService.selectedStation.next(station);
   }
