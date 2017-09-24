@@ -87,7 +87,7 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
     this.deviceType = this.dataService.getDeviceType();
 
     // this.numOfDeparturesToShow = 4;
-    this.numOfDeparturesToShow = (this.deviceType === DeviceTypeEnum.MobileHandset)? this.numOfDeparturesToShow/2 : this.numOfDeparturesToShow ;
+    this.numOfDeparturesToShow = (this.deviceType === DeviceTypeEnum.MobileHandset)? this.numOfDeparturesToShow-2 : this.numOfDeparturesToShow ;
 
     this.directionSelected = (this.route.snapshot.params['direction'])?
                               parseInt(this.route.snapshot.params['direction'])
