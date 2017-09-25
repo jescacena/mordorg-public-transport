@@ -202,7 +202,7 @@ export class DirectionSelectorComponent implements OnInit {
 
     }
 
-    this.angulartics2.eventTrack.next({ action: 'onDirectionChanged', properties: { category: 'button action', label: new Date().toLocaleDateString() }});
+    this.angulartics2.eventTrack.next({ action: 'onDirectionChanged', properties: { category: 'CTA change direction', label: this.labelSelected}});
 
   }
 

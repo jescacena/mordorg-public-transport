@@ -93,7 +93,7 @@ export class ActionsButtonGroupComponent implements OnInit {
       this.directionSelected = this.dataService.directionSelected;
 
 
-      this.angulartics2.eventTrack.next({ action: 'onDateChanged', properties: { category: 'button action', label: new Date(event.jsdate).toLocaleDateString() }});
+      this.angulartics2.eventTrack.next({ action: 'onDateChanged', properties: { category: 'CTA date change', label: new Date(event.jsdate).toLocaleDateString() }});
 
       this.gotoMixDirectionSelected();
   }
