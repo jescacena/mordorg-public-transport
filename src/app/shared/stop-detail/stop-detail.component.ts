@@ -58,6 +58,12 @@ export class StopDetailComponent implements OnInit {
 
           this.options.center = L.latLng({ lat: lat, lng: lon });
 
+          //Address label
+          this.addressLabel = (this.stationSelected.address.indexOf('Parada')!==-1)? this.stationSelected.address
+          :
+          'Parada en ' + this.stationSelected.address;
+
+
           //redraw map
           this.map.panTo([lat,lon]);
           L.marker([ lat, lon ], {

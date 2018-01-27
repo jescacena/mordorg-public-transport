@@ -215,6 +215,9 @@ export class TransportDetailComponent implements OnInit {
 
 
     this.line = new Line(this.lineId,stationList);
+
+    this.dataService.hidePageTransitionSpinner.next();
+
   }
 
 }

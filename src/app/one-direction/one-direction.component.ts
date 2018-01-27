@@ -256,6 +256,7 @@ export class OneDirectionComponent implements OnInit {
     }
 
 
+    this.dataService.hidePageTransitionSpinner.next();
 
 
   }
