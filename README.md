@@ -21,6 +21,9 @@ os: darwin x64
 @angular/cli: 1.1.0
 @angular/compiler-cli: 4.1.3
 @angular/language-service: 4.1.3
+@types/lodash: 4.14.75
+@types/leaflet: 1.2.0
+leaflet: 1.1.0
 ```
 
 ## Local development

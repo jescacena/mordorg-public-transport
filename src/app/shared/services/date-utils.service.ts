@@ -111,7 +111,8 @@ export class DateUtilsService {
   * @return {object} Departure
   */
   getNextNightlyDepartures(momentDate , departures: Array<Departure>, count) {
-    const result = _.filter(this.getNextDepartures(momentDate,departures,40), (departure)=> {
+    let result: Array<Departure> = this.getNextDepartures(momentDate,departures,40);
+    result = _.filter(result, (departure)=> {
       return departure && departure.isNightly;
     });
 
@@ -136,7 +137,7 @@ export class DateUtilsService {
   * @param {number} count number of next departures / null for ALL
   * @return {object} Departure
   */
-  getNextDepartures(momentDate , departures: Array<Departure>, count) {
+  getNextDepartures(momentDate , departures: Array<Departure>, count): Array<Departure> {
     let result: Array<Departure> = [];
     for (let i = 0; i < departures.length; i++) {
       if(departures[i].momentDate.isAfter(momentDate)) {
