@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Station } from '../model/station.class';
 import { DataService } from '../services/data.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-stop-detail',
