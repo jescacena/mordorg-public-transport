@@ -39,6 +39,7 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
   bus680LinePubtraResponse;
   trainC2LinePubtraResponse;
   trainC9LinePubtraResponse;
+  trainRegSegLinePubtraResponse;
   busPiscinasLinePubtraResponse;
   busUrbanLinePubtraResponse;
 
@@ -243,6 +244,37 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
             this._updateMixDepartures();
 
           }
+      } else if(this.directionSelected === DirectionsEnum.CercedillaSegovia ||
+                this.directionSelected === DirectionsEnum.SegoviaCercedilla) {
+
+          this.dataService.mixDepartures.next([]);
+
+          if(!this.cacheService.lineCacheList['line-pubtra-regseg']) {
+            this.dataService.getTrainLineData('regseg').subscribe(
+              (data: Response) => {
+                //Save to cache line data
+                const jsonData = data.json()[0];
+                this.trainRegSegLinePubtraResponse = jsonData;
+                this.cacheService.addLineDataToCache(jsonData,jsonData.type);
+                console.table(this.cacheService.lineCacheList)
+                //
+                this.dataService.directionSelected = this.directionSelected;
+                //Notify listeners
+                this.dataService.newDirectionSelected.next(this.directionSelected);
+
+                this._updateMixDepartures();
+
+              },
+              (error) => console.log(error)
+            );
+          } else {
+            this.dataService.directionSelected = this.directionSelected;
+            //Notify listeners
+            this.dataService.newDirectionSelected.next(this.directionSelected);
+
+            this._updateMixDepartures();
+
+          }
 
       } else {
         //Fetch  departures from common routes
@@ -339,7 +371,13 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
       case DirectionsEnum.CercedillaCotos:
         trainResponse = this.trainC9LinePubtraResponse;
         break;
+      case DirectionsEnum.CercedillaSegovia:
+        // trainResponse = this.trainRegSegLinePubtraResponse;
+        trainResponse = this.cacheService.lineCacheList['line-pubtra-regseg'];
+
+        break;
       case DirectionsEnum.CercedillaMadrid:
+      case DirectionsEnum.MadridCercedilla:
         busResponse = this.bus684LinePubtraResponse;
         trainResponse = this.trainC2LinePubtraResponse;
         break;
@@ -352,12 +390,12 @@ export class HomeWithSelectorComponent implements OnInit, OnDestroy {
       case DirectionsEnum.CercedillaPiscinasBerceas:
         busResponse = this.busPiscinasLinePubtraResponse;
         break;
-      case DirectionsEnum.MadridCercedilla:
-        busResponse = this.bus684LinePubtraResponse;
-        trainResponse = this.trainC2LinePubtraResponse;
-        break;
       case DirectionsEnum.CotosCercedilla:
         trainResponse = this.trainC9LinePubtraResponse;
+        break;
+      case DirectionsEnum.SegoviaCercedilla:
+        // trainResponse = this.trainRegSegLinePubtraResponse;
+        trainResponse = this.cacheService.lineCacheList['line-pubtra-regseg'];
         break;
       case DirectionsEnum.PiscinasBerceasCercedilla:
         busResponse = this.busPiscinasLinePubtraResponse;

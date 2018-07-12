@@ -111,6 +111,10 @@ export class TransportDetailComponent implements OnInit {
         stationsData = this.lineResponseObj['stations-cercedilla-cotos'][0];
         this.durationEstimated = this.lineResponseObj['stations-cercedilla-cotos'][0].duration_estimated;
         break;
+      case DirectionsEnum.CercedillaSegovia:
+        stationsData = this.lineResponseObj['stations-cercedilla-segovia'][0];
+        this.durationEstimated = this.lineResponseObj['stations-cercedilla-segovia'][0].duration_estimated;
+        break;
       case DirectionsEnum.CercedillaPiscinasBerceas:
         stationsData = this.lineResponseObj['stations-cercedilla-berceas'][0];
         this.durationEstimated = this.lineResponseObj['stations-cercedilla-berceas'][0].duration_estimated;
@@ -122,6 +126,10 @@ export class TransportDetailComponent implements OnInit {
       case DirectionsEnum.CotosCercedilla:
         stationsData = this.lineResponseObj['stations-cotos-cercedilla'][0];
         this.durationEstimated = this.lineResponseObj['stations-cotos-cercedilla'][0].duration_estimated;
+        break;
+      case DirectionsEnum.SegoviaCercedilla:
+        stationsData = this.lineResponseObj['stations-segovia-cercedilla'][0];
+        this.durationEstimated = this.lineResponseObj['stations-segovia-cercedilla'][0].duration_estimated;
         break;
       case DirectionsEnum.PiscinasBerceasCercedilla:
         stationsData = this.lineResponseObj['stations-berceas-cercedilla'][0];

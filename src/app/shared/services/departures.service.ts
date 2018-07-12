@@ -46,6 +46,9 @@ export class DeparturesService {
       case DirectionsEnum.CercedillaCotos:
         result = this.fillMixDeparturesByDirection(null,trainData,null ,'C2T', momentDate, directionSelected,count);
         break;
+      case DirectionsEnum.CercedillaSegovia:
+        result = this.fillMixDeparturesByDirection(null,trainData,null ,'C2S', momentDate, directionSelected,count);
+        break;
 
       case DirectionsEnum.PiscinasBerceasCercedilla:
         result = this.fillMixDeparturesByDirection(busData,null,'P2C' ,null, momentDate, directionSelected,count);
@@ -53,6 +56,10 @@ export class DeparturesService {
 
       case DirectionsEnum.CotosCercedilla:
         result = this.fillMixDeparturesByDirection(null,trainData,null,'T2C', momentDate, directionSelected,count);
+        break;
+
+      case DirectionsEnum.SegoviaCercedilla:
+        result = this.fillMixDeparturesByDirection(null,trainData,null,'S2C', momentDate, directionSelected,count);
         break;
 
       case DirectionsEnum.HospitalFuenfriaInstituto:
@@ -159,10 +166,16 @@ export class DeparturesService {
       case 'C2T':
         trainStation = trainData.station_start[0];
         break;
+      case 'C2S':
+        trainStation = trainData.station_start[0];
+        break;
       case 'A2C':
         trainStation = trainData.station_end[0];
         break;
       case 'T2C':
+        trainStation = trainData.station_end[0];
+        break;
+      case 'S2C':
         trainStation = trainData.station_end[0];
         break;
       default:
