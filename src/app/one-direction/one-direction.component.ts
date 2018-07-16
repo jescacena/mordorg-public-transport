@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import {ActivatedRoute, Data, Params} from '@angular/router';
+import { ActivatedRoute, Data, Params } from '@angular/router';
 import * as moment from 'moment';
 
 import { Departure } from '../shared/model/departure.class';
@@ -21,7 +21,7 @@ import { DeviceTypeEnum } from '../shared/model/device-type.enum';
   templateUrl: './one-direction.component.html',
   styleUrls: ['./one-direction.component.scss'],
   animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': ''}
+  host: { '[@fadeInAnimation]': '' }
 })
 export class OneDirectionComponent implements OnInit {
 
@@ -32,30 +32,31 @@ export class OneDirectionComponent implements OnInit {
   bus680LinePubtraResponse;
   trainC2LinePubtraResponse;
   trainC9LinePubtraResponse;
+  trainRegSegLinePubtraResponse;
   busPiscinasLinePubtraResponse;
   busUrbanLinePubtraResponse;
 
   //Next departures arrays
-  busDepartures:Array<Departure>;
-  trainDepartures:Array<Departure>;
+  busDepartures: Array<Departure>;
+  trainDepartures: Array<Departure>;
   mixDepartures: Array<Departure>;
 
-  directionSelected:number = DirectionsEnum.CercedillaMadrid;
-  directionSelectedLabel:string;
-  dateParam:string;
+  directionSelected: number = DirectionsEnum.CercedillaMadrid;
+  directionSelectedLabel: string;
+  dateParam: string;
   dateSelected;
-  dateSelectedLabel:string;
+  dateSelectedLabel: string;
 
-  showNoDataAvailable:boolean = false;
+  showNoDataAvailable: boolean = false;
 
   deviceType = DeviceTypeEnum.Desktop;
 
-  constructor(private route:ActivatedRoute,
-              private dateUtilsService: DateUtilsService,
-              private departuresService: DeparturesService,
-              private dataService: DataService,
-              private cacheService: CacheService,
-            ) { }
+  constructor(private route: ActivatedRoute,
+    private dateUtilsService: DateUtilsService,
+    private departuresService: DeparturesService,
+    private dataService: DataService,
+    private cacheService: CacheService,
+  ) { }
 
 
   ngOnInit() {
@@ -68,7 +69,7 @@ export class OneDirectionComponent implements OnInit {
 
     //Get direction from route params
     this.directionSelected = parseInt(this.route.snapshot.params['direction']);
-    this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
+    this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
 
 
     this.directionSelectedLabel = DirectionLabels[this.directionSelected];
@@ -79,158 +80,205 @@ export class OneDirectionComponent implements OnInit {
 
     //Resolve bank holidays and init dateUtilsService
     this.route.data.subscribe(
-       (data: Data) => {
-         this.bankHolidayListResponse = data['bankHolidayListResponse'];
-         this.dateUtilsService.setBankHolydays(this.bankHolidayListResponse.json().day_list);
-       }
+      (data: Data) => {
+        this.bankHolidayListResponse = data['bankHolidayListResponse'];
+        this.dateUtilsService.setBankHolydays(this.bankHolidayListResponse.json().day_list);
+      }
     );
-    console.log('OneDirection - bankHolidayList',this.bankHolidayListResponse.json().day_list);
+    console.log('OneDirection - bankHolidayList', this.bankHolidayListResponse.json().day_list);
 
 
     //Get lines data depending on selected direction
-    if(this.directionSelected === DirectionsEnum.HospitalFuenfriaInstituto ||
-            this.directionSelected === DirectionsEnum.InstitutoHospitalFuenfria) {
-              this.dataService.mixDepartures.next([]);
+    if (this.directionSelected === DirectionsEnum.HospitalFuenfriaInstituto ||
+      this.directionSelected === DirectionsEnum.InstitutoHospitalFuenfria) {
+      this.dataService.mixDepartures.next([]);
 
-              if(!this.cacheService.lineCacheList['line-pubtra-l1']) {
-                this.dataService.getBusLineData('l1').subscribe(
-                  (data: Response) => {
-                    //Save to cache line data
-                    const jsonData = data.json()[0];
-                    this.busUrbanLinePubtraResponse = jsonData;
-                    console.log('OneDirection - onChoiceSelect jsonData',jsonData);
-                    this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                    console.log('OneDirection - onChoiceSelect cached data for lines-->');
-                    console.table(this.cacheService.lineCacheList)
-                    //
-                    this.dataService.directionSelected = (this.directionSelected  || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                    //Notify listeners
-                    if(this.directionSelected  || this.directionSelected === 0 ) {
-                      this.dataService.newDirectionSelected.next(this.directionSelected);
-                    }
+      if (!this.cacheService.lineCacheList['line-pubtra-l1']) {
+        this.dataService.getBusLineData('l1').subscribe(
+          (data: Response) => {
+            //Save to cache line data
+            const jsonData = data.json()[0];
+            this.busUrbanLinePubtraResponse = jsonData;
+            console.log('OneDirection - onChoiceSelect jsonData', jsonData);
+            this.cacheService.addLineDataToCache(jsonData, jsonData.type);
+            console.log('OneDirection - onChoiceSelect cached data for lines-->');
+            console.table(this.cacheService.lineCacheList)
+            //
+            this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+            //Notify listeners
+            if (this.directionSelected || this.directionSelected === 0) {
+              this.dataService.newDirectionSelected.next(this.directionSelected);
+            }
 
-                    this._updateMixDepartures();
+            this._updateMixDepartures();
 
-                    this.route.params.subscribe(
-                     (params: Params) => {
-                       this._parseParamDate();
-                       this._updateMixDepartures();
-                     });
-
-
-                  },
-                  (error) => console.log(error)
-                );
-              } else {
-                this.dataService.directionSelected = (this.directionSelected  || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                //Notify listeners
-                if(this.directionSelected  || this.directionSelected === 0 ) {
-                  this.dataService.newDirectionSelected.next(this.directionSelected);
-                }
-
+            this.route.params.subscribe(
+              (params: Params) => {
+                this._parseParamDate();
                 this._updateMixDepartures();
-                this.route.params.subscribe(
-                 (params: Params) => {
-                   this._parseParamDate();
-                   this._updateMixDepartures();
-                 });
-
-              }
-
-    } else if(this.directionSelected === DirectionsEnum.CercedillaHospitalVillalba ||
-                this.directionSelected === DirectionsEnum.HospitalVillalbaCercedila) {
-                  this.dataService.mixDepartures.next([]);
-
-                  if(!this.cacheService.lineCacheList['line-pubtra-680']) {
-                    this.dataService.getBusLineData('680').subscribe(
-                      (data: Response) => {
-                        //Save to cache line data
-                        const jsonData = data.json()[0];
-                        this.bus680LinePubtraResponse = jsonData;
-                        console.log('OneDirection - onChoiceSelect jsonData',jsonData);
-                        this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                        console.log('OneDirection - onChoiceSelect cached data for lines-->');
-                        console.table(this.cacheService.lineCacheList)
-                        //
-                        this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                        //Notify listeners
-                        if(this.directionSelected   || this.directionSelected === 0 ) {
-                          this.dataService.newDirectionSelected.next(this.directionSelected);
-                        }
-                        this._updateMixDepartures();
-
-                        this.route.params.subscribe(
-                         (params: Params) => {
-                           this._parseParamDate();
-                           this._updateMixDepartures();
-                         });
+              });
 
 
-                      },
-                      (error) => console.log(error)
-                    );
-                  } else {
-                    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                    //Notify listeners
-                    if(this.directionSelected   || this.directionSelected === 0 ) {
-                      this.dataService.newDirectionSelected.next(this.directionSelected);
-                    }
-                    this._updateMixDepartures();
-                    this.route.params.subscribe(
-                     (params: Params) => {
-                       this._parseParamDate();
-                       this._updateMixDepartures();
-                     });
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+        //Notify listeners
+        if (this.directionSelected || this.directionSelected === 0) {
+          this.dataService.newDirectionSelected.next(this.directionSelected);
+        }
 
-                  }
+        this._updateMixDepartures();
+        this.route.params.subscribe(
+          (params: Params) => {
+            this._parseParamDate();
+            this._updateMixDepartures();
+          });
 
+      }
 
-    } else if(this.directionSelected === DirectionsEnum.CercedillaCotos ||
-            this.directionSelected === DirectionsEnum.CotosCercedilla) {
-              this.dataService.mixDepartures.next([]);
+    } else if (this.directionSelected === DirectionsEnum.CercedillaHospitalVillalba ||
+      this.directionSelected === DirectionsEnum.HospitalVillalbaCercedila) {
+      this.dataService.mixDepartures.next([]);
 
-              if(!this.cacheService.lineCacheList['line-pubtra-c9']) {
-                this.dataService.getTrainLineData('c9').subscribe(
-                  (data: Response) => {
-                    //Save to cache line data
-                    const jsonData = data.json()[0];
-                    this.trainC9LinePubtraResponse = jsonData;
-                    console.log('OneDirection - onChoiceSelect jsonData',jsonData);
-                    this.cacheService.addLineDataToCache(jsonData,jsonData.type);
-                    console.log('OneDirection - onChoiceSelect cached data for lines-->');
-                    console.table(this.cacheService.lineCacheList)
-                    //
-                    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                    //Notify listeners
-                    if(this.directionSelected   || this.directionSelected === 0 ) {
-                      this.dataService.newDirectionSelected.next(this.directionSelected);
-                    }
-                    this._updateMixDepartures();
+      if (!this.cacheService.lineCacheList['line-pubtra-680']) {
+        this.dataService.getBusLineData('680').subscribe(
+          (data: Response) => {
+            //Save to cache line data
+            const jsonData = data.json()[0];
+            this.bus680LinePubtraResponse = jsonData;
+            console.log('OneDirection - onChoiceSelect jsonData', jsonData);
+            this.cacheService.addLineDataToCache(jsonData, jsonData.type);
+            console.log('OneDirection - onChoiceSelect cached data for lines-->');
+            console.table(this.cacheService.lineCacheList)
+            //
+            this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+            //Notify listeners
+            if (this.directionSelected || this.directionSelected === 0) {
+              this.dataService.newDirectionSelected.next(this.directionSelected);
+            }
+            this._updateMixDepartures();
 
-                    this.route.params.subscribe(
-                     (params: Params) => {
-                       this._parseParamDate();
-                       this._updateMixDepartures();
-                     });
-
-
-                  },
-                  (error) => console.log(error)
-                );
-              } else {
-                this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
-                //Notify listeners
-                if(this.directionSelected   || this.directionSelected === 0 ) {
-                  this.dataService.newDirectionSelected.next(this.directionSelected);
-                }
+            this.route.params.subscribe(
+              (params: Params) => {
+                this._parseParamDate();
                 this._updateMixDepartures();
-                this.route.params.subscribe(
-                 (params: Params) => {
-                   this._parseParamDate();
-                   this._updateMixDepartures();
-                 });
+              });
 
-              }
+
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+        //Notify listeners
+        if (this.directionSelected || this.directionSelected === 0) {
+          this.dataService.newDirectionSelected.next(this.directionSelected);
+        }
+        this._updateMixDepartures();
+        this.route.params.subscribe(
+          (params: Params) => {
+            this._parseParamDate();
+            this._updateMixDepartures();
+          });
+
+      }
+
+
+    } else if (this.directionSelected === DirectionsEnum.CercedillaCotos ||
+      this.directionSelected === DirectionsEnum.CotosCercedilla) {
+      this.dataService.mixDepartures.next([]);
+
+      if (!this.cacheService.lineCacheList['line-pubtra-c9']) {
+        this.dataService.getTrainLineData('c9').subscribe(
+          (data: Response) => {
+            //Save to cache line data
+            const jsonData = data.json()[0];
+            this.trainC9LinePubtraResponse = jsonData;
+            console.log('OneDirection - onChoiceSelect jsonData', jsonData);
+            this.cacheService.addLineDataToCache(jsonData, jsonData.type);
+            console.log('OneDirection - onChoiceSelect cached data for lines-->');
+            console.table(this.cacheService.lineCacheList)
+            //
+            this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+            //Notify listeners
+            if (this.directionSelected || this.directionSelected === 0) {
+              this.dataService.newDirectionSelected.next(this.directionSelected);
+            }
+            this._updateMixDepartures();
+
+            this.route.params.subscribe(
+              (params: Params) => {
+                this._parseParamDate();
+                this._updateMixDepartures();
+              });
+
+
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+        //Notify listeners
+        if (this.directionSelected || this.directionSelected === 0) {
+          this.dataService.newDirectionSelected.next(this.directionSelected);
+        }
+        this._updateMixDepartures();
+        this.route.params.subscribe(
+          (params: Params) => {
+            this._parseParamDate();
+            this._updateMixDepartures();
+          });
+
+      }
+
+    } else if (this.directionSelected === DirectionsEnum.CercedillaSegovia ||
+      this.directionSelected === DirectionsEnum.SegoviaCercedilla) {
+      this.dataService.mixDepartures.next([]);
+
+      if (!this.cacheService.lineCacheList['line-pubtra-regseg']) {
+        this.dataService.getTrainLineData('regseg').subscribe(
+          (data: Response) => {
+            //Save to cache line data
+            const jsonData = data.json()[0];
+            this.trainRegSegLinePubtraResponse = jsonData;
+            console.log('OneDirection - onChoiceSelect jsonData', jsonData);
+            this.cacheService.addLineDataToCache(jsonData, jsonData.type);
+            console.log('OneDirection - onChoiceSelect cached data for lines-->');
+            console.table(this.cacheService.lineCacheList)
+            //
+            this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+            //Notify listeners
+            if (this.directionSelected || this.directionSelected === 0) {
+              this.dataService.newDirectionSelected.next(this.directionSelected);
+            }
+            this._updateMixDepartures();
+
+            this.route.params.subscribe(
+              (params: Params) => {
+                this._parseParamDate();
+                this._updateMixDepartures();
+              });
+
+
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
+        //Notify listeners
+        if (this.directionSelected || this.directionSelected === 0) {
+          this.dataService.newDirectionSelected.next(this.directionSelected);
+        }
+        this._updateMixDepartures();
+        this.route.params.subscribe(
+          (params: Params) => {
+            this._parseParamDate();
+            this._updateMixDepartures();
+          });
+
+      }
     } else {
       this.dataService.getAllLinesData().subscribe(
         (dataArray: Array<Response>) => {
@@ -244,10 +292,10 @@ export class OneDirectionComponent implements OnInit {
           this._updateMixDepartures();
 
           this.route.params.subscribe(
-           (params: Params) => {
-             this._parseParamDate();
-             this._updateMixDepartures();
-           });
+            (params: Params) => {
+              this._parseParamDate();
+              this._updateMixDepartures();
+            });
 
 
         },
@@ -270,10 +318,10 @@ export class OneDirectionComponent implements OnInit {
     const day = parseInt(tokens[0]);
     const month = parseInt(tokens[1]);
     const year = parseInt(tokens[2]);
-    this.dateSelected = moment().set({'year': year, 'month': month-1 , 'date': day , 'hour': 0, 'minute': 0});
+    this.dateSelected = moment().set({ 'year': year, 'month': month - 1, 'date': day, 'hour': 0, 'minute': 0 });
     this.dateSelectedLabel = this.dateSelected.locale('es').format('dddd, D [de] MMMM [de] YYYY');
     this.dataService.dateSelected = this.dateSelected;
-    console.log('jes _parseParamDate directionSelected',this.dataService.directionSelected);
+    console.log('jes _parseParamDate directionSelected', this.dataService.directionSelected);
   }
 
   /**
@@ -285,55 +333,44 @@ export class OneDirectionComponent implements OnInit {
     let busResponse;
 
     this.showNoDataAvailable = false;
-    this.dataService.directionSelected = (this.directionSelected   || this.directionSelected === 0 ) ? this.directionSelected : this.dataService.directionSelected;
+    this.dataService.directionSelected = (this.directionSelected || this.directionSelected === 0) ? this.directionSelected : this.dataService.directionSelected;
 
 
-    switch(this.directionSelected) {
+    switch (this.directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
-        busResponse = this.bus684LinePubtraResponse;
-        break;
-      case DirectionsEnum.CercedillaHospitalVillalba:
-        busResponse = this.cacheService.lineCacheList['line-pubtra-680'];
-        break;
-      case DirectionsEnum.CercedillaPiscinasBerceas:
-        busResponse = this.busPiscinasLinePubtraResponse;
-        break;
       case DirectionsEnum.MadridCercedilla:
         busResponse = this.bus684LinePubtraResponse;
         break;
+      case DirectionsEnum.CercedillaHospitalVillalba:
       case DirectionsEnum.HospitalVillalbaCercedila:
         busResponse = this.cacheService.lineCacheList['line-pubtra-680'];
         break;
+      case DirectionsEnum.CercedillaPiscinasBerceas:
       case DirectionsEnum.PiscinasBerceasCercedilla:
         busResponse = this.busPiscinasLinePubtraResponse;
         break;
-
       case DirectionsEnum.HospitalFuenfriaInstituto:
-        busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
-        break;
       case DirectionsEnum.InstitutoHospitalFuenfria:
         busResponse = this.cacheService.lineCacheList['line-pubtra-l1'];
         break;
-
       default:
         break;
     }
 
     let trainResponse;
-    switch(this.directionSelected) {
+    switch (this.directionSelected) {
       case DirectionsEnum.CercedillaMadrid:
-        trainResponse = this.trainC2LinePubtraResponse;
-        break;
       case DirectionsEnum.MadridCercedilla:
         trainResponse = this.trainC2LinePubtraResponse;
         break;
       case DirectionsEnum.CercedillaCotos:
-        trainResponse = this.cacheService.lineCacheList['line-pubtra-c9'];
-        break;
       case DirectionsEnum.CotosCercedilla:
         trainResponse = this.cacheService.lineCacheList['line-pubtra-c9'];
         break;
-
+      case DirectionsEnum.CercedillaSegovia:
+      case DirectionsEnum.SegoviaCercedilla:
+        trainResponse = this.cacheService.lineCacheList['line-pubtra-regseg'];
+        break;
       default:
         break;
     }
@@ -341,14 +378,14 @@ export class OneDirectionComponent implements OnInit {
 
 
     this.mixDepartures = this.departuresService.buildMixDepaturesFromMoment(this.dateSelected,
-                                                                            this.directionSelected,
-                                                                            trainResponse,
-                                                                            busResponse);
-    if(this.mixDepartures && this.mixDepartures.length > 0) {
-      setTimeout(()=>{
+      this.directionSelected,
+      trainResponse,
+      busResponse);
+    if (this.mixDepartures && this.mixDepartures.length > 0) {
+      setTimeout(() => {
         //Notify view by observable subject
         this.dataService.mixDepartures.next(this.mixDepartures);
-      },50);
+      }, 50);
     } else {
       this.showNoDataAvailable = true;
     }
