@@ -1,6 +1,6 @@
 {
   "name": "amos-testing-project",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
