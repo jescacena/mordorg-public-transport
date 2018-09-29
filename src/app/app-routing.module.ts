@@ -10,8 +10,6 @@ import { ContactComponent } from './contact/contact.component';
 
 import { BankHolidayListResolver } from './shared/services/bank-holidays-resolver.service';
 import { LineResolver } from './shared/services/line-resolver.service';
-// import {DataService} from './shared/data.service';
-
 
 const appRoutes: Routes = [
   { path: '', component: HomeWithSelectorComponent, resolve: {bankHolidayListResponse: BankHolidayListResolver}},
